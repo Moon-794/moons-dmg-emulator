@@ -13,7 +13,10 @@ class memory
 public:
     memory();
 
+    //returns a byte from the specified 16 bit address
     uint8_t read(uint16_t address);
+
+    //writes a byte to the specified 16 bit address
     void write(uint16_t address, uint8_t data);
 
 private:

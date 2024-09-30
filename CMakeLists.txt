@@ -13,5 +13,3 @@ find_package(OpenGL REQUIRED)
 find_package(glm CONFIG REQUIRED)
 
 target_link_libraries(emulator OpenGL::GL glm::glm-header-only glfw)
-
-
