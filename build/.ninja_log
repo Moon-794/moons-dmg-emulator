@@ -1,0 +1,26 @@
+# ninja log v6
+6	396	7494064520517839	CMakeFiles/UndergroundEngine.dir/src/main.cpp.obj	ec628d679bbcbea2
+11	310	7494064520567626	CMakeFiles/UndergroundEngine.dir/src/mem/memory.cpp.obj	2253359ca2b65c7c
+396	512	7494064524417605	bin/UndergroundEngine.exe	197261b36cdd5ffa
+16	165	7494064724767662	build.ninja	f52322235742c36f
+14	150	7494064724767662	build.ninja	f52322235742c36f
+25	305	7494064725257626	CMakeFiles/emulator.dir/src/mem/memory.cpp.obj	91bf40c71aa44df7
+22	398	7494064725227616	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+398	503	7494064728987636	bin/emulator.exe	829ad9af00f9abc8
+18	399	7494065021145107	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+400	503	7494065024962305	bin/emulator.exe	829ad9af00f9abc8
+22	386	7494066595483935	CMakeFiles/emulator.dir/src/mem/memory.cpp.obj	91bf40c71aa44df7
+18	395	7494066595443936	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+395	500	7494066599213937	bin/emulator.exe	829ad9af00f9abc8
+18	391	7494066751205059	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+391	497	7494066754935092	bin/emulator.exe	829ad9af00f9abc8
+20	405	7494067433993281	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+406	515	7494067437853144	bin/emulator.exe	829ad9af00f9abc8
+20	394	7494068397806511	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+395	502	7494068401556530	bin/emulator.exe	829ad9af00f9abc8
+18	393	7494068601569284	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+394	499	7494068605316496	bin/emulator.exe	829ad9af00f9abc8
+18	405	7494068740010573	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+406	512	7494068743880669	bin/emulator.exe	829ad9af00f9abc8
+7	376	7494069442252446	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+376	482	7494069445949682	bin/emulator.exe	829ad9af00f9abc8
