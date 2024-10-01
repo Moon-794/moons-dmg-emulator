@@ -3,9 +3,11 @@
 
 #include <cstdint>
 
-class PPU
-{
-    
-};
-
+namespace dmg
+{  
+    class ppu
+    {
+        
+    };
+}
 #endif

@@ -51,12 +51,19 @@ build CMakeFiles/emulator.dir/src/main.cpp.obj: CXX_COMPILER__emulator_ C$:/User
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src
 
-build CMakeFiles/emulator.dir/src/mem/memory.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/mem/memory.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/mmu/mmu.cpp || cmake_object_order_depends_target_emulator
   DEFINES = -DGLFW_DLL
-  DEP_FILE = CMakeFiles\emulator.dir\src\mem\memory.cpp.obj.d
+  DEP_FILE = CMakeFiles\emulator.dir\src\mmu\mmu.cpp.obj.d
   INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
   OBJECT_DIR = CMakeFiles\emulator.dir
-  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\mem
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\mmu
+
+build CMakeFiles/emulator.dir/src/gameboy.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/gameboy.cpp || cmake_object_order_depends_target_emulator
+  DEFINES = -DGLFW_DLL
+  DEP_FILE = CMakeFiles\emulator.dir\src\gameboy.cpp.obj.d
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  OBJECT_DIR = CMakeFiles\emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src
 
 
 # =============================================================================
@@ -66,7 +73,7 @@ build CMakeFiles/emulator.dir/src/mem/memory.cpp.obj: CXX_COMPILER__emulator_ C$
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mem/memory.cpp.obj | C$:/msys64/mingw64/lib/libglfw3.dll.a
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/gameboy.cpp.obj | C$:/msys64/mingw64/lib/libglfw3.dll.a
   LINK_LIBRARIES = -lopengl32  C:/msys64/mingw64/lib/libglfw3.dll.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\emulator.dir
   POST_BUILD = cd .

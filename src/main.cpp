@@ -15,5 +15,16 @@ int main(int arg, char** args)
 
     memory gb_memory;
 
+    //load rom
+
+    //while running
+        //fetch instruction
+
+        //decode
+
+        //execute instruction
+
+        //update screen? 
+
     return 0;
 }
