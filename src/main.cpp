@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "cpu/cpu.h"
-#include "ppu/ppu.h"
-#include "mem/memory.h"
+#include "gameboy.h"
 
 int main(int arg, char** args)
 {
@@ -13,8 +11,6 @@ int main(int arg, char** args)
 
     //The cpu, ppu and ram are what sticks out to me the most right now
 
-    memory gb_memory;
-
     //load rom
 
     //while running
@@ -24,7 +20,11 @@ int main(int arg, char** args)
 
         //execute instruction
 
-        //update screen? 
+        //update screen?
+
+    //Gameboy should take the rom as an arg
+    Gameboy gameboy = Gameboy();
+    gameboy.Run();
 
     return 0;
 }

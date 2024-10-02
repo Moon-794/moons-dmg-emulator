@@ -9,7 +9,7 @@ Gameboy::Gameboy()
 
 void Gameboy::Run()
 {
-
+    //Fetch, Decode, Execute cycle
 }
 
 void Gameboy::Reset()

@@ -14,6 +14,10 @@ public:
     void Reset();
     void Quit();
 
+    //Various other functions, not required but definite nice to haves
+    void SaveState();
+    void LoadState();
+
 private:
     gb::cpu* cpu;
     gb::ppu* ppu;

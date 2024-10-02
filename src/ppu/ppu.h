@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace dmg
+namespace gb
 {  
     class ppu
     {
