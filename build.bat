@@ -1,5 +1,5 @@
 cd build
 ninja
 cd bin
-emulator.exe tetris.gb
+emulator.exe bootrom.gb tetris.gb
 cd ../../

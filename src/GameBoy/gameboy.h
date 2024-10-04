@@ -8,7 +8,7 @@
 class Gameboy
 {
 public:
-    Gameboy();
+    Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom);
 
     void Run();
     void Reset();

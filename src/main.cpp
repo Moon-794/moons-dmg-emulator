@@ -2,45 +2,52 @@
 #include <fstream>
 #include <iomanip>
 
-#include "gameboy.h"
+#include "GameBoy/gameboy.h"
+
+std::vector<uint8_t> GetRomContentsFromFile(char* path);
 
 int main(int argc, char** args)
 {
-    //Ok, so goal of emulator is to "emulate" the DMG cpu
-    //Perform the fetch decode execute cycle
-    //Interpret VRAM to draw the game to the screen, using SDL2
-    //Capture Input from the player to control the game
-
-    //The cpu, ppu and ram are what sticks out to me the most right now
-
-    //load rom
-
-    //while running
-        //fetch instruction
-
-        //decode
-
-        //execute instruction
-
-        //update screen?
-
-    if(argc < 2)
+    //Argument checking
+    if(argc < 3)
     {
-        std::cout << "Error: Pass a ROM file as the first argument" << std::endl;
+        std::cout << "Error: Pass a BootROM file and a game ROM file as the first and second argument" << std::endl;
         return 1;
     }
 
-    char* romFile = args[1];
+    std::vector<uint8_t> bootRom = GetRomContentsFromFile(args[1]);
+    std::vector<uint8_t> gameRom = GetRomContentsFromFile(args[2]);
 
-    std::ifstream fs(romFile, std::ios::in | std::ios::binary);
+    //Validate file sizes, bootrom must ALWAYS be 256 bytes
+    if(bootRom.size() != 256 || gameRom.size() == 0)
+    {
+        std::cout << "Error reading from ROM files" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Bootrom size check: " << bootRom.size() << std::endl;
+    std::cout << "Gamerom size check: " << gameRom.size() << std::endl;
+
+    //Pass control to the emulator
+    Gameboy gameboy = Gameboy(bootRom, gameRom);
+    gameboy.Run();
+
+    return 0;
+}
+
+std::vector<uint8_t> GetRomContentsFromFile(char* path)
+{
+    std::vector<uint8_t> romData;
+    std::ifstream fs(path, std::ios::in | std::ios::binary);
 
     if(!fs)
     {
-        std::cout << "Failed to open file:" << romFile << std::endl;
-        return 1;
+        std::cout << "Failed to open file:" << path << std::endl;
+        return romData; //return empty vector
     }
     else
     {
+        //Read entire contents of file
         fs.seekg (0, fs.end);
         int length = fs.tellg();
         fs.seekg (0, fs.beg);
@@ -48,19 +55,18 @@ int main(int argc, char** args)
         unsigned char* buffer = new unsigned char[length];
         fs.read((char*)buffer, length);
 
+        romData = std::vector<uint8_t>(length);
+
+        //Pass data into vector in a usable format
         for (size_t i = 0; i < length; i++)
         {
-             std::cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)buffer[i];
+            romData[i] = (int8_t)buffer[i];
         }
-
+        
         delete buffer;
     }
 
     fs.close();
 
-    //Gameboy should take the rom as an arg
-    Gameboy gameboy = Gameboy();
-    gameboy.Run();
-
-    return 0;
+    return romData;
 }
