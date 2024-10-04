@@ -14,7 +14,7 @@ public:
     void Reset();
     void Quit();
 
-    //Various other functions, not required but definite nice to haves
+    //Various other functions, not required but definite "nice to have"
     void SaveState();
     void LoadState();
 
@@ -22,7 +22,8 @@ private:
     gb::cpu* cpu;
     gb::ppu* ppu;
     gb::mmu* mmu;
-    //rom file needed too, not sure where to strore 
+    
+    //rom file needed too, not sure where to store
 };
 
 #endif

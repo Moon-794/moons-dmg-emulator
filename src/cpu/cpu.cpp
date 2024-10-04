@@ -1,11 +1,11 @@
 #include "cpu/cpu.h"
 
-cpu::cpu()
+gb::cpu::cpu(gb::mmu* memory)
 {
-
+    this->memory = memory;
 }
 
-void cpu::Step()
+void gb::cpu::Step()
 {
 
 }

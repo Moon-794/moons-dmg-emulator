@@ -3,7 +3,7 @@
 Gameboy::Gameboy()
 {
     mmu = new gb::mmu();
-    cpu = new gb::cpu();
+    cpu = new gb::cpu(mmu);
     ppu = new gb::ppu();
 }
 
@@ -19,5 +19,5 @@ void Gameboy::Reset()
 
 void Gameboy::Quit()
 {
-    
+     
 }
