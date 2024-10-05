@@ -37,7 +37,11 @@ void gb::cpu::Step()
         if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
         {
             std::cout << "Unknown Instruction Encountered:\n";
-            memory->PrintByteAsHex(program_counter - 1);
+
+            if(!usingCB)
+                memory->PrintByteAsHex(program_counter);
+            else
+                memory->PrintByteAsHex(program_counter - 1);
             return;
         }
         else
@@ -170,4 +174,14 @@ void gb::cpu::PrintRegister(Register reg)
     }
 
     std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)*pReg << "\n";
+}
+
+void gb::cpu::SetFlag(uint8_t flag)
+{
+    f = f | flag;
+}
+
+void gb::cpu::ResetFlag(uint8_t flag)
+{
+    f = f & ~flag;
 }

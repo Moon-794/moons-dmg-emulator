@@ -1,5 +1,15 @@
 #include "cpu/cpu.h"
 
+void gb::cpu::LD_NN_D16(InstructionParams* p)
+{
+    uint8_t lsb = memory->read(program_counter++);
+    uint8_t msb = memory->read(program_counter++);
+
+    uint16_t value = (msb << 8) | lsb;
+
+    SetComboRegister(p->reg16, value);
+}
+
 void gb::cpu::NO_OP()
 {
     //do nothing!
@@ -9,16 +19,12 @@ void gb::cpu::NO_OP()
 //Load the immediate 16 bit value into the HL register
 void gb::cpu::LD_HL_D16()
 {
-    uint8_t lsb = memory->read(program_counter++);
-    uint8_t msb = memory->read(program_counter++);
+    InstructionParams p;
+    p.reg16 = HL;
 
-    uint16_t value = (msb << 8) | lsb;
-    SetComboRegister(HL, value);
+    LD_NN_D16(&p);
 
     cycles += 12;
-
-    PrintRegister(gb::H);
-    PrintRegister(gb::L);
 }
 
 //Load the immediate 16 bit value into the stack pointer register
@@ -37,9 +43,7 @@ void gb::cpu::LD_SP_D16()
 void gb::cpu::LD_HL_DEC_A()
 {
     uint16_t addr = GetComboRegister(HL);
-
     memory->write(addr, a);
-
     SetComboRegister(HL, addr - 1);
     cycles += 3;
 }
@@ -54,6 +58,35 @@ void gb::cpu::XOR_A()
     cycles += 4;
 }
 
+//CB PREFIX TABLE
+
+void gb::cpu::BIT_N_X(InstructionParams* p)
+{
+    //Test if nth bit of register x is set
+    if((*p->reg & p->bit_flag) != 0)
+    {
+        //Bit is set
+        ResetFlag(FLAG_Z);
+    }
+    else
+    {
+        //Bit is not set
+        SetFlag(FLAG_Z);
+    }
+
+    ResetFlag(FLAG_N);
+    SetFlag(FLAG_H);
+}
+
+void gb::cpu::BIT_7_H()
+{
+    InstructionParams p;
+    p.reg = &h;
+    p.bit_flag = BIT_7;
+
+    BIT_N_X(&p);
+}
+
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
@@ -61,4 +94,6 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x31] = &LD_SP_D16;
     instructionTable[0x32] = &LD_HL_DEC_A;
     instructionTable[0xAF] = &XOR_A;
+
+    extendedInstructionTable[0x7C] = &BIT_7_H;
 }
