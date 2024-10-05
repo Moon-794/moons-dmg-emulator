@@ -20,7 +20,7 @@ void gb::cpu::Step()
         if((this->instructionTable[instruction] == nullptr))
         {
             std::cout << "Unknown Instruction Encountered:\n";
-            memory->PrintByteAsHex(program_counter);
+            memory->PrintByteAsHex(program_counter - 1);
             return;
         }
 
@@ -56,11 +56,61 @@ void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
         break;
     }
 
-    *firstRegister = (data >> 8) & 0xFF;
-    *secondRegister = data & 0xF0;
+    if(reg != AF)
+    {
+        *firstRegister = (data >> 8) & 0xFF;
+        *secondRegister = data & 0xFF;
+    }
+    else
+    {
+        *firstRegister = (data >> 8) & 0xFF;
+        *secondRegister = data & 0xF0;
+    }
 }
 
 uint16_t gb::cpu::GetComboRegister(RegisterCombo reg)
 {
     return 0x0000;
+}
+
+void gb::cpu::PrintRegister(Register reg)
+{
+    uint8_t* pReg;
+
+    switch (reg)
+    {
+    case gb::A:
+        pReg = &a;
+        break;
+    
+    case gb::B:
+        pReg = &b;
+        break;
+
+    case gb::C:
+        pReg = &c;
+        break;
+
+    case gb::D:
+        pReg = &d;
+        break;
+
+    case gb::E:
+        pReg = &e;
+        break;
+
+    case gb::F:
+        pReg = &f;
+        break;
+
+    case gb::H:
+        pReg = &h;
+        break;
+
+    case gb::L:
+        pReg = &l;
+        break;
+    }
+
+    std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)*pReg << "\n";
 }

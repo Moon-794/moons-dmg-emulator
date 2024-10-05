@@ -15,6 +15,18 @@ namespace gb
         HL
     };
 
+    enum Register
+    {
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        H,
+        L
+    };
+
     class cpu
     {
     public:
@@ -42,8 +54,13 @@ namespace gb
         void SetupInstructionTable();
 
         void NO_OP();
-        void LD_SP_NN();
+        void LD_SP_D16();
+        void LD_HL_D16();
         void XOR_A();
+
+        //Debugging related
+        void PrintRegister(Register reg);
+        void PrintComboRegister(RegisterCombo reg);
     };
 }
 #endif
