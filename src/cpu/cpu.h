@@ -48,10 +48,14 @@ namespace gb
 
         typedef void (gb::cpu::*InstructionTable)();
         InstructionTable instructionTable[256];
+        
+
+        bool usingCB;
+        InstructionTable extendedInstructionTable[256];
 
         gb::mmu* memory;
 
-        void SetupInstructionTable();
+        void SetupInstructionTables();
 
         void NO_OP();
         void LD_SP_D16();

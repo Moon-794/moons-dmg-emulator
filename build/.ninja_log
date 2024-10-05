@@ -81,3 +81,11 @@
 446	558	7498518728996551	bin/emulator.exe	1541774627949968
 20	385	7498521940440078	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	84d6eabb949c5473
 386	500	7498521944070153	bin/emulator.exe	1541774627949968
+18	424	7498589919190258	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	84d6eabb949c5473
+21	478	7498589919220266	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	2c7c62fb63fd0380
+15	492	7498589919150276	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	83b9a66d561fca9f
+7	586	7498589919070251	CMakeFiles/emulator.dir/src/main.cpp.obj	64099178795b5196
+11	622	7498589919120263	CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj	e970932beb0d82d9
+622	742	7498589925220268	bin/emulator.exe	1541774627949968
+20	440	7498591902358145	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	83b9a66d561fca9f
+440	555	7498591906563938	bin/emulator.exe	1541774627949968

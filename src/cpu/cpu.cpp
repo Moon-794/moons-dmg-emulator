@@ -6,8 +6,18 @@
 gb::cpu::cpu(gb::mmu* memory)
 {
     this->memory = memory;
+    usingCB = false;
 
-    SetupInstructionTable();
+    a = 0x00;
+    b = 0x00;
+    c = 0x00;
+    d = 0x00;
+    e = 0x00;
+    f = 0x00;
+    h = 0x00;
+    l = 0x00;
+
+    SetupInstructionTables();
 }
 
 void gb::cpu::Step()
@@ -17,14 +27,32 @@ void gb::cpu::Step()
         uint8_t instruction = memory->read(program_counter);
         program_counter++;
 
-        if((this->instructionTable[instruction] == nullptr))
+        if(instruction == 0xCB)
+        {
+            //Using the extended instruction set, get next byte for opcode
+            usingCB = true;
+            instruction = memory->read(program_counter);
+        }
+        
+        if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
         {
             std::cout << "Unknown Instruction Encountered:\n";
             memory->PrintByteAsHex(program_counter - 1);
             return;
         }
- 
-        (this->*instructionTable[instruction])();
+        else
+        {
+            //Call the instruction implementation
+            if(usingCB)
+            {
+                usingCB = false;
+                (this->*extendedInstructionTable[instruction])();
+            }
+            else
+            {
+                (this->*instructionTable[instruction])();
+            }
+        }
     } 
 }
 

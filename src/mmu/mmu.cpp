@@ -42,5 +42,5 @@ void gb::mmu::write(uint16_t address, uint8_t data)
 
 void::gb::mmu::PrintByteAsHex(uint16_t address)
 {
-    std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)read(address) << " at address: " << (int)address << "\n";
+    std::cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)read(address) << " at address: " << (int)address << "\n";
 }

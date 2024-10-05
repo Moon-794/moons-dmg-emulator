@@ -54,7 +54,7 @@ void gb::cpu::XOR_A()
     cycles += 4;
 }
 
-void gb::cpu::SetupInstructionTable()
+void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
     instructionTable[0x21] = &LD_HL_D16;
