@@ -1,4 +1,6 @@
 #include "mmu/mmu.h"
+#include <iostream>
+#include <iomanip>
 
 gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 {
@@ -12,7 +14,6 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     {
         mem[i] = gameRom[i];
     }
-    
 }
 
 uint8_t gb::mmu::read(uint16_t address)
@@ -37,4 +38,9 @@ void gb::mmu::write(uint16_t address, uint8_t data)
         isBootRomMapped = false;
     
     mem[address] = data;
+}
+
+void::gb::mmu::PrintByteAsHex(uint16_t address)
+{
+    std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)read(address) << " at address: " << (int)address << "\n";
 }

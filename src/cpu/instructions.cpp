@@ -1,5 +1,11 @@
 #include "cpu/cpu.h"
 
+void gb::cpu::NO_OP()
+{
+    //do nothing!
+    cycles += 4;
+}
+
 void gb::cpu::LD_SP_NN()
 {
     uint8_t lsb = memory->read(program_counter++);
@@ -22,6 +28,7 @@ void gb::cpu::XOR_A()
 
 void gb::cpu::SetupInstructionTable()
 {
+    instructionTable[0x00] = &NO_OP;
     instructionTable[0x31] = &LD_SP_NN;
     instructionTable[0xAF] = &XOR_A;
 }

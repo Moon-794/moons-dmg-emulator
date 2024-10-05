@@ -6,7 +6,15 @@
 #include "mmu/mmu.h"
 
 namespace gb
-{  
+{
+    enum RegisterCombo
+    {
+        AF,
+        BC,
+        DE,
+        HL
+    };
+
     class cpu
     {
     public:
@@ -18,8 +26,8 @@ namespace gb
         //8 Bit cpu registers, f is special and represent flag states from certain ops
         uint8_t a, b, c, d, e, f, h, l;
 
-        void SetHL(uint16_t data);
-        uint16_t GetHL();
+        void SetComboRegister(RegisterCombo reg, uint16_t data);
+        uint16_t GetComboRegister(RegisterCombo reg);
 
         uint16_t program_counter = 0x0000;
         uint16_t stack_pointer = 0x0000;
@@ -33,6 +41,7 @@ namespace gb
 
         void SetupInstructionTable();
 
+        void NO_OP();
         void LD_SP_NN();
         void XOR_A();
     };
