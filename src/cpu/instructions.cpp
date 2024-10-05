@@ -31,7 +31,6 @@ void gb::cpu::LD_HL_D16()
 //Relative jump IF zero flag is clear (Not Zero)
 void gb::cpu::JR_NZ_D8()
 {
-    memory->PrintByteAsHex(program_counter);
     int8_t jumpOffset = memory->read(program_counter++);
 
     if(isFlagSet(FLAG_Z) == false)

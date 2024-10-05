@@ -40,10 +40,15 @@ void gb::cpu::Step()
             std::cout << "Unknown Instruction Encountered:\n";
 
             if(!usingCB)
+            {
                 memory->PrintByteAsHex(program_counter - 1);
+            }
             else
+            {
                 memory->PrintByteAsHex(program_counter - 1);
-            return;
+            }
+
+            break;
         }
         else
         {
@@ -58,7 +63,9 @@ void gb::cpu::Step()
                 (this->*instructionTable[instruction])();
             }
         }
-    } 
+    }
+
+    PrintComboRegister(HL); 
 }
 
 void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
@@ -133,6 +140,45 @@ uint16_t gb::cpu::GetComboRegister(RegisterCombo reg)
     value = (*firstRegister << 8) | *secondRegister; 
 
     return value;
+}
+
+void gb::cpu::PrintComboRegister(RegisterCombo reg)
+{
+    uint8_t* firstRegister;
+    uint8_t* secondRegister;
+
+    const char* title;
+
+    switch (reg)
+    {
+    case gb::AF:
+        title = "AF";
+        firstRegister = &a;
+        secondRegister = &f;
+        break;
+
+    case gb::BC:
+        title = "BC";
+        firstRegister = &b;
+        secondRegister = &c;
+        break;
+
+    case gb::DE:
+        title = "DE";
+        firstRegister = &d;
+        secondRegister = &e;
+        break;
+
+    case gb::HL:
+        title = "HL";
+        firstRegister = &h;
+        secondRegister = &l;
+        break;
+    }
+
+    std::cout << title << ": " << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)*firstRegister << (int)*secondRegister << "\n";
+
+    delete title; 
 }
 
 void gb::cpu::PrintRegister(Register reg)
