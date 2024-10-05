@@ -1,4 +1,5 @@
 #include "cpu/cpu.h"
+#include <bitset>
 
 void gb::cpu::LD_NN_D16(InstructionParams* p)
 {
@@ -25,6 +26,23 @@ void gb::cpu::LD_HL_D16()
     LD_NN_D16(&p);
 
     cycles += 12;
+}
+
+//Relative jump IF zero flag is clear (Not Zero)
+void gb::cpu::JR_NZ_D8()
+{
+    memory->PrintByteAsHex(program_counter);
+    int8_t jumpOffset = memory->read(program_counter++);
+
+    if(isFlagSet(FLAG_Z) == false)
+    {
+        program_counter += jumpOffset;
+        cycles += 12;
+    }
+    else
+    {
+        cycles += 8;
+    }
 }
 
 //Load the immediate 16 bit value into the stack pointer register
@@ -76,6 +94,8 @@ void gb::cpu::BIT_N_X(InstructionParams* p)
 
     ResetFlag(FLAG_N);
     SetFlag(FLAG_H);
+
+    cycles += 8;
 }
 
 void gb::cpu::BIT_7_H()
@@ -91,6 +111,7 @@ void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
     instructionTable[0x21] = &LD_HL_D16;
+    instructionTable[0x20] = &JR_NZ_D8;
     instructionTable[0x31] = &LD_SP_D16;
     instructionTable[0x32] = &LD_HL_DEC_A;
     instructionTable[0xAF] = &XOR_A;

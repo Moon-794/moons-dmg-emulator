@@ -32,14 +32,15 @@ void gb::cpu::Step()
             //Using the extended instruction set, get next byte for opcode
             usingCB = true;
             instruction = memory->read(program_counter);
+            program_counter++;
         }
         
-        if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
+        if(usingCB == false && (this->instructionTable[instruction] == nullptr))
         {
             std::cout << "Unknown Instruction Encountered:\n";
 
             if(!usingCB)
-                memory->PrintByteAsHex(program_counter);
+                memory->PrintByteAsHex(program_counter - 1);
             else
                 memory->PrintByteAsHex(program_counter - 1);
             return;
@@ -184,4 +185,9 @@ void gb::cpu::SetFlag(uint8_t flag)
 void gb::cpu::ResetFlag(uint8_t flag)
 {
     f = f & ~flag;
+}
+
+bool gb::cpu::isFlagSet(uint8_t flag)
+{
+    return (f & flag);
 }

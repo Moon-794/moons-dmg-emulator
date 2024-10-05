@@ -68,6 +68,8 @@ namespace gb
         void SetFlag(uint8_t flag);
         void ResetFlag(uint8_t flag);
 
+        bool isFlagSet(uint8_t flag);
+
         void SetComboRegister(RegisterCombo reg, uint16_t data);
         uint16_t GetComboRegister(RegisterCombo reg);
 
@@ -92,6 +94,7 @@ namespace gb
         //Specific implementations
         void NO_OP();
         void LD_SP_D16();
+        void JR_NZ_D8();
         void LD_HL_D16();
         void LD_HL_DEC_A();
         void XOR_A();
