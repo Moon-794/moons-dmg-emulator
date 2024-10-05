@@ -33,6 +33,17 @@ void gb::cpu::LD_SP_D16()
     cycles += 3;
 }
 
+//Load to the address specified by HL, data from A, decrement HL by 1 afterwards
+void gb::cpu::LD_HL_DEC_A()
+{
+    uint16_t addr = GetComboRegister(HL);
+
+    memory->write(addr, a);
+
+    SetComboRegister(HL, addr - 1);
+    cycles += 3;
+}
+
 //Perform a bitwise XOR on the A register with the A register **Note: This always results in a zero
 void gb::cpu::XOR_A()
 {
@@ -48,5 +59,6 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x00] = &NO_OP;
     instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x31] = &LD_SP_D16;
+    instructionTable[0x32] = &LD_HL_DEC_A;
     instructionTable[0xAF] = &XOR_A;
 }

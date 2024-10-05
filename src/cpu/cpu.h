@@ -56,6 +56,7 @@ namespace gb
         void NO_OP();
         void LD_SP_D16();
         void LD_HL_D16();
+        void LD_HL_DEC_A();
         void XOR_A();
 
         //Debugging related

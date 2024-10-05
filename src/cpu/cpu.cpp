@@ -23,7 +23,7 @@ void gb::cpu::Step()
             memory->PrintByteAsHex(program_counter - 1);
             return;
         }
-
+ 
         (this->*instructionTable[instruction])();
     } 
 }
@@ -70,7 +70,36 @@ void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
 
 uint16_t gb::cpu::GetComboRegister(RegisterCombo reg)
 {
-    return 0x0000;
+    uint8_t* firstRegister;
+    uint8_t* secondRegister;
+
+    switch (reg)
+    {
+    case gb::AF:
+        firstRegister = &a;
+        secondRegister = &f;
+        break;
+
+    case gb::BC:
+        firstRegister = &b;
+        secondRegister = &c;
+        break;
+
+    case gb::DE:
+        firstRegister = &d;
+        secondRegister = &e;
+        break;
+
+    case gb::HL:
+        firstRegister = &h;
+        secondRegister = &l;
+        break;
+    }
+
+    uint16_t value = 0x0000;
+    value = (*firstRegister << 8) | *secondRegister; 
+
+    return value;
 }
 
 void gb::cpu::PrintRegister(Register reg)
