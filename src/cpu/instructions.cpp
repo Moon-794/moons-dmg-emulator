@@ -43,6 +43,12 @@ void gb::cpu::LD_C_D8()
     LD_X_D8(&p);
 }
 
+void gb::cpu::LD_FFC_A()
+{
+    uint16_t addr = (0xFF00) | c;
+    memory->write(addr, a);
+}
+
 //Load the immediate 16 bit value into the HL register
 void gb::cpu::LD_HL_D16()
 {
@@ -142,6 +148,8 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x32] = &LD_HL_DEC_A;
     instructionTable[0x3E] = &LD_A_D8;
     instructionTable[0xAF] = &XOR_A;
+
+    instructionTable[0xE2] = &LD_FFC_A;
 
     extendedInstructionTable[0x7C] = &BIT_7_H;
 }

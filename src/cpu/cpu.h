@@ -91,9 +91,12 @@ namespace gb
         //Generics
         void LD_NN_D16(InstructionParams* p);
         void LD_X_D8(InstructionParams* p);
+        void LD_X_Y(uint8_t* x, uint8_t y);
 
         //Specific implementations
         void NO_OP();
+
+        void LD_FFC_A();
 
         void LD_A_D8();
         void LD_B_D8(); //Not yet done
