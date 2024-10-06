@@ -92,6 +92,8 @@ namespace gb
         void LD_NN_D16(InstructionParams* p);
         void LD_X_D8(InstructionParams* p);
         void LD_X_Y(uint8_t* x, uint8_t y);
+        void INC_X(uint8_t* reg);
+        void LD_HL_X(uint8_t* reg);
 
         //Specific implementations
         void NO_OP();
@@ -103,6 +105,13 @@ namespace gb
         void LD_C_D8();
         void LD_D_D8(); //Not yet done
         void LD_E_D8(); //Not yet done
+
+        void LD_HL_A();
+
+        void INC_A(); //Not yet done
+        void INC_B(); //Not yet done
+        void INC_C();
+        void INC_D(); //Not yet done
 
         void LD_SP_D16();
         void JR_NZ_D8();

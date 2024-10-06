@@ -1,6 +1,7 @@
 #include "cpu/cpu.h"
 #include <bitset>
 
+//Load the immediate value D16 into the combo register NN
 void gb::cpu::LD_NN_D16(InstructionParams* p)
 {
     uint8_t lsb = memory->read(program_counter++);
@@ -19,6 +20,38 @@ void gb::cpu::LD_X_D8(InstructionParams* p)
     *p->reg = value;
     cycles += 8;
 }
+
+void gb::cpu::INC_X(uint8_t* reg)
+{
+    if(((*reg & 0x0F) + (0x01 & 0x0F) & 0x10) == 0x10)
+    {
+        //bit 3 will carry to bit 4, set half carry flag
+        SetFlag(FLAG_H);
+    }
+    else
+    {
+        ResetFlag(FLAG_H);
+    }
+
+    (*reg)++;
+
+    if(*reg == 0)
+        SetFlag(FLAG_Z);
+    else
+        ResetFlag(FLAG_Z);
+
+    ResetFlag(FLAG_N);
+
+    cycles += 4;
+}
+
+void gb::cpu::LD_HL_X(uint8_t* reg)
+{
+    memory->write(GetComboRegister(HL), *reg);
+    cycles += 8;
+}
+
+//Implementations
 
 //Do nothing
 void gb::cpu::NO_OP()
@@ -47,6 +80,8 @@ void gb::cpu::LD_FFC_A()
 {
     uint16_t addr = (0xFF00) | c;
     memory->write(addr, a);
+
+    cycles += 8;
 }
 
 //Load the immediate 16 bit value into the HL register
@@ -97,6 +132,19 @@ void gb::cpu::LD_HL_DEC_A()
     cycles += 3;
 }
 
+void gb::cpu::LD_HL_A()
+{
+    LD_HL_X(&a);
+}
+
+//Increment B
+void::gb::cpu::INC_C()
+{
+    PrintRegister(C);
+    INC_X(&c);
+    PrintRegister(C);
+}
+
 //Perform a bitwise XOR on the A register with the A register **Note: This always results in a zero
 void gb::cpu::XOR_A()
 {
@@ -141,12 +189,14 @@ void gb::cpu::BIT_7_H()
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
+    instructionTable[0x0C] = &INC_C;
     instructionTable[0x0E] = &LD_C_D8;
     instructionTable[0x20] = &JR_NZ_D8;
     instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x31] = &LD_SP_D16;
     instructionTable[0x32] = &LD_HL_DEC_A;
     instructionTable[0x3E] = &LD_A_D8;
+    instructionTable[0x77] = &LD_HL_A;
     instructionTable[0xAF] = &XOR_A;
 
     instructionTable[0xE2] = &LD_FFC_A;

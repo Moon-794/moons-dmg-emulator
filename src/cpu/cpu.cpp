@@ -48,6 +48,7 @@ void gb::cpu::Step()
                 memory->PrintByteAsHex(program_counter - 1);
             }
 
+            std::cout << "Cycles: " << std::dec << cycles;
             break;
         }
         else
