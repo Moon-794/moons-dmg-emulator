@@ -94,7 +94,13 @@ namespace gb
 
         //Specific implementations
         void NO_OP();
+
+        void LD_A_D8();
+        void LD_B_D8(); //Not yet done
         void LD_C_D8();
+        void LD_D_D8(); //Not yet done
+        void LD_E_D8(); //Not yet done
+
         void LD_SP_D16();
         void JR_NZ_D8();
         void LD_HL_D16();

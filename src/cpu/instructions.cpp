@@ -27,6 +27,14 @@ void gb::cpu::NO_OP()
     cycles += 4;
 }
 
+void gb::cpu::LD_A_D8()
+{
+    InstructionParams p;
+    p.reg = &a;
+
+    LD_X_D8(&p);
+}
+
 void gb::cpu::LD_C_D8()
 {
     InstructionParams p;
@@ -128,10 +136,11 @@ void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
     instructionTable[0x0E] = &LD_C_D8;
-    instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x20] = &JR_NZ_D8;
+    instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x31] = &LD_SP_D16;
     instructionTable[0x32] = &LD_HL_DEC_A;
+    instructionTable[0x3E] = &LD_A_D8;
     instructionTable[0xAF] = &XOR_A;
 
     extendedInstructionTable[0x7C] = &BIT_7_H;
