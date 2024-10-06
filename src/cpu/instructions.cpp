@@ -11,10 +11,28 @@ void gb::cpu::LD_NN_D16(InstructionParams* p)
     SetComboRegister(p->reg16, value);
 }
 
+//Load the immediate value D8 into the register x
+void gb::cpu::LD_X_D8(InstructionParams* p)
+{
+    uint8_t value = memory->read(program_counter++);
+
+    *p->reg = value;
+    cycles += 8;
+}
+
+//Do nothing
 void gb::cpu::NO_OP()
 {
     //do nothing!
     cycles += 4;
+}
+
+void gb::cpu::LD_C_D8()
+{
+    InstructionParams p;
+    p.reg = &c;
+
+    LD_X_D8(&p);
 }
 
 //Load the immediate 16 bit value into the HL register
@@ -109,6 +127,7 @@ void gb::cpu::BIT_7_H()
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = &NO_OP;
+    instructionTable[0x0E] = &LD_C_D8;
     instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x20] = &JR_NZ_D8;
     instructionTable[0x31] = &LD_SP_D16;

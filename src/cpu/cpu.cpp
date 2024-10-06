@@ -64,8 +64,6 @@ void gb::cpu::Step()
             }
         }
     }
-
-    PrintComboRegister(HL); 
 }
 
 void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
