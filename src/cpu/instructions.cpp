@@ -2,14 +2,14 @@
 #include <bitset>
 
 //Load the immediate value D16 into the combo register NN
-void gb::cpu::LD_NN_D16(InstructionParams* p)
+void gb::cpu::LD_NN_D16(RegisterCombo reg16)
 {
     uint8_t lsb = memory->read(program_counter++);
     uint8_t msb = memory->read(program_counter++);
 
     uint16_t value = (msb << 8) | lsb;
 
-    SetComboRegister(p->reg16, value);
+    SetComboRegister(reg16, value);
 
     cycles += 12;
 }
@@ -21,17 +21,19 @@ void gb::cpu::LD_X_YY(uint8_t* x, uint16_t yy)
     cycles += 8;
 }
 
-void gb::cpu::LD_A_DE()
+void gb::cpu:: LD_X_Y(uint8_t* x, uint8_t y)
 {
-    LD_X_YY(&a, GetComboRegister(DE));
+    *x = y;
+
+    cycles += 4;
 }
 
 //Load the immediate value D8 into the register x
-void gb::cpu::LD_X_D8(InstructionParams* p)
+void gb::cpu::LD_X_D8(uint8_t* reg)
 {
     uint8_t value = memory->read(program_counter++);
 
-    *p->reg = value;
+    *reg = value;
     cycles += 8;
 }
 
@@ -74,47 +76,12 @@ void gb::cpu::NO_OP()
     cycles += 4;
 }
 
-void gb::cpu::LD_A_D8()
-{
-    InstructionParams p;
-    p.reg = &a;
-
-    LD_X_D8(&p);
-}
-
-void gb::cpu::LD_C_D8()
-{
-    InstructionParams p;
-    p.reg = &c;
-
-    LD_X_D8(&p);
-}
-
-void gb::cpu::LD_DE_D16()
-{
-    InstructionParams p;
-    p.reg16 = DE;
-
-    LD_NN_D16(&p);
-}
-
 void gb::cpu::LD_FFC_A()
 {
     uint16_t addr = (0xFF00) | c;
     memory->write(addr, a);
 
     cycles += 8;
-}
-
-//Load the immediate 16 bit value into the HL register
-void gb::cpu::LD_HL_D16()
-{
-    InstructionParams p;
-    p.reg16 = HL;
-
-    LD_NN_D16(&p);
-
-    cycles += 12;
 }
 
 //Relative jump IF zero flag is clear (Not Zero)
@@ -159,18 +126,22 @@ void gb::cpu::LD_HL_A()
     LD_HL_X(&a);
 }
 
-//Increment C
-void::gb::cpu::INC_C()
+void gb::cpu::XOR_X(uint8_t* reg)
 {
-    INC_X(&c);
-}
+    *reg = *reg ^ a;
 
-//Perform a bitwise XOR on the A register with the A register **Note: This always results in a zero
-void gb::cpu::XOR_A()
-{
-    a = a ^ a;
-    //Since this always results in a 0, the zero flag is set, the remaining flags are set to 0
-    f = f | 0b10000000;
+    if(*reg == 0)
+    {
+        SetFlag(FLAG_Z);
+    }
+    else
+    {
+        ResetFlag(FLAG_Z);
+    }
+
+    SetFlag(FLAG_N);
+    SetFlag(FLAG_H);
+    SetFlag(FLAG_C);
 
     cycles += 4;
 }
@@ -184,6 +155,25 @@ void gb::cpu::LDH_A8_A()
     memory->write(addr, a);
 
     cycles += 12;
+}
+
+void gb::cpu::CD()
+{
+    uint8_t lsb = memory->read(program_counter++);
+    uint8_t msb = memory->read(program_counter++);
+
+    uint16_t addr = convert16Bit(lsb, msb);
+
+    uint8_t pcMSB = program_counter >> 8;
+    uint8_t pcLSB = program_counter & 0x00FF;
+
+    stack_pointer--;
+    memory->write(stack_pointer, pcMSB);
+    stack_pointer--;
+    memory->write(stack_pointer, pcLSB);
+
+    program_counter = addr;
+    cycles += 24;
 }
 
 //CB PREFIX TABLE
@@ -219,21 +209,24 @@ void gb::cpu::BIT_7_H()
 
 void gb::cpu::SetupInstructionTables()
 {
-    instructionTable[0x00] = &NO_OP;
-    instructionTable[0x0C] = &INC_C;
-    instructionTable[0x0E] = &LD_C_D8;
-    instructionTable[0x11] = &LD_DE_D16;
-    instructionTable[0x1A] = &LD_A_DE;
-    instructionTable[0x20] = &JR_NZ_D8;
-    instructionTable[0x21] = &LD_HL_D16;
-    instructionTable[0x31] = &LD_SP_D16;
-    instructionTable[0x32] = &LD_HL_DEC_A;
-    instructionTable[0x3E] = &LD_A_D8;
-    instructionTable[0x77] = &LD_HL_A;
-    instructionTable[0xAF] = &XOR_A;
+    instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
+    instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
+    instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
+    instructionTable[0x11] = [this] { gb::cpu::LD_NN_D16(DE); };
+    instructionTable[0x1A] = [this] { gb::cpu::LD_X_YY(&a, GetComboRegister(DE)); };
+    instructionTable[0x20] = [this] { gb::cpu::JR_NZ_D8(); };
+    instructionTable[0x21] = [this] { gb::cpu::LD_NN_D16(HL); };
+    instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
+    
+    instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
+    instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a); };
+    instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
+    instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
-    instructionTable[0xE0] = &LDH_A8_A;
-    instructionTable[0xE2] = &LD_FFC_A;
+    instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
+    instructionTable[0xCD] = [this] { gb::cpu::CD(); };
+    instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
+    instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
 
     extendedInstructionTable[0x7C] = &BIT_7_H;
 }

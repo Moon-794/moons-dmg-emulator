@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstdint>
+#include <functional>
 #include "mmu/mmu.h"
 
 #define FLAG_Z 0x80
@@ -79,7 +80,7 @@ namespace gb
         uint32_t cycles = 0;
 
         typedef void (gb::cpu::*InstructionTable)();
-        InstructionTable instructionTable[256];
+        std::function<void()> instructionTable[256];
         
         bool usingCB;
         InstructionTable extendedInstructionTable[256];
@@ -88,43 +89,36 @@ namespace gb
 
         void SetupInstructionTables();
 
+        //Utility
+        uint16_t convert16Bit(uint8_t lsb, uint8_t msb);
+
         //Generics
-        void LD_NN_D16(InstructionParams* p);
-        void LD_X_D8(InstructionParams* p);
+        void LD_NN_D16(RegisterCombo reg16);
+        void LD_X_D8(uint8_t* reg);
         void LD_X_Y(uint8_t* x, uint8_t y);
         void LD_X_YY(uint8_t* x, uint16_t yy);
         void INC_X(uint8_t* reg);
         void LD_HL_X(uint8_t* reg);
+        void XOR_X(uint8_t* reg);
 
         //Specific implementations
         void NO_OP();
 
         void LD_FFC_A();
 
-        void LD_A_D8();
-        void LD_B_D8(); //Not yet done
-        void LD_C_D8();
-        void LD_D_D8(); //Not yet done
-        void LD_E_D8(); //Not yet done
-
         void LD_A_DE();
 
         void LD_HL_A(); 
-
-        void INC_A(); //Not yet done
-        void INC_B(); //Not yet done
-        void INC_C();
-        void INC_D(); //Not yet done
 
         void LD_SP_D16();
         void JR_NZ_D8();
         void LD_HL_D16();
         void LD_HL_DEC_A();
         void LD_DE_D16();
-
-        void XOR_A();
-
         void LDH_A8_A();
+
+        void CD();
+        void RET();
 
         //CB Generics
         void BIT_N_X(InstructionParams* p);

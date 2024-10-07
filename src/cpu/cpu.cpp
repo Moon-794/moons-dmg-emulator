@@ -61,11 +61,16 @@ void gb::cpu::Step()
             }
             else
             {
-                (this->*instructionTable[instruction])();
+                (instructionTable[instruction])();
             }
         }
     }
 }
+
+uint16_t gb::cpu::convert16Bit(uint8_t lsb, uint8_t msb)
+ {
+    return (msb << 8) | lsb;
+ }
 
 void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
 {
