@@ -10,6 +10,20 @@ void gb::cpu::LD_NN_D16(InstructionParams* p)
     uint16_t value = (msb << 8) | lsb;
 
     SetComboRegister(p->reg16, value);
+
+    cycles += 12;
+}
+
+void gb::cpu::LD_X_YY(uint8_t* x, uint16_t yy)
+{
+    *x = memory->read(yy);
+
+    cycles += 8;
+}
+
+void gb::cpu::LD_A_DE()
+{
+    LD_X_YY(&a, GetComboRegister(DE));
 }
 
 //Load the immediate value D8 into the register x
@@ -76,6 +90,14 @@ void gb::cpu::LD_C_D8()
     LD_X_D8(&p);
 }
 
+void gb::cpu::LD_DE_D16()
+{
+    InstructionParams p;
+    p.reg16 = DE;
+
+    LD_NN_D16(&p);
+}
+
 void gb::cpu::LD_FFC_A()
 {
     uint16_t addr = (0xFF00) | c;
@@ -137,12 +159,10 @@ void gb::cpu::LD_HL_A()
     LD_HL_X(&a);
 }
 
-//Increment B
+//Increment C
 void::gb::cpu::INC_C()
 {
-    PrintRegister(C);
     INC_X(&c);
-    PrintRegister(C);
 }
 
 //Perform a bitwise XOR on the A register with the A register **Note: This always results in a zero
@@ -153,6 +173,17 @@ void gb::cpu::XOR_A()
     f = f | 0b10000000;
 
     cycles += 4;
+}
+
+void gb::cpu::LDH_A8_A()
+{
+    uint8_t val = memory->read(program_counter++);
+
+    uint16_t addr = 0xFF00 | val;
+
+    memory->write(addr, a);
+
+    cycles += 12;
 }
 
 //CB PREFIX TABLE
@@ -191,6 +222,8 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x00] = &NO_OP;
     instructionTable[0x0C] = &INC_C;
     instructionTable[0x0E] = &LD_C_D8;
+    instructionTable[0x11] = &LD_DE_D16;
+    instructionTable[0x1A] = &LD_A_DE;
     instructionTable[0x20] = &JR_NZ_D8;
     instructionTable[0x21] = &LD_HL_D16;
     instructionTable[0x31] = &LD_SP_D16;
@@ -199,6 +232,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x77] = &LD_HL_A;
     instructionTable[0xAF] = &XOR_A;
 
+    instructionTable[0xE0] = &LDH_A8_A;
     instructionTable[0xE2] = &LD_FFC_A;
 
     extendedInstructionTable[0x7C] = &BIT_7_H;
