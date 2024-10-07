@@ -83,7 +83,7 @@ namespace gb
         std::function<void()> instructionTable[256];
         
         bool usingCB;
-        InstructionTable extendedInstructionTable[256];
+        std::function<void()> extendedInstructionTable[256];
 
         gb::mmu* memory;
 
@@ -121,7 +121,8 @@ namespace gb
         void RET();
 
         //CB Generics
-        void BIT_N_X(InstructionParams* p);
+        void BIT_N_X(uint8_t n, uint8_t* reg);
+        void RL_X(uint8_t* reg);
 
         //CB Implementations
         void BIT_7_H();

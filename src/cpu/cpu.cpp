@@ -35,7 +35,7 @@ void gb::cpu::Step()
             program_counter++;
         }
         
-        if(usingCB == false && (this->instructionTable[instruction] == nullptr))
+        if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB == true && (this->extendedInstructionTable[instruction] == nullptr))
         {
             std::cout << "Unknown Instruction Encountered:\n";
 
@@ -45,6 +45,7 @@ void gb::cpu::Step()
             }
             else
             {
+                std::cout << "**CB Table**\n";
                 memory->PrintByteAsHex(program_counter - 1);
             }
 
@@ -57,7 +58,7 @@ void gb::cpu::Step()
             if(usingCB)
             {
                 usingCB = false;
-                (this->*extendedInstructionTable[instruction])();
+                (extendedInstructionTable[instruction])();
             }
             else
             {

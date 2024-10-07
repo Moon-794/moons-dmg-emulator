@@ -178,10 +178,39 @@ void gb::cpu::CD()
 
 //CB PREFIX TABLE
 
-void gb::cpu::BIT_N_X(InstructionParams* p)
+void gb::cpu::RL_X(uint8_t* reg)
+{
+    uint8_t newCarry = (*reg & BIT_7) >> 7;
+    *reg = *reg << 1 | (f & BIT_4 ? 1 : 0);
+
+    if(*reg == 0)
+    {
+        SetFlag(FLAG_Z);
+    }
+    else
+    {
+        ResetFlag(FLAG_Z);
+    }
+
+    ResetFlag(FLAG_H);
+    ResetFlag(FLAG_N);
+
+    if(newCarry == 1)
+    {
+        SetFlag(FLAG_C);
+    }
+    else
+    {
+        ResetFlag(FLAG_C);
+    }
+
+    cycles += 8;
+}
+
+void gb::cpu::BIT_N_X(uint8_t n, uint8_t* reg)
 {
     //Test if nth bit of register x is set
-    if((*p->reg & p->bit_flag) != 0)
+    if((*reg & n) != 0)
     {
         //Bit is set
         ResetFlag(FLAG_Z);
@@ -198,18 +227,10 @@ void gb::cpu::BIT_N_X(InstructionParams* p)
     cycles += 8;
 }
 
-void gb::cpu::BIT_7_H()
-{
-    InstructionParams p;
-    p.reg = &h;
-    p.bit_flag = BIT_7;
-
-    BIT_N_X(&p);
-}
-
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
+    instructionTable[0x06] = [this] { gb::cpu::LD_X_D8(&b); };
     instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
     instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
     instructionTable[0x11] = [this] { gb::cpu::LD_NN_D16(DE); };
@@ -224,9 +245,11 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
+    instructionTable[0xC5] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0xCD] = [this] { gb::cpu::CD(); };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
 
-    extendedInstructionTable[0x7C] = &BIT_7_H;
+    extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
+    extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };
 }
