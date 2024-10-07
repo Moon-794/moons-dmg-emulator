@@ -241,6 +241,7 @@ void gb::cpu::SetupInstructionTables()
     
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a); };
+    instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 

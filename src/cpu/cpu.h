@@ -105,9 +105,6 @@ namespace gb
         void NO_OP();
 
         void LD_FFC_A();
-
-        void LD_A_DE();
-
         void LD_HL_A(); 
 
         void LD_SP_D16();
@@ -123,9 +120,6 @@ namespace gb
         //CB Generics
         void BIT_N_X(uint8_t n, uint8_t* reg);
         void RL_X(uint8_t* reg);
-
-        //CB Implementations
-        void BIT_7_H();
 
         //Debugging related
         void PrintRegister(Register reg);
