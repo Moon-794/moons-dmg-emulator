@@ -176,6 +176,21 @@ void gb::cpu::CD()
     cycles += 24;
 }
 
+void gb::cpu::PUSH_XX(RegisterCombo reg)
+{
+    uint16_t value = GetComboRegister(reg);
+
+    uint8_t highByte = value >> 8;
+    uint8_t lowByte = value & 0xFF;
+
+    stack_pointer--;
+    memory->write(stack_pointer, highByte);
+    stack_pointer--;
+    memory->write(stack_pointer, lowByte);
+
+    cycles += 16;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -246,7 +261,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
-    instructionTable[0xC5] = [this] { gb::cpu::LD_X_Y(&e, h); };
+    instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
     instructionTable[0xCD] = [this] { gb::cpu::CD(); };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };

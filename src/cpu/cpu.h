@@ -100,6 +100,8 @@ namespace gb
         void INC_X(uint8_t* reg);
         void LD_HL_X(uint8_t* reg);
         void XOR_X(uint8_t* reg);
+        void PUSH_XX(RegisterCombo reg);
+        void POP_XX(RegisterCombo reg);
 
         //Specific implementations
         void NO_OP();
