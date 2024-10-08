@@ -182,8 +182,6 @@ void gb::cpu::PrintComboRegister(RegisterCombo reg)
     }
 
     std::cout << title << ": " << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)*firstRegister << (int)*secondRegister << "\n";
-
-    delete title; 
 }
 
 void gb::cpu::PrintRegister(Register reg)
