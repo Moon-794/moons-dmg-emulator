@@ -203,6 +203,33 @@ void gb::cpu::POP_XX(RegisterCombo reg)
     cycles += 12;
 }
 
+void gb::cpu::DEC_X(uint8_t* reg)
+{
+    if((*reg & 0x0F) == 0x00)
+    {
+        SetFlag(FLAG_H);
+    }
+    else
+    {
+        ResetFlag(FLAG_H);
+    }
+
+    *reg = *reg - 1;
+
+    if(*reg == 0x00)
+    {
+        SetFlag(FLAG_Z);
+    }
+    else
+    {
+        ResetFlag(FLAG_Z);
+    }
+
+    SetFlag(FLAG_N);
+
+    cycles += 4;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -257,6 +284,7 @@ void gb::cpu::BIT_N_X(uint8_t n, uint8_t* reg)
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
+    instructionTable[0x05] = [this] { gb::cpu::DEC_X(&b); };
     instructionTable[0x06] = [this] { gb::cpu::LD_X_D8(&b); };
     instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
     instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
