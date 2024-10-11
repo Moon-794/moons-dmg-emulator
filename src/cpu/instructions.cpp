@@ -121,6 +121,16 @@ void gb::cpu::LD_HL_DEC_A()
     cycles += 3;
 }
 
+void gb::cpu::LD_HL_INC_A()
+{
+    memory->write(GetComboRegister(HL), a);
+    
+    uint16_t newHL = GetComboRegister(HL) + 1;
+    SetComboRegister(HL, newHL);
+
+    cycles += 8;
+}
+
 void gb::cpu::LD_HL_A()
 {
     LD_HL_X(&a);
@@ -230,6 +240,16 @@ void gb::cpu::DEC_X(uint8_t* reg)
     cycles += 4;
 }
 
+void gb::cpu::RET()
+{
+    uint8_t lsb = memory->read(stack_pointer++);
+    uint8_t msb = memory->read(stack_pointer++);
+
+    program_counter = convert16Bit(lsb, msb);
+
+    cycles += 16;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -293,6 +313,8 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x1A] = [this] { gb::cpu::LD_X_YY(&a, GetComboRegister(DE)); };
     instructionTable[0x20] = [this] { gb::cpu::JR_NZ_D8(); };
     instructionTable[0x21] = [this] { gb::cpu::LD_NN_D16(HL); };
+    instructionTable[0x22] = [this] { gb::cpu::LD_HL_INC_A(); };
+    instructionTable[0x23] = [this] { gb::cpu::SetComboRegister(HL, gb::cpu::GetComboRegister(HL) + 1); };
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
@@ -304,6 +326,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
     instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
+    instructionTable[0xC9] = [this] { gb::cpu::RET(); };
     instructionTable[0xCD] = [this] { gb::cpu::CD(); };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };

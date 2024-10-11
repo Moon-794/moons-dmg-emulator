@@ -116,6 +116,7 @@ namespace gb
         void JR_NZ_D8();
         void LD_HL_D16();
         void LD_HL_DEC_A();
+        void LD_HL_INC_A();
         void LD_DE_D16();
         void LDH_A8_A();
 
