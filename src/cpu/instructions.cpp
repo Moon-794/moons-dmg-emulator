@@ -250,6 +250,21 @@ void gb::cpu::RET()
     cycles += 16;
 }
 
+//Subtract D8 from the A register, without storing it and set flags
+void gb::cpu::CP_D8()
+{
+    uint8_t value = memory->read(program_counter++);
+    uint8_t result = a - value;
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    a < value ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    ((a & 0x0F) - (value & 0x0F)) & 0x10 ? SetFlag(FLAG_H) : ResetFlag(FLAG_H); 
+
+    SetFlag(FLAG_N);
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -309,18 +324,20 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
     instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
     instructionTable[0x11] = [this] { gb::cpu::LD_NN_D16(DE); };
+    instructionTable[0x13] = [this] { gb::cpu::SetComboRegister(DE, gb::cpu::GetComboRegister(DE) + 1); cycles += 8; };
     instructionTable[0x17] = [this] { gb::cpu::RL_X(&a); gb::cpu::ResetFlag(FLAG_Z); };
     instructionTable[0x1A] = [this] { gb::cpu::LD_X_YY(&a, GetComboRegister(DE)); };
     instructionTable[0x20] = [this] { gb::cpu::JR_NZ_D8(); };
     instructionTable[0x21] = [this] { gb::cpu::LD_NN_D16(HL); };
     instructionTable[0x22] = [this] { gb::cpu::LD_HL_INC_A(); };
-    instructionTable[0x23] = [this] { gb::cpu::SetComboRegister(HL, gb::cpu::GetComboRegister(HL) + 1); };
+    instructionTable[0x23] = [this] { gb::cpu::SetComboRegister(HL, gb::cpu::GetComboRegister(HL) + 1); cycles += 8; };
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a); };
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
+    instructionTable[0x7B] = [this] { gb::cpu::LD_X_Y(&a, e); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
@@ -330,6 +347,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xCD] = [this] { gb::cpu::CD(); };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
+    instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };

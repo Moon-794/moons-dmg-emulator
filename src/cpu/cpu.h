@@ -123,6 +123,8 @@ namespace gb
         void CD();
         void RET();
 
+        void CP_D8();
+
         //CB Generics
         void BIT_N_X(uint8_t n, uint8_t* reg);
         void RL_X(uint8_t* reg);
