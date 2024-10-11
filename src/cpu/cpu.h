@@ -106,8 +106,12 @@ namespace gb
         void PUSH_XX(RegisterCombo reg);
         void POP_XX(RegisterCombo reg);
 
+        void JR_CC_R8(uint8_t flag);
+
         //Specific implementations
         void NO_OP();
+
+        void JR_D8();
 
         void LD_FFC_A();
         void LD_HL_A(); 
