@@ -119,6 +119,7 @@ namespace gb
         void LD_HL_INC_A();
         void LD_DE_D16();
         void LDH_A8_A();
+        void LD_A16_A();
 
         void CD();
         void RET();

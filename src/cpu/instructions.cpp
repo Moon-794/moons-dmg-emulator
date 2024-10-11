@@ -258,11 +258,23 @@ void gb::cpu::CP_D8()
 
     result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
     a < value ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
-    ((a & 0x0F) - (value & 0x0F)) & 0x10 ? SetFlag(FLAG_H) : ResetFlag(FLAG_H); 
+    (a & 0x0F) < (value & 0x0F) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H); 
 
     SetFlag(FLAG_N);
 
     cycles += 8;
+}
+
+void gb::cpu::LD_A16_A()
+{
+    uint8_t lsb = memory->read(program_counter++);
+    uint8_t msb = memory->read(program_counter++);
+
+    uint16_t addr = convert16Bit(lsb, msb);
+
+    memory->write(addr, a);
+
+    cycles += 16;
 }
 
 //CB PREFIX TABLE
@@ -334,6 +346,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
+    instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a); };
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
@@ -347,6 +360,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xCD] = [this] { gb::cpu::CD(); };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
+    instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
     instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
