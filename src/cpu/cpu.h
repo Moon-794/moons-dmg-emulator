@@ -112,6 +112,7 @@ namespace gb
         void NO_OP();
 
         void JR_D8();
+        void LDH_A_A8();
 
         void LD_FFC_A();
         void LD_HL_A(); 

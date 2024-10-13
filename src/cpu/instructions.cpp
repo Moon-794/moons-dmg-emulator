@@ -300,6 +300,18 @@ void gb::cpu::JR_D8()
     cycles += 12;
 }
 
+void gb::cpu::LDH_A_A8()
+{
+    uint16_t addr = 0xFF00;
+    uint8_t val = memory->read(program_counter++);
+
+    addr += val;
+
+    a = memory->read(a);
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -393,6 +405,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
+    instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
     instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
