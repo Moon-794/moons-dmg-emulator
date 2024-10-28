@@ -406,7 +406,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
-    instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); };
+    instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); }; 
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };

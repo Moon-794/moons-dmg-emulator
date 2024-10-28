@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+
 namespace gb
 {
     //ppu is responsible for interpreting VRAM to display the correct graphics
@@ -10,7 +11,10 @@ namespace gb
     
     class ppu
     {
-        
+    public:
+        void Step(uint32_t cycles);
+    
+        uint32_t clock;
     };
 }
 #endif

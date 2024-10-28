@@ -45,44 +45,38 @@ cmake_ninja_workdir = C$:/Users/Martin/Desktop/gameboy-dmg-emulator/build/
 build cmake_object_order_depends_target_emulator: phony || CMakeFiles/emulator.dir
 
 build CMakeFiles/emulator.dir/src/main.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/main.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\main.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src
 
 build CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/mmu/mmu.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\mmu\mmu.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\mmu
 
 build CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/cpu/cpu.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\cpu.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu
 
 build CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/cpu/instructions.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu
 
 build CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/ppu/ppu.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\ppu\ppu.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\ppu
 
 build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/GameBoy/gameboy.cpp || cmake_object_order_depends_target_emulator
-  DEFINES = -DGLFW_DLL
   DEP_FILE = CMakeFiles\emulator.dir\src\GameBoy\gameboy.cpp.obj.d
-  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/vcpkg/installed/x64-windows/include
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\GameBoy
 
@@ -94,8 +88,9 @@ build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulato
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj | C$:/msys64/mingw64/lib/libglfw3.dll.a
-  LINK_LIBRARIES = -lopengl32  C:/msys64/mingw64/lib/libglfw3.dll.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj
+  LINK_LIBRARIES = -Wl,-Bstatic  -lsfml-graphics-s  -lsfml-window-s  -lsfml-system-s  -Wl,-Bdynamic  -lopengl32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -LC:/Users/Martin/Desktop/gameboy-dmg-emulator/lib
   OBJECT_DIR = CMakeFiles\emulator.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -151,14 +146,14 @@ build all: phony bin/emulator.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckIncludeFile.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckLibraryExists.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindOpenGL.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindPackageMessage.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindThreads.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/WindowsPaths.cmake C$:/Users/Martin/Desktop/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Config.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3ConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Targets-release.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Targets.cmake C$:/msys64/mingw64/share/glm/glmConfig.cmake C$:/msys64/mingw64/share/glm/glmConfigVersion.cmake CMakeCache.txt CMakeFiles/3.25.1/CMakeCCompiler.cmake CMakeFiles/3.25.1/CMakeCXXCompiler.cmake CMakeFiles/3.25.1/CMakeRCCompiler.cmake CMakeFiles/3.25.1/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/WindowsPaths.cmake C$:/Users/Martin/Desktop/gameboy-dmg-emulator/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.1/CMakeCCompiler.cmake CMakeFiles/3.25.1/CMakeCXXCompiler.cmake CMakeFiles/3.25.1/CMakeRCCompiler.cmake CMakeFiles/3.25.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeFindDependencyMacro.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckCSourceCompiles.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckIncludeFile.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CheckLibraryExists.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindOpenGL.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindPackageHandleStandardArgs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindPackageMessage.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/FindThreads.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Internal/CheckSourceCompiles.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/WindowsPaths.cmake C$:/Users/Martin/Desktop/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Config.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3ConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Targets-release.cmake C$:/msys64/mingw64/lib/cmake/glfw3/glfw3Targets.cmake C$:/msys64/mingw64/share/glm/glmConfig.cmake C$:/msys64/mingw64/share/glm/glmConfigVersion.cmake CMakeCache.txt CMakeFiles/3.25.1/CMakeCCompiler.cmake CMakeFiles/3.25.1/CMakeCXXCompiler.cmake CMakeFiles/3.25.1/CMakeRCCompiler.cmake CMakeFiles/3.25.1/CMakeSystem.cmake: phony
+build C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.25/Modules/Platform/WindowsPaths.cmake C$:/Users/Martin/Desktop/gameboy-dmg-emulator/CMakeLists.txt CMakeCache.txt CMakeFiles/3.25.1/CMakeCCompiler.cmake CMakeFiles/3.25.1/CMakeCXXCompiler.cmake CMakeFiles/3.25.1/CMakeRCCompiler.cmake CMakeFiles/3.25.1/CMakeSystem.cmake: phony
 
 
 #############################################

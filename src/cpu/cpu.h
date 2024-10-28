@@ -62,6 +62,8 @@ namespace gb
         cpu(gb::mmu* memory);
         void Step();
 
+        uint32_t GetCycles() { return cycles; }
+
     private:
         //8 Bit cpu registers, f is special and represent flag states from certain ops
         uint8_t a, b, c, d, e, f, h, l;
