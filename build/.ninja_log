@@ -1,10 +1,14 @@
 # ninja log v6
-16	160	7518297969348824	CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj	5010c858c7b36360
-20	766	7518297969378745	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	f8c63421ae92bc7d
-10	809	7518297969279024	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	fa43226286422442
-6	846	7518297969249099	CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj	9466735253f65a1c
-13	1177	7518297969318905	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	57023a3738ac815a
-12	555	7518299426223631	CMakeFiles/emulator.dir/src/main.cpp.obj	9479224e61d4b3d1
-556	811	7518299431650952	bin/emulator.exe	5ae81b8fdae48d78
-14	480	7518299693436061	CMakeFiles/emulator.dir/src/main.cpp.obj	9479224e61d4b3d1
-483	695	7518299698128980	bin/emulator.exe	5ae81b8fdae48d78
+18	491	7543375486401590	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	ed12f52fc23ef3c1
+15	85	7543375486371696	CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj	4dec5a28f68cdadf
+16	172	7543378515549366	bin/emulator.exe	7cda3f7599368e81
+7	545	7543375486291905	CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj	ea32f00caa1fb6e
+9	505	7543375486321820	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	924ab8addaf23d24
+4	714	7543375486262156	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
+12	1565	7543375486341764	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	ea924f2a28f93264
+2	133	7543380810164323	build.ninja	f52322235742c36f
+9	145	7543380810164323	build.ninja	f52322235742c36f
+17	641	7543380810573649	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
+642	810	7543380816821952	bin/emulator.exe	7cda3f7599368e81
+5	615	7543381451238603	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
+616	722	7543381457343437	bin/emulator.exe	7cda3f7599368e81

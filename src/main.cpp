@@ -13,8 +13,8 @@ std::vector<uint8_t> GetRomContentsFromFile(char* path);
 
 int main(int argc, char** args)
 {
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML Window");
-    window.setFramerateLimit(60);
+    //sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML Window");
+    //window.setFramerateLimit(60);
 
     //Argument checking
     if(argc < 3)
@@ -28,7 +28,7 @@ int main(int argc, char** args)
 
     //Validate file sizes, bootrom must ALWAYS be 256 bytes
     if(bootRom.size() != 256 || gameRom.size() == 0)
-    {
+    { 
         std::cout << "Error reading from ROM files" << std::endl;
         return 1;
     }
