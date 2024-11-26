@@ -2,6 +2,7 @@
 #define GB_PPU
 
 #include <cstdint>
+#include <iostream>
 
 //The PPU (Picture Processing Unit) is responsible for
 //drawing the sprites to the screen. It performs other things such
@@ -23,11 +24,13 @@ namespace gb
         void Step(uint32_t cycles);
     
         uint32_t clock = 0;
-        uint32_t scanline = 0;
+        uint32_t scanline = 0; // Must also update LCD register 0xFF44, bootrom is currently stalling as this is not yet implemented
     
     private:
         ppuMode mode = ppuMode::OAM_SCAN;
         void ChangeMode(ppuMode newMode);
+
+        void DrawScanLine();
     };
 }
 #endif

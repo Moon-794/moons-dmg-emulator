@@ -20,7 +20,7 @@ void Gameboy::Run()
 
 void Gameboy::Reset()
 {
-
+    
 }
 
 void Gameboy::Quit()

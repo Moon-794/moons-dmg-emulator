@@ -22,48 +22,45 @@ gb::cpu::cpu(gb::mmu* memory)
 
 void gb::cpu::Step()
 {
-    while(program_counter < 256)
+    uint8_t instruction = memory->read(program_counter);
+    program_counter++;
+
+    if(instruction == 0xCB)
     {
-        uint8_t instruction = memory->read(program_counter);
+        //Using the extended instruction set, get next byte for opcode
+        usingCB = true;
+        instruction = memory->read(program_counter);
         program_counter++;
+    }
+    
+    if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB == true && (this->extendedInstructionTable[instruction] == nullptr))
+    {
+        std::cout << "Unknown Instruction Encountered:\n";
 
-        if(instruction == 0xCB)
+        if(!usingCB)
         {
-            //Using the extended instruction set, get next byte for opcode
-            usingCB = true;
-            instruction = memory->read(program_counter);
-            program_counter++;
-        }
-        
-        if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB == true && (this->extendedInstructionTable[instruction] == nullptr))
-        {
-            std::cout << "Unknown Instruction Encountered:\n";
-
-            if(!usingCB)
-            {
-                memory->PrintByteAsHex(program_counter - 1);
-            }
-            else
-            {
-                std::cout << "**CB Table**\n";
-                memory->PrintByteAsHex(program_counter - 1);
-            }
-
-            std::cout << "Cycles: " << std::dec << cycles;
-            break;
+            memory->PrintByteAsHex(program_counter - 1);
         }
         else
         {
-            //Call the instruction implementation
-            if(usingCB)
-            {
-                usingCB = false;
-                (extendedInstructionTable[instruction])();
-            }
-            else
-            {
-                (instructionTable[instruction])();
-            }
+            std::cout << "**CB Table**\n";
+            memory->PrintByteAsHex(program_counter - 1);
+        }
+
+        std::cout << "Cycles: " << std::dec << cycles;
+        return;
+    }
+    else
+    {
+        //Call the instruction implementation
+        if(usingCB)
+        {
+            usingCB = false;
+            (extendedInstructionTable[instruction])();
+        }
+        else
+        {
+            (instructionTable[instruction])();
         }
     }
 }

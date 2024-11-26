@@ -38,7 +38,9 @@ int main(int argc, char** args)
 
     //Pass control to the emulator
     Gameboy gameboy = Gameboy(bootRom, gameRom);
-    gameboy.Run();
+
+    while(true)
+        gameboy.Run();
 
     return 0;
 }

@@ -10,6 +10,9 @@ class Gameboy
 public:
     Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom);
 
+    void Save(uint32_t saveID);
+    void Load(uint32_t saveID);
+
     void Run();
     void Reset();
     void Quit();
