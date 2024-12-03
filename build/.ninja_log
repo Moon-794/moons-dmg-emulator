@@ -49,3 +49,14 @@
 1588	1696	7549563295963521	bin/emulator.exe	7cda3f7599368e81
 18	1571	7549563395441466	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	ea924f2a28f93264
 1571	1680	7549563410969875	bin/emulator.exe	7cda3f7599368e81
+20	496	7549579950360459	CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj	ea32f00caa1fb6e
+497	606	7549579955125204	bin/emulator.exe	7cda3f7599368e81
+29	497	7549592630991675	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	ed12f52fc23ef3c1
+24	514	7549592630931842	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	924ab8addaf23d24
+20	673	7549592630901923	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
+27	1659	7549592630961760	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	ea924f2a28f93264
+1659	1768	7549592647284060	bin/emulator.exe	7cda3f7599368e81
+19	1655	7549593094988552	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	ea924f2a28f93264
+1656	1763	7549593111356603	bin/emulator.exe	7cda3f7599368e81
+18	1658	7549593495183018	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	ea924f2a28f93264
+1658	1765	7549593511585584	bin/emulator.exe	7cda3f7599368e81

@@ -6,9 +6,13 @@
 #include <functional>
 #include "mmu/mmu.h"
 
+//Zero Flag, set if an operation results in a zero value
 #define FLAG_Z 0x80
+//Subtraction flag, set if an operationg involves subtraction
 #define FLAG_N 0x40  
+//Half carry flag, set if an operation carries a bit from bit 3 to bit 4
 #define FLAG_H 0x20  
+//Carry flag, set if an operation carries to bit 7
 #define FLAG_C 0x10
 
 #define BIT_7 0x80
@@ -109,6 +113,8 @@ namespace gb
         void POP_XX(RegisterCombo reg);
 
         void JR_CC_R8(uint8_t flag);
+
+        void SUB_X(uint8_t value);
 
         //Specific implementations
         void NO_OP();
