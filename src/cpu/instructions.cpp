@@ -256,6 +256,8 @@ void gb::cpu::CP_D8()
     uint8_t value = memory->read(program_counter++);
     uint8_t result = a - value;
 
+    //std::cout << "A Register: " << (int)a << "\t" << "Comparator: " << (int)value << "\t" << "Result: " << (int)result << "\n";
+
     result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
     a < value ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
     (a & 0x0F) < (value & 0x0F) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H); 
@@ -307,7 +309,7 @@ void gb::cpu::LDH_A_A8()
 
     addr += val;
 
-    a = memory->read(a);
+    a = memory->read(addr);
 
     cycles += 8;
 }
