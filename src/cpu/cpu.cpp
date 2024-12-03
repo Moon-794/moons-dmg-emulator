@@ -65,8 +65,6 @@ void gb::cpu::Step()
             (instructionTable[instruction])();
         }
     }
-
-    memory->PrintByteAsHex(program_counter - 1);
 }
 
 uint16_t gb::cpu::convert16Bit(uint8_t lsb, uint8_t msb)

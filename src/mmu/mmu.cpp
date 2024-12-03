@@ -35,7 +35,10 @@ void gb::mmu::write(uint16_t address, uint8_t data)
     
     //Bootrom map register
     if(address == 0xFF50)
+    {
+        std::cout << "Bootrom completed, unmapping..." << "\n";
         isBootRomMapped = false;
+    }
     
     mem[address] = data;
 }
