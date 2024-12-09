@@ -20,7 +20,7 @@ gb::cpu::cpu(gb::mmu* memory)
     SetupInstructionTables();
 }
 
-void gb::cpu::Step()
+int gb::cpu::Step()
 {
     uint8_t instruction = memory->read(program_counter);
     program_counter++;
@@ -48,9 +48,9 @@ void gb::cpu::Step()
         }
 
         std::cout << "Cycles: " << std::dec << cycles << "\n";
-        char x;
-        std::cin >> x;
-        return;
+        
+
+        return -1;
     }
     else
     {
@@ -65,6 +65,8 @@ void gb::cpu::Step()
             (instructionTable[instruction])();
         }
     }
+
+    return 0;
 }
 
 uint16_t gb::cpu::convert16Bit(uint8_t lsb, uint8_t msb)

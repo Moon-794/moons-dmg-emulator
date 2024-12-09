@@ -64,7 +64,7 @@ namespace gb
     public:
 
         cpu(gb::mmu* memory);
-        void Step();
+        int Step();
 
         uint32_t GetCycles() { return cycles; }
 

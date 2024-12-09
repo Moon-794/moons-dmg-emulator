@@ -1,21 +1,13 @@
-#define SFML_STATIC
-
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 
 #include "GameBoy/gameboy.h"
 
-#include "SFML/Window.hpp"
-#include "SFML/Graphics.hpp"
-
 std::vector<uint8_t> GetRomContentsFromFile(char* path);
 
 int main(int argc, char** args)
 {
-    //sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML Window");
-    //window.setFramerateLimit(60);
-
     //Argument checking
     if(argc < 3)
     {
@@ -33,8 +25,8 @@ int main(int argc, char** args)
         return 1;
     }
 
-    std::cout << "Bootrom size check: " << bootRom.size() << std::endl;
-    std::cout << "Gamerom size check: " << gameRom.size() << std::endl;
+    std::cout << "Bootrom size: " << bootRom.size() << std::endl;
+    std::cout << "Gamerom size: " << gameRom.size() << std::endl;
 
     //Pass control to the emulator
     Gameboy gameboy = Gameboy(bootRom, gameRom);

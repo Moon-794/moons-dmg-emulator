@@ -34,10 +34,27 @@ void gb::ppu::Step(uint32_t cycles)
 
     UpdateLY();
 
+    //Mode 2, 3 and 0 changes
+    if(mode == ppuMode::HORIZONTAL_BLANK && clock == 0)
+    {
+        //Entered OAM Scan
+        ChangeMode(ppuMode::OAM_SCAN);
+    }
+
+    if(mode == ppuMode::OAM_SCAN && clock > OAM_SCAN_SPAN)
+    {
+        //Entered pixel drawing mode
+        ChangeMode(ppuMode::DRAWING_PIXELS);
+    }
+
+    //if(mode == DRAWING_PIXELS && )
+
+    window.Update();
+
     if(overflow != 0)
     {
         Step(overflow);
-    }  
+    }
 }
 
 void gb::ppu::ChangeMode(ppuMode newMode)

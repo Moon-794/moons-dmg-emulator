@@ -13,7 +13,12 @@ void Gameboy::Run()
 
     uint32_t last_cycles = cpu->GetCycles();
     
-    cpu->Step();
+    int result = cpu->Step();
+
+    if(result == -1)
+    {
+        Quit();
+    }
 
     uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
     ppu->Step(cpu_cycles);
@@ -26,5 +31,5 @@ void Gameboy::Reset()
 
 void Gameboy::Quit()
 {
-     
+    exit(-1);
 }

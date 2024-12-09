@@ -80,6 +80,12 @@ build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulato
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\GameBoy
 
+build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILER__emulator_ C$:/Users/Martin/Desktop/gameboy-dmg-emulator/src/RenderWindow/RenderWindow.cpp || cmake_object_order_depends_target_emulator
+  DEP_FILE = CMakeFiles\emulator.dir\src\RenderWindow\RenderWindow.cpp.obj.d
+  INCLUDES = -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/src -IC:/Users/Martin/Desktop/gameboy-dmg-emulator/include
+  OBJECT_DIR = CMakeFiles\emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\RenderWindow
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target emulator
@@ -88,7 +94,7 @@ build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulato
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
   LINK_LIBRARIES = -lsfml-window-s  -lsfml-graphics-s  -lsfml-system-s  -lopengl32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\emulator.dir
   POST_BUILD = cd .
