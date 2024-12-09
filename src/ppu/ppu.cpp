@@ -34,6 +34,12 @@ void gb::ppu::Step(uint32_t cycles)
 
     UpdateLY();
 
+    if(mode == ppuMode::VERTICAL_BLANK && scanline < 144)
+    {
+        if(clock < 80)
+            ChangeMode(ppuMode::OAM_SCAN);
+    }
+
     //Mode 2, 3 and 0 changes
     if(mode == ppuMode::HORIZONTAL_BLANK && clock == 0)
     {
@@ -47,7 +53,11 @@ void gb::ppu::Step(uint32_t cycles)
         ChangeMode(ppuMode::DRAWING_PIXELS);
     }
 
-    //if(mode == DRAWING_PIXELS && )
+    if(mode == DRAWING_PIXELS && clock > OAM_SCAN_SPAN + DRAWING_PIXELS_SPAN)
+    {
+        //Entered Horizontal Blank Mode
+        ChangeMode(ppuMode::HORIZONTAL_BLANK);
+    }
 
     window.Update();
 
