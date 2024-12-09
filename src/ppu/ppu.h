@@ -46,7 +46,9 @@ namespace gb
         mmu* memory;
 
         ppuMode mode = ppuMode::OAM_SCAN;
+
         void ChangeMode(ppuMode newMode);
+        void ModeUpdate(int cycles);
         void UpdateLY();
     };
 }

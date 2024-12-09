@@ -59,6 +59,7 @@ void gb::ppu::Step(uint32_t cycles)
         ChangeMode(ppuMode::HORIZONTAL_BLANK);
     }
 
+    ModeUpdate(cycles);
     window.Update();
 
     if(overflow != 0)
@@ -70,6 +71,14 @@ void gb::ppu::Step(uint32_t cycles)
 void gb::ppu::ChangeMode(ppuMode newMode)
 {
     mode = newMode;
+}
+
+void::gb::ppu::ModeUpdate(int cycles)
+{
+    if(mode == ppuMode::DRAWING_PIXELS)
+    {
+        window.DrawPixels(cycles);
+    }
 }
 
 void gb::ppu::UpdateLY()

@@ -31,3 +31,10 @@
 11	633	7554785968073702	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	ed12f52fc23ef3c1
 5	709	7554785968024107	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
 709	878	7554785975053446	bin/emulator.exe	415a931de37f41ca
+23	546	7554799627843298	CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj	4dec5a28f68cdadf
+29	555	7554799627893169	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	a38bf2b1b53eebb2
+26	656	7554799627873219	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	ed12f52fc23ef3c1
+20	734	7554799627813378	CMakeFiles/emulator.dir/src/main.cpp.obj	5012004d7bf872e1
+734	913	7554799634955241	bin/emulator.exe	415a931de37f41ca
+20	497	7554799832717908	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	a38bf2b1b53eebb2
+498	664	7554799837485141	bin/emulator.exe	415a931de37f41ca

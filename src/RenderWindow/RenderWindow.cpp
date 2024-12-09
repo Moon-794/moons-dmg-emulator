@@ -12,7 +12,10 @@ void gb::RenderWindow::Update()
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
+        {
             window.close();
+            exit(0);
+        }
     }
 }
 
