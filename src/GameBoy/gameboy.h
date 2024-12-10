@@ -22,6 +22,9 @@ public:
     void LoadState();
 
 private:
+    std::vector<uint8_t> indices;
+    int ticker = 0;
+
     gb::cpu* cpu;
     gb::ppu* ppu;
     gb::mmu* mmu;

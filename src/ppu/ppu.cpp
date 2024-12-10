@@ -1,6 +1,6 @@
 #include "ppu/ppu.h"
 
-gb::ppu::ppu(gb::mmu* memory)
+gb::ppu::ppu(gb::mmu* memory) : window(memory)
 {
     this->memory = memory;
 }

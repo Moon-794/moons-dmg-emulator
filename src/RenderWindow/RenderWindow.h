@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "mmu/mmu.h"
+
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 
@@ -14,15 +16,20 @@ namespace gb
     class RenderWindow
     {
     public:
-        RenderWindow();
+        RenderWindow(gb::mmu* mmu);
 
         void DrawPixels(int count);
+        void DrawTile(uint8_t index);
         void Update();
 
     private:
         sf::RenderWindow window;
+        sf::Texture tex;
+        sf::Sprite sprite;
+        sf::Color shades[4];
 
-        sf::Image frameBuffer;
+        gb::mmu* memory;
+
 
         //Used to track the current pixel position;
         int x = 0;
