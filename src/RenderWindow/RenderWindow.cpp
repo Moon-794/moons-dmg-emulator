@@ -51,10 +51,7 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         window.draw(sprite);
         window.display();
 
-        
-    }
-
-    sf::Event event;
+        sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -63,6 +60,7 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
                 exit(0);
             }
         }
+    }
 }
 
 void gb::RenderWindow::DrawPixels(int count)
