@@ -16,20 +16,40 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 
 void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles)
 {
-    if(mode == DRAWPIXELS && scanline == 0)
+    if(mode == DRAWPIXELS && clock < 240)
     {
         int yPos = scanline;
         int tileRow = scanline / 8;
         int pixelRow = scanline % 8;
 
         int xPos = clock - 80;
+        int tileColumn = xPos / 8;
+        int pixelColumn = xPos % 8;
 
-        if(xPos > 11)
-        {
-            
-        }
+        uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
 
-        std::cout << xPos << "\n";
+        uint8_t byteOne = memory->read(0x8000 + (tileIndex * 16) + (pixelRow * 2));
+        uint8_t byteTwo = memory->read(0x8000 + (tileIndex * 16) + ((pixelRow * 2) + 1));
+
+        byteOne = (byteOne >> (7 - pixelColumn)) & 0x01;
+        byteTwo = (byteTwo >> (7 - pixelColumn)) & 0x01;
+
+        sf::Color shade = shades[byteOne + byteTwo];
+
+        int textureIndex = ((scanline * 160) + xPos) * 4;
+        TexturePixels[textureIndex] = shade.r;
+        TexturePixels[textureIndex + 1] = shade.g;
+        TexturePixels[textureIndex + 2] = shade.b;
+        TexturePixels[textureIndex + 3] = shade.a;
+    }
+
+    if(scanline > 144)
+    {
+        tex.update(TexturePixels);
+
+        window.clear();
+        window.draw(sprite);
+        window.display();
     }
 
     sf::Event event;
