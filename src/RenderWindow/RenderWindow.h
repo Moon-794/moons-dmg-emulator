@@ -37,8 +37,12 @@ namespace gb
 
         gb::mmu* memory;
 
-        //Used to track the current pixel position;
-        int x = 0;
-        int y = 0;
+        int yPos = 0;
+        int tileRow = 0;
+        int pixelRow = 0;
+
+        int xPos = 0;
+        int tileColumn = 0;
+        int pixelColumn = 0;
     };
 }

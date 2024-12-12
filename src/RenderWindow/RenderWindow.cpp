@@ -18,13 +18,13 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 {
     if(mode == DRAWPIXELS && clock < 240)
     {
-        int yPos = scanline;
-        int tileRow = scanline / 8;
-        int pixelRow = scanline % 8;
+        yPos = scanline;
+        tileRow = scanline / 8;
+        pixelRow = scanline % 8;
 
-        int xPos = clock - 80;
-        int tileColumn = xPos / 8;
-        int pixelColumn = xPos % 8;
+        xPos = clock - 80;
+        tileColumn = xPos / 8;
+        pixelColumn = xPos % 8;
 
         uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
 
@@ -43,22 +43,22 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         TexturePixels[textureIndex + 3] = shade.a;
     }
 
-    if(scanline > 144)
+    if(scanline == 144 && clock == 455)
     {
         tex.update(TexturePixels);
 
         window.clear();
         window.draw(sprite);
         window.display();
-    }
 
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
+        sf::Event event;
+        while (window.pollEvent(event))
         {
-            window.close();
-            exit(0);
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+                exit(0);
+            }
         }
     }
 }
