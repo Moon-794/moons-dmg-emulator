@@ -18,9 +18,9 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 {
     if(mode == DRAWPIXELS && clock < 240)
     {
-        yPos = scanline;
-        tileRow = scanline / 8;
-        pixelRow = scanline % 8;
+        yPos = scanline + memory->read(0xFF42);
+        tileRow = yPos / 8;
+        pixelRow = yPos % 8;
 
         xPos = clock - 80;
         tileColumn = xPos / 8;
@@ -51,7 +51,10 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         window.draw(sprite);
         window.display();
 
-        sf::Event event;
+        
+    }
+
+    sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -60,7 +63,6 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
                 exit(0);
             }
         }
-    }
 }
 
 void gb::RenderWindow::DrawPixels(int count)
