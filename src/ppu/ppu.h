@@ -38,7 +38,7 @@ namespace gb
         ppuMode GetPPUMode();
     
         uint32_t clock = 0;
-        uint32_t scanline = 0; // Must also update LCD register 0xFF44, bootrom is currently stalling as this is not yet implemented
+        uint32_t scanline = 0; // Must also update LCD register 0xFF44
 
         gb::RenderWindow window;
     

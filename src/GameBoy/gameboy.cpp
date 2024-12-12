@@ -32,15 +32,14 @@ void Gameboy::Run()
             indices.push_back(index);
         }
 
-        ticker = 6000;
-        ppu->window.DrawTile(indices[260]);
+        ticker = 60000;
+
+        //ppu->window.DrawTile(indices[260]);
     }
     else
     {
         ticker--;
     }
-
-    
 }
 
 void Gameboy::Reset()

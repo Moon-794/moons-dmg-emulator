@@ -13,10 +13,12 @@
 
 namespace gb
 {
+    class ppu;
+
     class RenderWindow
     {
     public:
-        RenderWindow(gb::mmu* mmu);
+        RenderWindow(gb::mmu* mmu, gb::ppu* _ppu);
 
         void DrawPixels(int count);
         void DrawTile(uint8_t index);
@@ -29,7 +31,7 @@ namespace gb
         sf::Color shades[4];
 
         gb::mmu* memory;
-
+        gb::ppu* __ppu;
 
         //Used to track the current pixel position;
         int x = 0;

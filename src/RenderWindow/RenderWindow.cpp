@@ -1,6 +1,6 @@
 #include "RenderWindow/RenderWindow.h"
 
-gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
+gb::RenderWindow::RenderWindow(gb::mmu* mmu, gb::ppu* _ppu) : memory(mmu), __ppu(_ppu)
 {
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "My window");
 
