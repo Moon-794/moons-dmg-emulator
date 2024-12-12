@@ -1,6 +1,6 @@
 #include "RenderWindow/RenderWindow.h"
 
-gb::RenderWindow::RenderWindow(gb::mmu* mmu, gb::ppu* _ppu) : memory(mmu), __ppu(_ppu)
+gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "My window");
 
@@ -9,13 +9,29 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu, gb::ppu* _ppu) : memory(mmu), __ppu
     shades[2] = sf::Color(80, 80, 80, 255);
     shades[3] = sf::Color(40, 40, 40, 255);
 
-    tex.create(8, 8);
+    tex.create(160, 144);
     sprite.setTexture(tex);
-    sprite.setScale(16, 16);
+    sprite.setScale(4, 4);
 }
 
-void gb::RenderWindow::Update()
+void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles)
 {
+    if(mode == DRAWPIXELS && scanline == 0)
+    {
+        int yPos = scanline;
+        int tileRow = scanline / 8;
+        int pixelRow = scanline % 8;
+
+        int xPos = clock - 80;
+
+        if(xPos > 11)
+        {
+            
+        }
+
+        std::cout << xPos << "\n";
+    }
+
     sf::Event event;
     while (window.pollEvent(event))
     {
@@ -34,38 +50,7 @@ void gb::RenderWindow::DrawPixels(int count)
 
 void gb::RenderWindow::DrawTile(uint8_t index)
 {
-    uint8_t pixels[8 * 8 * 4];
+    /*
 
-    uint8_t tileData[16];
-    for (size_t i = 0; i < 16; i++)
-    {
-        tileData[i] = memory->read(0x8000 + (index * 16) + i);
-    }
-
-    for (size_t i = 0; i < 8; i++)
-    {
-        uint8_t first = tileData[(2 * i)];
-        uint8_t second = tileData[(2 * i) + 1];
-
-        for (size_t f = 0; f < 8; f++)
-        {
-            uint8_t shiftedFirst = (first >> 7 - f) & 0x01;
-            uint8_t shiftedSecond = (second >> 7 - f) & 0x01;
-
-            sf::Color shade = shades[shiftedFirst + shiftedSecond];
-
-            size_t pixelIndex = (i * 8 + f) * 4;
-
-            pixels[pixelIndex] = shade.r;
-            pixels[pixelIndex + 1] = shade.g;
-            pixels[pixelIndex + 2] = shade.b;
-            pixels[pixelIndex + 3] = shade.a;
-        }
-    }
-
-    tex.update(pixels);
-
-    window.clear();
-    window.draw(sprite);
-    window.display();
+    */
 }

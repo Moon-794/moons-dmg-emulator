@@ -4,6 +4,11 @@
 #define SCREEN_HEIGHT 144
 #define WINDOW_SCALE 4
 
+#define OAM 0
+#define DRAWPIXELS 1
+#define H_BLANK 2
+#define V_BLANK 3
+
 #include <iostream>
 
 #include "mmu/mmu.h"
@@ -13,25 +18,24 @@
 
 namespace gb
 {
-    class ppu;
-
     class RenderWindow
     {
     public:
-        RenderWindow(gb::mmu* mmu, gb::ppu* _ppu);
+        RenderWindow(gb::mmu* mmu);
 
         void DrawPixels(int count);
         void DrawTile(uint8_t index);
-        void Update();
+        void Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles);
 
     private:
         sf::RenderWindow window;
+
+        uint8_t TexturePixels[160 * 144 * 4];
         sf::Texture tex;
         sf::Sprite sprite;
         sf::Color shades[4];
 
         gb::mmu* memory;
-        gb::ppu* __ppu;
 
         //Used to track the current pixel position;
         int x = 0;

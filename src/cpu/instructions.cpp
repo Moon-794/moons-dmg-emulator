@@ -109,7 +109,7 @@ void gb::cpu::LD_SP_D16()
     uint16_t value = (msb << 8) | lsb;
     stack_pointer = value;
 
-    cycles += 3;
+    cycles += 12;
 }
 
 //Load to the address specified by HL, data from A, decrement HL by 1 afterwards
@@ -118,7 +118,7 @@ void gb::cpu::LD_HL_DEC_A()
     uint16_t addr = GetComboRegister(HL);
     memory->write(addr, a);
     SetComboRegister(HL, addr - 1);
-    cycles += 3;
+    cycles += 8;
 }
 
 void gb::cpu::LD_HL_INC_A()
