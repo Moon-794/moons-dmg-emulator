@@ -25,7 +25,7 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         xPos = clock - 80;
         tileColumn = xPos / 8;
         pixelColumn = xPos % 8;
-
+        
         uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
 
         uint8_t byteOne = memory->read(0x8000 + (tileIndex * 16) + (pixelRow * 2));

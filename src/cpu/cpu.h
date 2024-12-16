@@ -134,6 +134,8 @@ namespace gb
         void LDH_A8_A();
         void LD_A16_A();
 
+        void CP_HL();
+
         void CD();
         void RET();
 

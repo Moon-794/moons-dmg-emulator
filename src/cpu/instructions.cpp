@@ -335,6 +335,26 @@ void gb::cpu::SUB_X(uint8_t value)
     a = result;
 }
 
+void gb::cpu::CP_HL()
+{
+    uint8_t data = memory->read(GetComboRegister(HL));
+    uint8_t result = a - data;
+
+    if((a & 0x0F) < (data & 0x0F))
+    {
+        SetFlag(FLAG_H);
+    }
+    else
+    {
+        ResetFlag(FLAG_H);
+    }
+
+    if(result == 0)
+        SetFlag(FLAG_Z);
+
+    SetFlag(FLAG_N);
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -417,6 +437,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
 
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a); };
+    instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
     instructionTable[0x67] = [this] { gb::cpu::LD_X_Y(&h, a); };
@@ -425,7 +446,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x7C] = [this] { gb::cpu::LD_X_Y(&a, h); };
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
-    instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
+    instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
     instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
 
