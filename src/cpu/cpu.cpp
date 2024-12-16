@@ -48,7 +48,6 @@ int gb::cpu::Step()
         }
 
         std::cout << "Cycles: " << std::dec << cycles << "\n";
-        
 
         return -1;
     }

@@ -22,7 +22,7 @@ uint8_t gb::mmu::read(uint16_t address)
         throw std::out_of_range("Invalid address");
 
     //Retrieve memory from bootrom if still in the boot sequence
-    if(address < 0x00FF && isBootRomMapped)
+    if(address <= 0x00FF && isBootRomMapped)
         return bootRom[address];        
 
     return mem[address];
