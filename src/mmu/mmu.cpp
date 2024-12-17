@@ -31,8 +31,10 @@ uint8_t gb::mmu::read(uint16_t address)
 void gb::mmu::write(uint16_t address, uint8_t data)
 {
     if(address > 0xFFFF)
+    {
         throw std::out_of_range("Invalid address: " + address);
-    
+    }
+
     //Bootrom map register
     if(address == 0xFF50)
     {

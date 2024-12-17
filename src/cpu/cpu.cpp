@@ -17,11 +17,46 @@ gb::cpu::cpu(gb::mmu* memory)
     h = 0x00;
     l = 0x00;
 
+    //Initialise Default request flags
+    memory->write(0xFF0F, 0xE1);
+
     SetupInstructionTables();
 }
 
 int gb::cpu::Step()
 {
+    //Check for interrupts first
+    if(IME == 1)
+    {
+        std::cout << "hello";
+
+        uint8_t IF = memory->read(0xFF0F);
+        uint8_t IE = memory->read(0xFFFF);
+
+        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
+        {
+            //Clear V-Blank Interrupt
+            IF &= ~0x01;
+            memory->write(0xFF0F, IF);
+
+            //Push program counter to stack
+            uint8_t pcMSB = program_counter >> 8;
+            uint8_t pcLSB = program_counter & 0x00FF;
+
+            stack_pointer--;
+            memory->write(stack_pointer, pcMSB);
+            stack_pointer--;
+            memory->write(stack_pointer, pcLSB);
+
+            program_counter = 0x0040;
+
+            //Disable Interrupts
+            DI();
+
+            std::cout << std::hex << program_counter << "\n";
+        }
+    }
+
     uint8_t instruction = memory->read(program_counter);
     program_counter++;
 
@@ -37,16 +72,10 @@ int gb::cpu::Step()
     {
         std::cout << "Unknown Instruction Encountered:\n";
 
-        if(!usingCB)
-        {
-            memory->PrintByteAsHex(program_counter - 1);
-        }
-        else
-        {
+        if(usingCB)
             std::cout << "**CB Table**\n";
-            memory->PrintByteAsHex(program_counter - 1);
-        }
 
+        memory->PrintByteAsHex(program_counter - 1);
         std::cout << "Cycles: " << std::dec << cycles << "\n";
 
         return -1;
@@ -63,6 +92,12 @@ int gb::cpu::Step()
         {
             (instructionTable[instruction])();
         }
+    }
+
+    if(enable_IME_next_instruction)
+    {
+        enable_IME_next_instruction = false;
+        IME = 1;
     }
 
     return 0;

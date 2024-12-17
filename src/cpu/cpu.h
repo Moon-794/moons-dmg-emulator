@@ -24,6 +24,8 @@
 #define BIT_1 0x02
 #define BIT_0 0x01
 
+#define V_BLANK_FLAG 0x01
+
 
 namespace gb
 {
@@ -72,6 +74,9 @@ namespace gb
         //8 Bit cpu registers, f is special and represent flag states from certain ops
         uint8_t a, b, c, d, e, f, h, l;
 
+        bool enable_IME_next_instruction = false;
+        uint8_t IME;
+
         void SetFlag(uint8_t flag);
         void ResetFlag(uint8_t flag);
 
@@ -86,8 +91,7 @@ namespace gb
         uint32_t cycles = 0;
 
         typedef void (gb::cpu::*InstructionTable)();
-        std::function<void()> instructionTable[256];
-        
+        std::function<void()> instructionTable[256];  
         bool usingCB;
         std::function<void()> extendedInstructionTable[256];
 
@@ -98,7 +102,13 @@ namespace gb
         //Utility
         uint16_t convert16Bit(uint8_t lsb, uint8_t msb);
 
-        //Generics
+        //Debugging related
+        void PrintRegister(Register reg);
+        void PrintComboRegister(RegisterCombo reg);
+
+        // ---------------- Instructions ----------------
+
+        // --- Generics --- 
         void LD_NN_D16(RegisterCombo reg16);
         void LD_X_D8(uint8_t* reg);
         void LD_X_Y(uint8_t* x, uint8_t y);
@@ -106,49 +116,42 @@ namespace gb
         void INC_X(uint8_t* reg);
         void LD_HL_X(uint8_t* reg);
         void XOR_X(uint8_t* reg);
-
         void DEC_X(uint8_t* reg);
-
+        void DEC_XX(RegisterCombo reg);
         void PUSH_XX(RegisterCombo reg);
         void POP_XX(RegisterCombo reg);
-
         void JR_CC_R8(uint8_t flag);
-
         void SUB_X(uint8_t value);
 
-        //Specific implementations
+        // --- Specific implementations ---
         void NO_OP();
-
         void JR_D8();
         void LDH_A_A8();
-
         void LD_FFC_A();
         void LD_HL_A(); 
-
         void LD_SP_D16();
         void JR_NZ_D8();
+        void JP_A16();
+        void LD_HL_D8();
         void LD_HL_D16();
         void LD_HL_DEC_A();
         void LD_HL_INC_A();
         void LD_DE_D16();
         void LDH_A8_A();
         void LD_A16_A();
-
+        void LD_A_HL_INC();
         void CP_HL();
         void ADD_HL();
-
-        void CD();
+        void CALL_A16();
         void RET();
-
         void CP_D8();
+        void DI();
+        void EI();
 
-        //CB Generics
+        // --- CB Generics ---
         void BIT_N_X(uint8_t n, uint8_t* reg);
         void RL_X(uint8_t* reg);
-
-        //Debugging related
-        void PrintRegister(Register reg);
-        void PrintComboRegister(RegisterCombo reg);
     };
 }
+
 #endif
