@@ -123,6 +123,7 @@ namespace gb
         void POP_XX(RegisterCombo reg);
         void JR_CC_R8(uint8_t flag);
         void SUB_X(uint8_t value);
+        void AND_X(uint8_t* reg);
 
         // --- Specific implementations ---
         void NO_OP();
@@ -145,6 +146,7 @@ namespace gb
         void ADD_HL();
         void CALL_A16();
         void RET();
+        void RET_NZ();
         void CP_D8();
         void DI();
         void EI();
