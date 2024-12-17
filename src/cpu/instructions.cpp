@@ -425,6 +425,18 @@ void gb::cpu::LD_A_HL_INC()
     cycles += 8;
 }
 
+void gb::cpu::OR_X(uint8_t* reg)
+{
+    uint8_t result = a | *reg;
+    a = result;
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_C);
+    ResetFlag(FLAG_H);
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -523,6 +535,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
+    instructionTable[0xB1] = [this] { gb::cpu::OR_X(&c); };
     instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
     instructionTable[0xC3] = [this] { gb::cpu::JP_A16(); };

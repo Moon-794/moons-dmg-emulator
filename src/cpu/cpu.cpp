@@ -28,8 +28,6 @@ int gb::cpu::Step()
     //Check for interrupts first
     if(IME == 1)
     {
-        std::cout << "hello";
-
         uint8_t IF = memory->read(0xFF0F);
         uint8_t IE = memory->read(0xFFFF);
 
@@ -52,8 +50,6 @@ int gb::cpu::Step()
 
             //Disable Interrupts
             DI();
-
-            std::cout << std::hex << program_counter << "\n";
         }
     }
 
