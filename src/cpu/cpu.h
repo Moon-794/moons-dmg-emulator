@@ -148,6 +148,7 @@ namespace gb
         void CALL_A16();
         void RET();
         void RET_NZ();
+        void RET_Z();
         void CP_D8();
         void DI();
         void EI();

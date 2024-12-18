@@ -478,6 +478,25 @@ void gb::cpu::LD_A_NN()
     cycles += 16;
 }
 
+void gb::cpu::RET_Z()
+{
+    if(isFlagSet(FLAG_Z))
+    {
+        stack_pointer--;
+        uint8_t lsb = memory->read(stack_pointer);
+        stack_pointer--;
+        uint8_t msb = memory->read(stack_pointer);
+
+        program_counter = convert16Bit(lsb, msb);
+
+        cycles += 20;
+    }
+    else
+    {
+        cycles += 8;
+    }
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -582,6 +601,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
     instructionTable[0xC3] = [this] { gb::cpu::JP_A16(); };
     instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
+    instructionTable[0xC8] = [this] { gb::cpu::RET_Z(); };
 
     instructionTable[0xC9] = [this] { gb::cpu::RET(); };
     instructionTable[0xCD] = [this] { gb::cpu::CALL_A16(); };

@@ -87,3 +87,8 @@
 20	732	7562571071934047	CMakeFiles/emulator.dir/src/main.cpp.obj	62060d7ef12bb097
 27	2272	7562571071993579	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	df107a333795f794
 2272	2453	7562571094457643	bin/emulator.exe	f839ca3764457658
+24	541	7562572895231448	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	570053310d555675
+29	635	7562572895291288	CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj	89bd9f6320fcaa13
+20	692	7562572895201526	CMakeFiles/emulator.dir/src/main.cpp.obj	62060d7ef12bb097
+26	2257	7562572895261372	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	df107a333795f794
+2258	2424	7562572917579845	bin/emulator.exe	f839ca3764457658
