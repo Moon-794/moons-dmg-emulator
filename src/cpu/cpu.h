@@ -141,6 +141,7 @@ namespace gb
         void LD_DE_D16();
         void LDH_A8_A();
         void LD_A16_A();
+        void LD_A_NN();
         void LD_A_HL_INC();
         void CP_HL();
         void ADD_HL();

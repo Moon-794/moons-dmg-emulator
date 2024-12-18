@@ -467,6 +467,17 @@ void gb::cpu::RET_NZ()
     }
 }
 
+void gb::cpu::LD_A_NN()
+{
+    uint8_t lsb = memory->read(program_counter++);
+    uint8_t msb = memory->read(program_counter++);
+
+    uint8_t addr = convert16Bit(lsb, msb);
+    a = memory->read(addr);
+
+    cycles += 16;
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -583,6 +594,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
     instructionTable[0xF3] = [this] { gb::cpu::DI(); };
     instructionTable[0xF5] = [this] { gb::cpu::PUSH_XX(AF); };
+    instructionTable[0xFA] = [this] { gb::cpu::LD_A_NN(); };
     instructionTable[0xFB] = [this] { gb::cpu::EI(); }; 
     instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); }; 
 
