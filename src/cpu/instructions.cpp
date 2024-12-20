@@ -497,6 +497,14 @@ void gb::cpu::RET_Z()
     }
 }
 
+void gb::cpu::LD_X_HL(uint8_t* reg)
+{
+    uint16_t addr = GetComboRegister(HL);
+    *reg = memory->read(addr);
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -591,11 +599,13 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x7B] = [this] { gb::cpu::LD_X_Y(&a, e); };
     instructionTable[0x7C] = [this] { gb::cpu::LD_X_Y(&a, h); };
     instructionTable[0x7D] = [this] { gb::cpu::LD_X_Y(&a, l); };
+    instructionTable[0x7E] = [this] { gb::cpu::LD_X_HL(&a); };
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
     instructionTable[0xB1] = [this] { gb::cpu::OR_X(&c); };
+    instructionTable[0xB7] = [this] { gb::cpu::OR_X(&a); };
     instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
     instructionTable[0xC0] = [this] { gb::cpu::RET_NZ(); };
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };

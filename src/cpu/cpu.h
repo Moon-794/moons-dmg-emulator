@@ -115,6 +115,7 @@ namespace gb
         void LD_X_YY(uint8_t* x, uint16_t yy);
         void INC_X(uint8_t* reg);
         void LD_HL_X(uint8_t* reg);
+        void LD_X_HL(uint8_t* reg);
         void OR_X(uint8_t* reg);
         void XOR_X(uint8_t* reg);
         void DEC_X(uint8_t* reg);
