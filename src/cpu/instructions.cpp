@@ -587,6 +587,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
     instructionTable[0x36] = [this] { gb::cpu::LD_HL_D8(); };
+    instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
 
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a);};
@@ -615,6 +616,7 @@ void gb::cpu::SetupInstructionTables()
 
     instructionTable[0xC9] = [this] { gb::cpu::RET(); };
     instructionTable[0xCD] = [this] { gb::cpu::CALL_A16(); };
+    instructionTable[0xD1] = [this] { gb::cpu::POP_XX(DE); };
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
