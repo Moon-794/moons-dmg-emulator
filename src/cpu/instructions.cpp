@@ -405,8 +405,6 @@ void gb::cpu::EI()
 {
     enable_IME_next_instruction = true;
     cycles += 4;
-
-    std::cout << "yay";
 }
 
 void gb::cpu::LD_HL_D8()
@@ -505,6 +503,21 @@ void gb::cpu::LD_X_HL(uint8_t* reg)
     cycles += 8;
 }
 
+void gb::cpu::INC_XX(RegisterCombo reg)
+{
+    uint16_t regValue = GetComboRegister(reg);
+    uint8_t byte = memory->read(regValue);
+
+    byte++;
+    memory->write(regValue, byte);
+
+    byte == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    (byte & 0x0F) == 0 ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    ResetFlag(FLAG_N);
+
+    cycles += 12;
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -586,6 +599,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x2E] = [this] { gb::cpu::LD_X_D8(&l); };
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
+    instructionTable[0x34] = [this] { gb::cpu::INC_XX(HL); };
     instructionTable[0x36] = [this] { gb::cpu::LD_HL_D8(); };
     instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
@@ -620,10 +634,12 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
+    instructionTable[0xE1] = [this] { gb::cpu::POP_XX(HL); };
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
     instructionTable[0xE5] = [this] { gb::cpu::PUSH_XX(HL); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
+    instructionTable[0xF1] = [this] { gb::cpu::POP_XX(AF); };
     instructionTable[0xF3] = [this] { gb::cpu::DI(); };
     instructionTable[0xF5] = [this] { gb::cpu::PUSH_XX(AF); };
     instructionTable[0xFA] = [this] { gb::cpu::LD_A_NN(); };

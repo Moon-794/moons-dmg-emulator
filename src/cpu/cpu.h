@@ -125,6 +125,7 @@ namespace gb
         void JR_CC_R8(uint8_t flag);
         void SUB_X(uint8_t value);
         void AND_X(uint8_t* reg);
+        void INC_XX(RegisterCombo reg);
 
         // --- Specific implementations ---
         void NO_OP();

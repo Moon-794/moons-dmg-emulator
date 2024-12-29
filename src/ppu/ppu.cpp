@@ -65,8 +65,6 @@ void gb::ppu::Step(uint32_t cycles)
         }
 
         ModeUpdate(cycles);
-
-        //std::cout << "clock: " << clock << " cycles: " << cycles << "\n";
         window.Update(mode, clock, scanline, cycles);
     }
 }
