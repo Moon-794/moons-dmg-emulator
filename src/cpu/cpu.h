@@ -126,9 +126,11 @@ namespace gb
         void SUB_X(uint8_t value);
         void AND_X(uint8_t* reg);
         void INC_XX(RegisterCombo reg);
+        void RST_XX(uint16_t addr);
 
         // --- Specific implementations ---
         void NO_OP();
+        void AND_N();
         void JR_D8();
         void LDH_A_A8();
         void LD_FFC_A();
@@ -154,10 +156,12 @@ namespace gb
         void CP_D8();
         void DI();
         void EI();
+        void CPL();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t n, uint8_t* reg);
         void RL_X(uint8_t* reg);
+        void SWAP_X(uint8_t* reg);
     };
 }
 
