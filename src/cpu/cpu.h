@@ -113,6 +113,7 @@ namespace gb
         void LD_X_D8(uint8_t* reg);
         void LD_X_Y(uint8_t* x, uint8_t y);
         void LD_X_YY(uint8_t* x, uint16_t yy);
+        void LD_XX_Y(RegisterCombo regCombo, uint8_t* reg);
         void INC_X(uint8_t* reg);
         void LD_HL_X(uint8_t* reg);
         void LD_X_HL(uint8_t* reg);
@@ -160,11 +161,13 @@ namespace gb
         void DI();
         void EI();
         void CPL();
+        void JP_HL();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t n, uint8_t* reg);
         void RL_X(uint8_t* reg);
         void SWAP_X(uint8_t* reg);
+        void RES_N_X(uint8_t* reg, uint8_t bitNo);
     };
 }
 
