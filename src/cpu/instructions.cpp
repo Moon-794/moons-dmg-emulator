@@ -503,7 +503,7 @@ void gb::cpu::LD_X_HL(uint8_t* reg)
     cycles += 8;
 }
 
-void gb::cpu::INC_XX(RegisterCombo reg)
+void gb::cpu::INC_XX_VAL(RegisterCombo reg)
 {
     uint16_t regValue = GetComboRegister(reg);
     uint8_t byte = memory->read(regValue);
@@ -568,6 +568,23 @@ void gb::cpu::ADD_X(uint8_t* reg)
     ((a & 0x0F) + ((*reg) & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
 }
+
+void gb::cpu::ADD_XX_YY(RegisterCombo first, RegisterCombo second)
+{
+    uint16_t firstVal = GetComboRegister(first);
+    uint16_t secondVal = GetComboRegister(second);
+
+    uint32_t result = firstVal + secondVal;
+
+    SetComboRegister(first, result);
+
+    ((HL & 0x0FFF) + (DE & 0x0FFF) > 0x0FFF) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    result > 0xFFFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    ResetFlag(FLAG_N);
+
+    cycles += 8;
+}
+
 
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
@@ -646,12 +663,14 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
     instructionTable[0x0D] = [this] { gb::cpu::DEC_X(&c); };
     instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
+
     instructionTable[0x11] = [this] { gb::cpu::LD_NN_D16(DE); };
     instructionTable[0x13] = [this] { gb::cpu::SetComboRegister(DE, gb::cpu::GetComboRegister(DE) + 1); cycles += 8; };
     instructionTable[0x15] = [this] { gb::cpu::DEC_X(&d); };
     instructionTable[0x16] = [this] { gb::cpu::LD_X_D8(&d); };
     instructionTable[0x17] = [this] { gb::cpu::RL_X(&a); gb::cpu::ResetFlag(FLAG_Z); };
     instructionTable[0x18] = [this] { gb::cpu::JR_D8(); };
+    instructionTable[0x19] = [this] { gb::cpu::ADD_XX_YY(HL, DE); };
 
     instructionTable[0x1A] = [this] { gb::cpu::LD_X_YY(&a, GetComboRegister(DE)); };
     instructionTable[0x1D] = [this] { gb::cpu::DEC_X(&e); };
@@ -667,7 +686,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x2F] = [this] { gb::cpu::CPL(); };
     instructionTable[0x31] = [this] { gb::cpu::LD_SP_D16(); };
     instructionTable[0x32] = [this] { gb::cpu::LD_HL_DEC_A(); };
-    instructionTable[0x34] = [this] { gb::cpu::INC_XX(HL); };
+    instructionTable[0x34] = [this] { gb::cpu::INC_XX_VAL(HL); };
     instructionTable[0x36] = [this] { gb::cpu::LD_HL_D8(); };
     instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
