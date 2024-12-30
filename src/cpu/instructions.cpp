@@ -585,6 +585,12 @@ void gb::cpu::ADD_XX_YY(RegisterCombo first, RegisterCombo second)
     cycles += 8;
 }
 
+void gb::cpu::LD_X_DHL(uint8_t* reg)
+{
+    *reg = memory->read(GetComboRegister(HL));
+
+    cycles += 8;
+}
 
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
@@ -696,6 +702,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x47] = [this] { gb::cpu::LD_X_Y(&b, a); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
+    instructionTable[0x5E] = [this] { gb::cpu::LD_X_DHL(&e); };
     instructionTable[0x5F] = [this] { gb::cpu::LD_X_Y(&e, a); };
     instructionTable[0x67] = [this] { gb::cpu::LD_X_Y(&h, a); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
