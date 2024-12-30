@@ -127,6 +127,7 @@ namespace gb
         void AND_X(uint8_t* reg);
         void INC_XX(RegisterCombo reg);
         void RST_XX(uint16_t addr);
+        void ADD_X(uint8_t* reg);
 
         // --- Specific implementations ---
         void NO_OP();

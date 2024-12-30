@@ -558,6 +558,17 @@ void gb::cpu::RST_XX(uint16_t address)
     cycles += 16;
 }
 
+void gb::cpu::ADD_X(uint8_t* reg)
+{
+    uint16_t result = a + (*reg);
+
+    (result & 0xFF) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_N);
+
+    ((a & 0x0F) + ((*reg) & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -666,6 +677,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x47] = [this] { gb::cpu::LD_X_Y(&b, a); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
+    instructionTable[0x5F] = [this] { gb::cpu::LD_X_Y(&e, a); };
     instructionTable[0x67] = [this] { gb::cpu::LD_X_Y(&h, a); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
     instructionTable[0x78] = [this] { gb::cpu::LD_X_Y(&a, b); };
@@ -675,6 +687,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x7D] = [this] { gb::cpu::LD_X_Y(&a, l); };
     instructionTable[0x7E] = [this] { gb::cpu::LD_X_HL(&a); };
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
+    instructionTable[0x87] = [this] { gb::cpu::ADD_X(&a); };
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
