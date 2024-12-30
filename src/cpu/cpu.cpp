@@ -21,10 +21,37 @@ gb::cpu::cpu(gb::mmu* memory)
     memory->write(0xFF0F, 0xE1);
 
     SetupInstructionTables();
+
+    fileWriter.open("output.txt");
 }
 
 int gb::cpu::Step()
 {
+    if(debug)
+    {
+        if (fileWriter.is_open()) 
+        {
+            std::cout << std::hex << std::uppercase << std::setfill('0');
+
+            fileWriter << "A:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(a) << " ";
+            fileWriter << "F:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(f) << " ";
+            fileWriter << "B:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(b) << " ";
+            fileWriter << "C:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
+            fileWriter << "D:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(d) << " ";
+            fileWriter << "E:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(e) << " ";
+            fileWriter << "H:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(h) << " ";
+            fileWriter << "L:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(l) << " ";
+
+            fileWriter << "SP:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(stack_pointer) << " ";
+            fileWriter << "PC:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(program_counter) << " ";
+
+            fileWriter << "PCMEM:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << "\n";
+        }
+    }
+
     //Check for interrupts first
     if(IME == 1)
     {

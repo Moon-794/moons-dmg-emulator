@@ -2,6 +2,8 @@
 #define GB_CPU
 
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 #include <cstdint>
 #include <functional>
 #include "mmu/mmu.h"
@@ -70,9 +72,16 @@ namespace gb
 
         uint32_t GetCycles() { return cycles; }
 
+        uint16_t program_counter = 0x0000;
+        uint16_t stack_pointer = 0x0000;
+
+        uint8_t a, b, c, d, e, f, h, l;
+
+        bool debug = false;
+
     private:
         //8 Bit cpu registers, f is special and represent flag states from certain ops
-        uint8_t a, b, c, d, e, f, h, l;
+       
 
         bool enable_IME_next_instruction = false;
         uint8_t IME;
@@ -82,11 +91,12 @@ namespace gb
 
         bool isFlagSet(uint8_t flag);
 
+        void LogCPUState();
+
         void SetComboRegister(RegisterCombo reg, uint16_t data);
         uint16_t GetComboRegister(RegisterCombo reg);
 
-        uint16_t program_counter = 0x0000;
-        uint16_t stack_pointer = 0x0000;
+        std::ofstream fileWriter;
 
         uint32_t cycles = 0;
 
@@ -154,6 +164,7 @@ namespace gb
         void CP_HL();
         void ADD_HL();
         void CALL_A16();
+        void CALL_NZ_NN();
         void RET();
         void RET_NZ();
         void RET_Z();

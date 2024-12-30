@@ -24,6 +24,22 @@ void Gameboy::Run()
     ppu->Step(cpu_cycles);
 }
 
+void Gameboy::SetupLog()
+{
+    cpu->a = 0x01;
+    cpu->f = 0xB0;
+    cpu->b = 0x00;
+    cpu->c = 0x13;
+    cpu->d = 0x00;
+    cpu->e = 0xD8;
+    cpu->h = 0x01;
+    cpu->l = 0x4D;
+    cpu->stack_pointer = 0xFFFE;
+    cpu->program_counter = 0x100;
+
+    cpu->debug = true;
+}
+
 void Gameboy::Reset()
 {
     
