@@ -173,6 +173,7 @@ namespace gb
         void EI();
         void CPL();
         void JP_HL();
+        void ADD_N();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t n, uint8_t* reg);

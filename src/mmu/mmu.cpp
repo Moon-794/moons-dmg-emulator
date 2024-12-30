@@ -18,10 +18,11 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 
 uint8_t gb::mmu::read(uint16_t address)
 {
-    if(address == 0xFF44)
-    {
-        return 0x90;
-    }
+    
+    //if(address == 0xFF44)
+    //{
+    //    return 0x90;
+    //}
 
     if(address > 0xFFFF)
         throw std::out_of_range("Invalid address");

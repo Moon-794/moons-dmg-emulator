@@ -321,7 +321,7 @@ void gb::cpu::LDH_A_A8()
 {
     uint8_t val = memory->read(program_counter++);
 
-    uint16_t addr = 0xFF00 | val;
+    uint16_t addr = 0xFF00 + val;
     a = memory->read(addr);
 
     cycles += 12;
@@ -473,6 +473,8 @@ void gb::cpu::LD_A_NN()
     uint16_t addr = convert16Bit(lsb, msb);
     a = memory->read(addr);
 
+    std::cout << a << "\n";
+
     cycles += 16;
 }
 
@@ -480,10 +482,8 @@ void gb::cpu::RET_Z()
 {
     if(isFlagSet(FLAG_Z))
     {
-        stack_pointer--;
-        uint8_t lsb = memory->read(stack_pointer);
-        stack_pointer--;
-        uint8_t msb = memory->read(stack_pointer);
+        uint8_t lsb = memory->read(stack_pointer++);
+        uint8_t msb = memory->read(stack_pointer++);
 
         program_counter = convert16Bit(lsb, msb);
 
@@ -566,6 +566,19 @@ void gb::cpu::ADD_X(uint8_t* reg)
     ResetFlag(FLAG_N);
 
     ((a & 0x0F) + ((*reg) & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+}
+
+void gb::cpu::ADD_N()
+{
+    uint8_t data = memory->read(program_counter++);
+
+    uint16_t result = a + data;
+
+    (result & 0xFF) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_N);
+
+    ((a & 0x0F) + (data & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
 }
 
@@ -782,6 +795,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xC3] = [this] { gb::cpu::JP_A16(); };
     instructionTable[0xC4] = [this] { gb::cpu::CALL_NZ_NN(); };
     instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
+    instructionTable[0xC6] = [this] { gb::cpu::ADD_N(); };
     instructionTable[0xC8] = [this] { gb::cpu::RET_Z(); };
 
     instructionTable[0xC9] = [this] { gb::cpu::RET(); };
