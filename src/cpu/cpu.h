@@ -141,6 +141,8 @@ namespace gb
         void ADD_X(uint8_t* reg);
         void ADD_XX_YY(RegisterCombo first, RegisterCombo second);
         void LD_X_DHL(uint8_t* reg);
+        void ADC_X(uint8_t* reg);
+        void JR_CC_E(bool condition);
 
         // --- Specific implementations ---
         void NO_OP();
