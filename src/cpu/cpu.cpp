@@ -28,8 +28,8 @@ gb::cpu::cpu(gb::mmu* memory)
 int gb::cpu::Step()
 {
     
-        if (fileWriter.is_open() && debug) 
-        {
+    if (fileWriter.is_open() && debug) 
+    {
             std::cout << std::hex << std::uppercase << std::setfill('0');
 
             fileWriter << "A:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(a) << " ";
@@ -48,8 +48,7 @@ int gb::cpu::Step()
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << "\n";
-        }
-    
+    }
 
     //Check for interrupts first
     if(IME == 1)

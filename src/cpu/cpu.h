@@ -131,6 +131,7 @@ namespace gb
         void XOR_X(uint8_t* reg);
         void DEC_X(uint8_t* reg);
         void DEC_XX(RegisterCombo reg);
+        void DEC_I_XX(RegisterCombo reg);
         void PUSH_XX(RegisterCombo reg);
         void POP_XX(RegisterCombo reg);
         void JR_CC_R8(uint8_t flag);
@@ -143,6 +144,7 @@ namespace gb
         void LD_X_DHL(uint8_t* reg);
         void ADC_X(uint8_t* reg);
         void JR_CC_E(bool condition);
+        void JP_CC_NN(bool condition);
 
         // --- Specific implementations ---
         void NO_OP();
