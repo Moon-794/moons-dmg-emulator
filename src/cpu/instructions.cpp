@@ -903,7 +903,13 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x47] = [this] { gb::cpu::LD_X_Y(&b, a); };
     instructionTable[0x4E] = [this] { gb::cpu::LD_X_DHL(&c); };
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
-   
+    
+    instructionTable[0x50] = [this] { gb::cpu::LD_X_Y(&d, b); };
+    instructionTable[0x51] = [this] { gb::cpu::LD_X_Y(&d, c); };
+    instructionTable[0x52] = [this] { gb::cpu::LD_X_Y(&d, d); };
+    instructionTable[0x53] = [this] { gb::cpu::LD_X_Y(&d, e); };
+    instructionTable[0x54] = [this] { gb::cpu::LD_X_Y(&d, h); };
+    instructionTable[0x55] = [this] { gb::cpu::LD_X_Y(&d, l); };
     instructionTable[0x56] = [this] { gb::cpu::LD_X_DHL(&d); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
