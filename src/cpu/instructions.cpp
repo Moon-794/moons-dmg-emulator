@@ -701,6 +701,15 @@ void gb::cpu::JR_CC_E(bool condition)
     }
 }
 
+void gb::cpu::LD_A_HL_DEC()
+{
+    a = memory->read(GetComboRegister(HL));
+
+    SetComboRegister(HL, GetComboRegister(HL) - 1);
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 void gb::cpu::RL_X(uint8_t* reg)
 {
@@ -810,7 +819,8 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x23] = [this] { gb::cpu::SetComboRegister(HL, gb::cpu::GetComboRegister(HL) + 1); cycles += 8; };
     instructionTable[0x24] = [this] { gb::cpu::INC_X(&h); };
     instructionTable[0x28] = [this] { gb::cpu::JR_CC_R8(FLAG_Z); };
-    instructionTable[0x2A] = [this] { gb::cpu::LD_A_HL_INC(); }; 
+    instructionTable[0x2A] = [this] { gb::cpu::LD_A_HL_INC(); };
+    instructionTable[0x2B] = [this] { gb::cpu::DEC_XX(HL); }; 
     instructionTable[0x2C] = [this] { gb::cpu::INC_X(&l); };
     instructionTable[0x2D] = [this] { gb::cpu::DEC_X(&l); };
     instructionTable[0x2E] = [this] { gb::cpu::LD_X_D8(&l); };
@@ -821,6 +831,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x34] = [this] { gb::cpu::INC_XX_VAL(HL); };
     instructionTable[0x36] = [this] { gb::cpu::LD_HL_D8(); };
     instructionTable[0x38] = [this] { gb::cpu::JR_CC_E(isFlagSet(FLAG_C)); };
+    instructionTable[0x3A] = [this] { gb::cpu::LD_A_HL_DEC(); };
     instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
 
@@ -848,6 +859,10 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x7E] = [this] { gb::cpu::LD_X_HL(&a); };
     
     instructionTable[0x80] = [this] { gb::cpu::ADD_X(&b); };
+    instructionTable[0x81] = [this] { gb::cpu::ADD_X(&c); };
+    instructionTable[0x82] = [this] { gb::cpu::ADD_X(&d); };
+    instructionTable[0x83] = [this] { gb::cpu::ADD_X(&e); };
+    instructionTable[0x84] = [this] { gb::cpu::ADD_X(&h); };
     instructionTable[0x85] = [this] { gb::cpu::ADD_X(&l); };
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
     instructionTable[0x87] = [this] { gb::cpu::ADD_X(&a); };
@@ -898,6 +913,7 @@ void gb::cpu::SetupInstructionTables()
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
     extendedInstructionTable[0x37] = [this]{ gb::cpu::SWAP_X(&a); };
+    extendedInstructionTable[0x41] = [this]{ gb::cpu::BIT_N_X(BIT_0, &c); };
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };

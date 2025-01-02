@@ -177,6 +177,7 @@ namespace gb
         void JP_HL();
         void ADD_N();
         void RLCA();
+        void LD_A_HL_DEC();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t n, uint8_t* reg);
