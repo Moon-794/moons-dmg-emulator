@@ -20,6 +20,9 @@ gb::cpu::cpu(gb::mmu* memory)
     //Initialise Default request flags
     memory->write(0xFF0F, 0xE1);
 
+    //Set buttons off
+    memory->write(0xFF00, 0xCF);
+
     SetupInstructionTables();
 
     fileWriter.open("output.txt");
@@ -27,7 +30,6 @@ gb::cpu::cpu(gb::mmu* memory)
 
 int gb::cpu::Step()
 {
-    
     if (fileWriter.is_open() && debug) 
     {
             std::cout << std::hex << std::uppercase << std::setfill('0');

@@ -171,6 +171,7 @@ namespace gb
         void CALL_NZ_NN();
         void RET();
         void RET_NZ();
+        void RET_NC();
         void RET_Z();
         void CP_D8();
         void DI();
@@ -179,10 +180,15 @@ namespace gb
         void JP_HL();
         void ADD_N();
         void RLCA();
+        void RRCA();
+        void RRA();
+        void RLA();
         void LD_A_HL_DEC();
+        void ADC_A_NN(uint8_t val);
 
         // --- CB Generics ---
-        void BIT_N_X(uint8_t n, uint8_t* reg);
+        void BIT_N_X(uint8_t bitNo, uint8_t* reg);
+        void BIT_N_HL(uint8_t bitNo);
         void RL_X(uint8_t* reg);
         void SWAP_X(uint8_t* reg);
         void RES_N_X(uint8_t* reg, uint8_t bitNo);

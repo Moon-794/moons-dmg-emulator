@@ -5,8 +5,6 @@ Gameboy::Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     mmu = new gb::mmu(bootRom, gameRom);
     cpu = new gb::cpu(mmu);
     ppu = new gb::ppu(mmu);
-
-    mmu->write(0xFF00, 0xFF);
 }
 
 void Gameboy::Run()
