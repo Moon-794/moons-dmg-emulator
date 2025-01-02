@@ -320,8 +320,8 @@ void gb::cpu::JR_D8()
 void gb::cpu::LDH_A_A8()
 {
     uint8_t val = memory->read(program_counter++);
+    uint16_t addr = convert16Bit(val, 0xFF);
 
-    uint16_t addr = 0xFF00 + val;
     a = memory->read(addr);
 
     cycles += 12;
@@ -349,8 +349,7 @@ void gb::cpu::SUB_X(uint8_t value)
         ResetFlag(FLAG_H);
     }
 
-    if(result == 0)
-        SetFlag(FLAG_Z);
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
 
     SetFlag(FLAG_N);
 
@@ -589,6 +588,8 @@ void gb::cpu::ADD_N()
 
     ((a & 0x0F) + (data & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+
+    a = result & 0xFF;
 }
 
 void gb::cpu::ADD_XX_YY(RegisterCombo first, RegisterCombo second)
@@ -912,7 +913,6 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x55] = [this] { gb::cpu::LD_X_Y(&d, l); };
     instructionTable[0x56] = [this] { gb::cpu::LD_X_DHL(&d); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
-
     instructionTable[0x58] = [this] { gb::cpu::LD_X_Y(&e, b); };
     instructionTable[0x59] = [this] { gb::cpu::LD_X_Y(&e, c); };
     instructionTable[0x5A] = [this] { gb::cpu::LD_X_Y(&e, d); };
@@ -1017,6 +1017,7 @@ void gb::cpu::SetupInstructionTables()
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };
+    extendedInstructionTable[0x7F] = [this]{ gb::cpu::BIT_N_X(BIT_7, &a); };
     extendedInstructionTable[0x87] = [this]{ gb::cpu::RES_N_X(&a, BIT_0); };
     extendedInstructionTable[0xFE] = [this]{ gb::cpu::SET_N_HL(BIT_7); };
 }
