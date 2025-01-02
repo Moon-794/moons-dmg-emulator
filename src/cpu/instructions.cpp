@@ -912,17 +912,34 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x55] = [this] { gb::cpu::LD_X_Y(&d, l); };
     instructionTable[0x56] = [this] { gb::cpu::LD_X_DHL(&d); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
+
+    instructionTable[0x58] = [this] { gb::cpu::LD_X_Y(&e, b); };
+    instructionTable[0x59] = [this] { gb::cpu::LD_X_Y(&e, c); };
+    instructionTable[0x5A] = [this] { gb::cpu::LD_X_Y(&e, d); };
+    instructionTable[0x5B] = [this] { gb::cpu::LD_X_Y(&e, e); };
     instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
+    instructionTable[0x5D] = [this] { gb::cpu::LD_X_Y(&e, l); };
     instructionTable[0x5E] = [this] { gb::cpu::LD_X_DHL(&e); };
     instructionTable[0x5F] = [this] { gb::cpu::LD_X_Y(&e, a); };
 
     instructionTable[0x60] = [this] { gb::cpu::LD_X_Y(&h, b); };
+    instructionTable[0x61] = [this] { gb::cpu::LD_X_Y(&h, c); };
+    instructionTable[0x62] = [this] { gb::cpu::LD_X_Y(&h, d); };
+    instructionTable[0x63] = [this] { gb::cpu::LD_X_Y(&h, e); };
+    instructionTable[0x64] = [this] { gb::cpu::LD_X_Y(&h, h); };
+    instructionTable[0x65] = [this] { gb::cpu::LD_X_Y(&h, l); };
     instructionTable[0x66] = [this] { gb::cpu::LD_X_DHL(&h); };
     instructionTable[0x67] = [this] { gb::cpu::LD_X_Y(&h, a); };
     instructionTable[0x69] = [this] { gb::cpu::LD_X_Y(&l, c); };
     instructionTable[0x6E] = [this] { gb::cpu::LD_X_DHL(&l); };
     instructionTable[0x6F] = [this] { gb::cpu::LD_X_Y(&l, a); };
 
+    instructionTable[0x70] = [this] { gb::cpu::LD_HL_X(&b); };
+    instructionTable[0x71] = [this] { gb::cpu::LD_HL_X(&c); };
+    instructionTable[0x72] = [this] { gb::cpu::LD_HL_X(&d); };
+    instructionTable[0x73] = [this] { gb::cpu::LD_HL_X(&e); };
+    instructionTable[0x74] = [this] { gb::cpu::LD_HL_X(&h); };
+    instructionTable[0x75] = [this] { gb::cpu::LD_HL_X(&l); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
     instructionTable[0x78] = [this] { gb::cpu::LD_X_Y(&a, b); };
     instructionTable[0x79] = [this] { gb::cpu::LD_X_Y(&a, c); };
@@ -945,6 +962,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0x96] = [this] { gb::cpu::SUB_X(memory->read(GetComboRegister(HL))); cycles += 4; };
 
+    instructionTable[0xA0] = [this] { gb::cpu::AND_X(&b); };
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
