@@ -796,6 +796,35 @@ void gb::cpu::RET_NC()
     }
 }
 
+void gb::cpu::XOR_HL()
+{
+    uint8_t val = memory->read(GetComboRegister(HL));
+    uint8_t result = a ^ val;
+
+    a = result;
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_C);
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    cycles += 8;
+}
+
+void gb::cpu::XOR_A_D8()
+{
+    uint8_t val = memory->read(program_counter++);
+
+    a = a ^ val;
+
+    a != 0 ? ResetFlag(FLAG_Z) : SetFlag(FLAG_Z);
+    ResetFlag(FLAG_C);
+    ResetFlag(FLAG_H);
+    ResetFlag(FLAG_N);
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -906,6 +935,38 @@ void gb::cpu::BIT_N_HL(uint8_t bitNo)
     cycles += 12;
 }
 
+//Shifts the register 1 bit to the right, MSB is set to 0, LSB shifted into carry flag
+void gb::cpu::SRL_X(uint8_t* reg)
+{
+    uint8_t lsb = (*reg) & BIT_0;
+    (*reg) = (*reg) >> 1;
+
+    *reg == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    lsb == 0 ? ResetFlag(FLAG_C) : SetFlag(FLAG_C);
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    cycles += 8;
+}
+
+void gb::cpu::RR_X(uint8_t* reg)
+{
+    uint8_t lsb = (*reg) & BIT_0;
+    uint8_t carry = isFlagSet(FLAG_C) ? 1 : 0;
+
+    *reg = (*reg) >> 1;
+    
+    if(carry == 1)
+        *reg |= BIT_7;
+
+    lsb != 0 ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    cycles += 8;
+}
+
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
@@ -944,6 +1005,8 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x22] = [this] { gb::cpu::LD_HL_INC_A(); };
     instructionTable[0x23] = [this] { gb::cpu::SetComboRegister(HL, gb::cpu::GetComboRegister(HL) + 1); cycles += 8; };
     instructionTable[0x24] = [this] { gb::cpu::INC_X(&h); };
+    instructionTable[0x25] = [this] { gb::cpu::DEC_X(&h); };
+    instructionTable[0x26] = [this] { gb::cpu::LD_X_D8(&h); };
     instructionTable[0x28] = [this] { gb::cpu::JR_CC_E(isFlagSet(FLAG_Z)); };
     instructionTable[0x2A] = [this] { gb::cpu::LD_A_HL_INC(); };
     instructionTable[0x2B] = [this] { gb::cpu::DEC_XX(HL); }; 
@@ -1036,6 +1099,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
+    instructionTable[0xAE] = [this] { gb::cpu::XOR_HL(); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
     instructionTable[0xB0] = [this] { gb::cpu::OR_X(&b); };
@@ -1071,6 +1135,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xE6] = [this] { gb::cpu::AND_N(); };
     instructionTable[0xE9] = [this] { gb::cpu::JP_HL(); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
+    instructionTable[0xEE] = [this] { gb::cpu::XOR_A_D8(); };
     instructionTable[0xEF] = [this] { gb::cpu::RST_XX(0x28); };
 
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
@@ -1083,14 +1148,24 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xFF] = [this] { gb::cpu::RST_XX(0x38); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
+    extendedInstructionTable[0x19] = [this]{ gb::cpu::RR_X(&c); };
+    extendedInstructionTable[0x1A] = [this]{ gb::cpu::RR_X(&d); };
+
     extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
+
     extendedInstructionTable[0x37] = [this]{ gb::cpu::SWAP_X(&a); };
+    extendedInstructionTable[0x38] = [this]{ gb::cpu::SRL_X(&b); };
+
     extendedInstructionTable[0x41] = [this]{ gb::cpu::BIT_N_X(BIT_0, &c); };
+
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
+
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };
     extendedInstructionTable[0x7E] = [this]{ gb::cpu::BIT_N_HL(BIT_7); };
     extendedInstructionTable[0x7F] = [this]{ gb::cpu::BIT_N_X(BIT_7, &a); };
+
     extendedInstructionTable[0x87] = [this]{ gb::cpu::RES_N_X(&a, BIT_0); };
+
     extendedInstructionTable[0xFE] = [this]{ gb::cpu::SET_N_HL(BIT_7); };
 }

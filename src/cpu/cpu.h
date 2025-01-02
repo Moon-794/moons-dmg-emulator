@@ -185,6 +185,8 @@ namespace gb
         void RLA();
         void LD_A_HL_DEC();
         void ADC_A_NN(uint8_t val);
+        void XOR_HL();
+        void XOR_A_D8();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, uint8_t* reg);
@@ -195,6 +197,8 @@ namespace gb
         void SET_N_X(uint8_t bitNo, uint8_t* reg);
         void SET_N_HL(uint8_t bitNo);
         void SLA_X(uint8_t* reg);
+        void SRL_X(uint8_t* reg);
+        void RR_X(uint8_t* reg);
     };
 }
 
