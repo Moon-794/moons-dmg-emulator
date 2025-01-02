@@ -891,7 +891,6 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x3A] = [this] { gb::cpu::LD_A_HL_DEC(); };
     instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
     instructionTable[0x3D] = [this] { gb::cpu::DEC_X(&a); };
-
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a);};
 
     instructionTable[0x46] = [this] { gb::cpu::LD_X_DHL(&b); };
@@ -955,11 +954,13 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xC9] = [this] { gb::cpu::RET(); };
     instructionTable[0xCA] = [this] { gb::cpu::JP_CC_NN(isFlagSet(FLAG_Z)); };
     instructionTable[0xCD] = [this] { gb::cpu::CALL_A16(); };
+    instructionTable[0xCF] = [this] { gb::cpu::RST_XX(0x08); };
 
     instructionTable[0xD1] = [this] { gb::cpu::POP_XX(DE); };
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
     instructionTable[0xD6] = [this] { gb::cpu::SUB_X(memory->read(program_counter++)); };
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
+    instructionTable[0xDF] = [this] { gb::cpu::RST_XX(0x18); };
 
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
     instructionTable[0xE1] = [this] { gb::cpu::POP_XX(HL); };
@@ -969,6 +970,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xE9] = [this] { gb::cpu::JP_HL(); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
     instructionTable[0xEF] = [this] { gb::cpu::RST_XX(0x28); };
+
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
     instructionTable[0xF1] = [this] { gb::cpu::POP_XX(AF); };
     instructionTable[0xF3] = [this] { gb::cpu::DI(); };
@@ -976,6 +978,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xFA] = [this] { gb::cpu::LD_A_NN(); };
     instructionTable[0xFB] = [this] { gb::cpu::EI(); }; 
     instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); }; 
+    instructionTable[0xFF] = [this] { gb::cpu::RST_XX(0x38); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
     extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
