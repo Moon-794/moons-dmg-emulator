@@ -783,6 +783,30 @@ void gb::cpu::RES_N_X(uint8_t* reg, uint8_t bitNo)
     cycles += 8;
 }
 
+void gb::cpu::SET_N_HL(uint8_t bitNo)
+{
+    uint8_t val = memory->read(GetComboRegister(HL));
+
+    val |= bitNo;
+
+    memory->write(GetComboRegister(HL), val);
+
+    cycles += 16;
+}
+
+void gb::cpu::SLA_X(uint8_t* reg)
+{
+    *reg = ((*reg) << 1) & 0xFF;
+
+    ((*reg) & BIT_7) != 0 ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    (*reg) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    cycles += 8;
+}
+
 void gb::cpu::SetupInstructionTables()
 {
     instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
@@ -837,12 +861,14 @@ void gb::cpu::SetupInstructionTables()
 
     instructionTable[0x3E] = [this] { gb::cpu::LD_X_D8(&a);};
 
-    instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
-    instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
+    instructionTable[0x46] = [this] { gb::cpu::LD_X_DHL(&b); };
     instructionTable[0x47] = [this] { gb::cpu::LD_X_Y(&b, a); };
-
+    instructionTable[0x4E] = [this] { gb::cpu::LD_X_DHL(&c); };
+    instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
+   
     instructionTable[0x56] = [this] { gb::cpu::LD_X_DHL(&d); };
     instructionTable[0x57] = [this] { gb::cpu::LD_X_Y(&d, a); };
+    instructionTable[0x5C] = [this] { gb::cpu::LD_X_Y(&e, h); };
     instructionTable[0x5E] = [this] { gb::cpu::LD_X_DHL(&e); };
     instructionTable[0x5F] = [this] { gb::cpu::LD_X_Y(&e, a); };
 
@@ -893,6 +919,7 @@ void gb::cpu::SetupInstructionTables()
 
     instructionTable[0xD1] = [this] { gb::cpu::POP_XX(DE); };
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
+    instructionTable[0xD6] = [this] { gb::cpu::SUB_X(memory->read(program_counter++)); };
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
 
     instructionTable[0xE0] = [this] { gb::cpu::LDH_A8_A(); };
@@ -912,10 +939,12 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xFE] = [this] { gb::cpu::CP_D8(); }; 
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
+    extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
     extendedInstructionTable[0x37] = [this]{ gb::cpu::SWAP_X(&a); };
     extendedInstructionTable[0x41] = [this]{ gb::cpu::BIT_N_X(BIT_0, &c); };
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };
     extendedInstructionTable[0x87] = [this]{ gb::cpu::RES_N_X(&a, BIT_0); };
+    extendedInstructionTable[0xFE] = [this]{ gb::cpu::SET_N_HL(BIT_7); };
 }

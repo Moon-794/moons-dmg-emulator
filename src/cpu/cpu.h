@@ -184,6 +184,9 @@ namespace gb
         void RL_X(uint8_t* reg);
         void SWAP_X(uint8_t* reg);
         void RES_N_X(uint8_t* reg, uint8_t bitNo);
+        void SET_N_X(uint8_t bitNo, uint8_t* reg);
+        void SET_N_HL(uint8_t bitNo);
+        void SLA_X(uint8_t* reg);
     };
 }
 
