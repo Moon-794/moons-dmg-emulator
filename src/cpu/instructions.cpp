@@ -825,6 +825,20 @@ void gb::cpu::XOR_A_D8()
     cycles += 8;
 }
 
+void gb::cpu::OR_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    uint8_t result = a | value;
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_C);
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    a = result;
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)
@@ -1008,6 +1022,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x25] = [this] { gb::cpu::DEC_X(&h); };
     instructionTable[0x26] = [this] { gb::cpu::LD_X_D8(&h); };
     instructionTable[0x28] = [this] { gb::cpu::JR_CC_E(isFlagSet(FLAG_Z)); };
+    instructionTable[0x29] = [this] { gb::cpu::ADD_XX_YY(HL, HL); };
     instructionTable[0x2A] = [this] { gb::cpu::LD_A_HL_INC(); };
     instructionTable[0x2B] = [this] { gb::cpu::DEC_XX(HL); }; 
     instructionTable[0x2C] = [this] { gb::cpu::INC_X(&l); };
@@ -1035,6 +1050,12 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x45] = [this] { gb::cpu::LD_X_Y(&b, l); };
     instructionTable[0x46] = [this] { gb::cpu::LD_X_DHL(&b); };
     instructionTable[0x47] = [this] { gb::cpu::LD_X_Y(&b, a); };
+    instructionTable[0x48] = [this] { gb::cpu::LD_X_Y(&c, b); };
+    instructionTable[0x49] = [this] { gb::cpu::LD_X_Y(&c, c); };
+    instructionTable[0x4A] = [this] { gb::cpu::LD_X_Y(&c, d); };
+    instructionTable[0x4B] = [this] { gb::cpu::LD_X_Y(&c, e); };
+    instructionTable[0x4C] = [this] { gb::cpu::LD_X_Y(&c, h); };
+    instructionTable[0x4D] = [this] { gb::cpu::LD_X_Y(&c, l); };
     instructionTable[0x4E] = [this] { gb::cpu::LD_X_DHL(&c); };
     instructionTable[0x4F] = [this] { gb::cpu::LD_X_Y(&c, a); };
     
@@ -1099,11 +1120,16 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
+    instructionTable[0xAA] = [this] { gb::cpu::XOR_X(&d); };
+    instructionTable[0xAB] = [this] { gb::cpu::XOR_X(&e); };
+    instructionTable[0xAC] = [this] { gb::cpu::XOR_X(&h); };
+    instructionTable[0xAD] = [this] { gb::cpu::XOR_X(&l); };
     instructionTable[0xAE] = [this] { gb::cpu::XOR_HL(); };
     instructionTable[0xAF] = [this] { gb::cpu::XOR_X(&a); };
 
     instructionTable[0xB0] = [this] { gb::cpu::OR_X(&b); };
     instructionTable[0xB1] = [this] { gb::cpu::OR_X(&c); };
+    instructionTable[0xB6] = [this] { gb::cpu::OR_HL(); };
     instructionTable[0xB7] = [this] { gb::cpu::OR_X(&a); };
     instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
 
@@ -1148,8 +1174,13 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xFF] = [this] { gb::cpu::RST_XX(0x38); };
 
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
+    extendedInstructionTable[0x18] = [this]{ gb::cpu::RR_X(&b); };
     extendedInstructionTable[0x19] = [this]{ gb::cpu::RR_X(&c); };
     extendedInstructionTable[0x1A] = [this]{ gb::cpu::RR_X(&d); };
+    extendedInstructionTable[0x1B] = [this]{ gb::cpu::RR_X(&e); };
+    extendedInstructionTable[0x1C] = [this]{ gb::cpu::RR_X(&h); };
+    extendedInstructionTable[0x1D] = [this]{ gb::cpu::RR_X(&l); };
+    extendedInstructionTable[0x1F] = [this]{ gb::cpu::RR_X(&a); };
 
     extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
 

@@ -21,7 +21,7 @@ gb::cpu::cpu(gb::mmu* memory)
     memory->write(0xFF0F, 0xE1);
 
     //Set buttons off
-    memory->write(0xFF00, 0xCF);
+    memory->write(0xFF00, 0xFF);
 
     SetupInstructionTables();
 
@@ -50,8 +50,6 @@ int gb::cpu::Step()
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
-
-            std::cout << program_counter << "\n";
     }
 
     //Check for interrupts first
