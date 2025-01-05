@@ -29,3 +29,5 @@
 5533	5693	7577664792599934	bin/emulator.exe	3a5a0a3abce8479a
 5	5476	7577666064544186	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	8ed6f5ce9dd76970
 5477	5758	7577666119263953	bin/emulator.exe	3a5a0a3abce8479a
+18	5565	7577667529628649	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	8ed6f5ce9dd76970
+5565	5717	7577667585072467	bin/emulator.exe	3a5a0a3abce8479a
