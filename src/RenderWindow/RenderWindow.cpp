@@ -18,7 +18,8 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 {
     if(mode == DRAWPIXELS && clock < 240)
     {
-        yPos = scanline + memory->read(0xFF42);
+        yPos = (scanline + memory->read(0xFF42)) % 256;
+
         tileRow = yPos / 8;
         pixelRow = yPos % 8;
 
@@ -27,6 +28,12 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         pixelColumn = xPos % 8;
         
         uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
+
+        if(tileIndex != 0)
+        {
+            //std::cout << "tileIndex: " << tileIndex << "\n";
+        }
+
 
         uint8_t byteOne = memory->read(0x8000 + (tileIndex * 16) + (pixelRow * 2));
         uint8_t byteTwo = memory->read(0x8000 + (tileIndex * 16) + ((pixelRow * 2) + 1));

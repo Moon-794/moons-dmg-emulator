@@ -21,7 +21,7 @@ gb::cpu::cpu(gb::mmu* memory)
     memory->write(0xFF0F, 0xE1);
 
     //Set buttons off
-    memory->write(0xFF00, 0xFF);
+    memory->write(0xFF00, 0xCF);
 
     SetupInstructionTables();
 
@@ -30,6 +30,34 @@ gb::cpu::cpu(gb::mmu* memory)
 
 int gb::cpu::Step()
 {
+    //Check for interrupts first
+    if(IME == 1)
+    {
+        uint8_t IF = memory->read(0xFF0F);
+        uint8_t IE = memory->read(0xFFFF);
+
+        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
+        {
+            //Clear V-Blank Interrupt
+            IF &= ~0x01;
+            memory->write(0xFF0F, IF);
+
+            //Push program counter to stack
+            uint8_t pcMSB = program_counter >> 8;
+            uint8_t pcLSB = program_counter & 0x00FF;
+
+            stack_pointer--;
+            memory->write(stack_pointer, pcMSB);
+            stack_pointer--;
+            memory->write(stack_pointer, pcLSB);
+            
+            program_counter = 0x0040;
+
+            //Disable Interrupts
+            DI();
+        }
+    }
+
     if (debug) 
     {
             std::cout << std::hex << std::uppercase << std::setfill('0');
@@ -52,34 +80,6 @@ int gb::cpu::Step()
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
     }
 
-    //Check for interrupts first
-    if(IME == 1)
-    {
-        uint8_t IF = memory->read(0xFF0F);
-        uint8_t IE = memory->read(0xFFFF);
-
-        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
-        {
-            //Clear V-Blank Interrupt
-            IF &= ~0x01;
-            memory->write(0xFF0F, IF);
-
-            //Push program counter to stack
-            uint8_t pcMSB = program_counter >> 8;
-            uint8_t pcLSB = program_counter & 0x00FF;
-
-            stack_pointer--;
-            memory->write(stack_pointer, pcMSB);
-            stack_pointer--;
-            memory->write(stack_pointer, pcLSB);
-
-            program_counter = 0x0040;
-
-            //Disable Interrupts
-            DI();
-        }
-    }
-
     uint8_t instruction = memory->read(program_counter);
     program_counter++;
 
@@ -90,6 +90,8 @@ int gb::cpu::Step()
         instruction = memory->read(program_counter);
         program_counter++;
     }
+
+    //memory->PrintByteAsHex(program_counter - 1);
     
     if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB == true && (this->extendedInstructionTable[instruction] == nullptr))
     {

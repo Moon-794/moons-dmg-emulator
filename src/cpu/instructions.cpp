@@ -234,7 +234,7 @@ void gb::cpu::DEC_X(uint8_t* reg)
         ResetFlag(FLAG_H);
     }
 
-    *reg = *reg - 1;
+    --(*reg);
 
     if(*reg == 0x00)
     {
@@ -361,6 +361,29 @@ void gb::cpu::CP_HL()
         SetFlag(FLAG_Z);
 
     SetFlag(FLAG_N);
+
+    cycles += 8;
+}
+
+void gb::cpu::CP_X(uint8_t value)
+{
+    uint8_t result = a - value;
+
+    if((a & 0x0F) < (value & 0x0F))
+    {
+        SetFlag(FLAG_H);
+    }
+    else
+    {
+        ResetFlag(FLAG_H);
+    }
+
+    if(result == 0)
+        SetFlag(FLAG_Z);
+
+    SetFlag(FLAG_N);
+
+    cycles += 4;
 }
 
 void gb::cpu::ADD_HL()
@@ -754,7 +777,7 @@ void gb::cpu::DEC_I_XX(RegisterCombo reg)
     memory->write(GetComboRegister(reg), val);
 
     val == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
-    (val & 0x0F) == 0x00 ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    (val & 0x0F) == 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     SetFlag(FLAG_N);
 
     cycles += 12;
@@ -854,6 +877,11 @@ void gb::cpu::OR_HL()
 
     a = result;
     cycles += 8;
+}
+
+void gb::cpu::DAA()
+{
+    
 }
 
 //CB PREFIX TABLE
@@ -1155,6 +1183,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xB1] = [this] { gb::cpu::OR_X(&c); };
     instructionTable[0xB6] = [this] { gb::cpu::OR_HL(); };
     instructionTable[0xB7] = [this] { gb::cpu::OR_X(&a); };
+    instructionTable[0xBB] = [this] { gb::cpu::CP_X(e); };
     instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
 
     instructionTable[0xC0] = [this] { gb::cpu::RET_NZ(); };

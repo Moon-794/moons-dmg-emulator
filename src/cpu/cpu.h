@@ -145,6 +145,7 @@ namespace gb
         void ADC_X(uint8_t* reg);
         void JR_CC_E(bool condition);
         void JP_CC_NN(bool condition);
+        void CP_X(uint8_t value);
 
         // --- Specific implementations ---
         void NO_OP();
@@ -189,6 +190,7 @@ namespace gb
         void XOR_A_D8();
         void OR_HL();
         void RET_C();
+        void DAA();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, uint8_t* reg);
