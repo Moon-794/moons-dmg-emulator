@@ -188,6 +188,7 @@ namespace gb
         void XOR_HL();
         void XOR_A_D8();
         void OR_HL();
+        void RET_C();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, uint8_t* reg);

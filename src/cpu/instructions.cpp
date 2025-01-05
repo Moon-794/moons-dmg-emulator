@@ -460,6 +460,23 @@ void gb::cpu::RET_NZ()
     }
 }
 
+void gb::cpu::RET_C()
+{
+    if(isFlagSet(FLAG_C))
+    {
+        uint8_t lsb = memory->read(stack_pointer++);
+        uint8_t msb = memory->read(stack_pointer++);
+
+        program_counter = convert16Bit(lsb, msb);
+
+        cycles += 20;
+    }
+    else
+    {
+        cycles += 8;
+    }
+}
+
 void gb::cpu::LD_A_NN()
 {
     uint8_t lsb = memory->read(program_counter++);
@@ -586,7 +603,7 @@ void gb::cpu::ADD_XX_YY(RegisterCombo first, RegisterCombo second)
 
     SetComboRegister(first, result);
 
-    ((HL & 0x0FFF) + (DE & 0x0FFF) > 0x0FFF) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    ((firstVal & 0x0FFF) + (secondVal & 0x0FFF) > 0x0FFF) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     result > 0xFFFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
     ResetFlag(FLAG_N);
 
@@ -974,6 +991,7 @@ void gb::cpu::RR_X(uint8_t* reg)
         *reg |= BIT_7;
 
     lsb != 0 ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    (*reg) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
 
     ResetFlag(FLAG_N);
     ResetFlag(FLAG_H);
@@ -1107,6 +1125,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0x7C] = [this] { gb::cpu::LD_X_Y(&a, h); };
     instructionTable[0x7D] = [this] { gb::cpu::LD_X_Y(&a, l); };
     instructionTable[0x7E] = [this] { gb::cpu::LD_X_HL(&a); };
+    instructionTable[0x7F] = [this] { gb::cpu::LD_X_Y(&a, a); };
     
     instructionTable[0x80] = [this] { gb::cpu::ADD_X(&b); };
     instructionTable[0x81] = [this] { gb::cpu::ADD_X(&c); };
@@ -1156,6 +1175,7 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xD1] = [this] { gb::cpu::POP_XX(DE); };
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
     instructionTable[0xD6] = [this] { gb::cpu::SUB_X(memory->read(program_counter++)); };
+    instructionTable[0xD8] = [this] { gb::cpu::RET_C();};
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
     instructionTable[0xDF] = [this] { gb::cpu::RST_XX(0x18); };
 
