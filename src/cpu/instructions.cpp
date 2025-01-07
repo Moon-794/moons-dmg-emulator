@@ -391,7 +391,13 @@ void gb::cpu::CP_X(uint8_t value)
     }
 
     if(result == 0)
+    {
         SetFlag(FLAG_Z);
+    }
+    else
+    {
+        ResetFlag(FLAG_Z);
+    }
 
     SetFlag(FLAG_N);
 
@@ -612,6 +618,8 @@ void gb::cpu::ADD_X(uint8_t* reg)
 
     ((a & 0x0F) + ((*reg) & 0x0F)) > 0x0F ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
     result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+
+    a = result;
 }
 
 void gb::cpu::ADD_N()
