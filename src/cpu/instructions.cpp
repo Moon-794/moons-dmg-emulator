@@ -1320,8 +1320,14 @@ void gb::cpu::SetupInstructionTables()
     instructionTable[0xB5] = [this] { gb::cpu::OR_X(&l); };
     instructionTable[0xB6] = [this] { gb::cpu::OR_HL(); };
     instructionTable[0xB7] = [this] { gb::cpu::OR_X(&a); };
+    instructionTable[0xB8] = [this] { gb::cpu::CP_X(b); };
+    instructionTable[0xB9] = [this] { gb::cpu::CP_X(c); };
+    instructionTable[0xBA] = [this] { gb::cpu::CP_X(d); };
     instructionTable[0xBB] = [this] { gb::cpu::CP_X(e); };
+    instructionTable[0xBC] = [this] { gb::cpu::CP_X(h); };
+    instructionTable[0xBD] = [this] { gb::cpu::CP_X(l); };
     instructionTable[0xBE] = [this] { gb::cpu::CP_HL(); };
+    instructionTable[0xBF] = [this] { gb::cpu::CP_X(a); };
 
     instructionTable[0xC0] = [this] { gb::cpu::RET_NZ(); };
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
