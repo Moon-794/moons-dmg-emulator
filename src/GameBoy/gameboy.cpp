@@ -21,7 +21,7 @@ void Gameboy::Run()
     }
 
     uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
-    ppu->Step(cpu_cycles);
+    ppu->Step(cpu_cycles / 4);
 }
 
 void Gameboy::SetupLog()

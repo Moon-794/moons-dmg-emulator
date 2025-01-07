@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <fstream>
 #include <stdexcept>
 
 namespace gb
@@ -31,6 +32,8 @@ namespace gb
         //If true, reads from adresses 0x0000 to 0x00FF will read from the boot rom instead of the game cartridge
         //Writing any value to 0xFF50 will effectively unmap the bootrom, and reads will be retrieved from mem
         bool isBootRomMapped = true;
+
+        std::ofstream fileWriter;
     };
 }
 

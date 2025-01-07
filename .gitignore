@@ -12,3 +12,5 @@ _deps
 CMakeUserPresets.json
 .vscode
 output.txt
+*.gb
+!tetris.gb

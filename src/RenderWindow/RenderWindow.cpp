@@ -29,12 +29,6 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         
         uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
 
-        if(tileIndex != 0)
-        {
-            //std::cout << "tileIndex: " << tileIndex << "\n";
-        }
-
-
         uint8_t byteOne = memory->read(0x8000 + (tileIndex * 16) + (pixelRow * 2));
         uint8_t byteTwo = memory->read(0x8000 + (tileIndex * 16) + ((pixelRow * 2) + 1));
 

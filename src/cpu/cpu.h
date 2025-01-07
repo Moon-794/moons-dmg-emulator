@@ -146,6 +146,7 @@ namespace gb
         void JR_CC_E(bool condition);
         void JP_CC_NN(bool condition);
         void CP_X(uint8_t value);
+        void SBC_D8();
 
         // --- Specific implementations ---
         void NO_OP();
@@ -191,6 +192,11 @@ namespace gb
         void OR_HL();
         void RET_C();
         void DAA();
+        void OR_D8();
+        void LD_D16_SP();
+        void LD_SP_HL();
+        void SCF();
+        void CCF();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, uint8_t* reg);
@@ -198,6 +204,7 @@ namespace gb
         void RL_X(uint8_t* reg);
         void SWAP_X(uint8_t* reg);
         void RES_N_X(uint8_t* reg, uint8_t bitNo);
+        void RES_N_HL(uint8_t bitNo);
         void SET_N_X(uint8_t bitNo, uint8_t* reg);
         void SET_N_HL(uint8_t bitNo);
         void SLA_X(uint8_t* reg);

@@ -15,15 +15,15 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
         mem[i] = gameRom[i];
     }
 
-    //isBootRomMapped = false;
+    isBootRomMapped = false;
+
+    fileWriter.open("VRAM.txt");
 }
 
 uint8_t gb::mmu::read(uint16_t address)
-{   
-    //if(address == 0xFF44)
-    //{
-    //    return 0x90;
-    //}
+{ 
+    if(address == 0xFF44)
+        return 0x90;
 
     if(address > 0xFFFF)
         throw std::out_of_range("Invalid address");
@@ -37,6 +37,18 @@ uint8_t gb::mmu::read(uint16_t address)
 
 void gb::mmu::write(uint16_t address, uint8_t data)
 {
+    if(address >= 0x2000 && address < 0x4000)
+    {
+        //Ignore write
+        return;
+    }
+
+    if(address >= 0x8000 && address < 0x9000 && false)
+    {
+        std::cout << std::hex << "Address: " << address << " -- " << (int)data << "\n";
+        fileWriter << "Address: " << address << " - " << (int)data << "\n";
+    }
+
     if(address > 0xFFFF)
     {
         throw std::out_of_range("Invalid address: " + address);
