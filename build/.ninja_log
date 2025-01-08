@@ -64,3 +64,6 @@
 602	764	7579181613600678	bin/emulator.exe	3a5a0a3abce8479a
 6	481	7579190510603253	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	95e2646abda82b37
 482	636	7579190515363977	bin/emulator.exe	3a5a0a3abce8479a
+31	1088	7580428504271440	CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj	95e2646abda82b37
+99	6943	7580428504940431	CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj	8ed6f5ce9dd76970
+6943	7302	7580428573388837	bin/emulator.exe	3a5a0a3abce8479a
