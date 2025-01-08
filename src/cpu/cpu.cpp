@@ -17,13 +17,13 @@ gb::cpu::cpu(gb::mmu* memory)
     h = 0x00;
     l = 0x00;
 
-    //Initialise Default request flags
+    //Initialise default interrupt request flags
     memory->write(0xFF0F, 0xE1);
-
     //Set buttons off
     memory->write(0xFF00, 0xCF);
 
-    SetupInstructionTables();
+    SetupInstructionTable();
+    SetupInstructionTableEXT();
 
     fileWriter.open("output.txt");
 }
@@ -31,28 +31,6 @@ gb::cpu::cpu(gb::mmu* memory)
 int gb::cpu::Step()
 {
     memory->write(0xFF00, 0xCF);
-
-    if (debug) 
-    {
-            std::cout << std::hex << std::uppercase << std::setfill('0');
-
-            fileWriter << "A:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(a) << " ";
-            fileWriter << "F:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(f) << " ";
-            fileWriter << "B:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(b) << " ";
-            fileWriter << "C:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
-            fileWriter << "D:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(d) << " ";
-            fileWriter << "E:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(e) << " ";
-            fileWriter << "H:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(h) << " ";
-            fileWriter << "L:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(l) << " ";
-
-            fileWriter << "SP:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(stack_pointer) << " ";
-            fileWriter << "PC:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(program_counter) << " ";
-
-            fileWriter << "PCMEM:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
-    }
 
     //Check for interrupts first
     if(IME == 1)
@@ -130,12 +108,37 @@ int gb::cpu::Step()
     return 0;
 }
 
+void gb::cpu::LogCPUState()
+{
+    if (debug) 
+    {
+            std::cout << std::hex << std::uppercase << std::setfill('0');
+
+            fileWriter << "A:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(a) << " ";
+            fileWriter << "F:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(f) << " ";
+            fileWriter << "B:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(b) << " ";
+            fileWriter << "C:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
+            fileWriter << "D:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(d) << " ";
+            fileWriter << "E:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(e) << " ";
+            fileWriter << "H:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(h) << " ";
+            fileWriter << "L:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(l) << " ";
+
+            fileWriter << "SP:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(stack_pointer) << " ";
+            fileWriter << "PC:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(program_counter) << " ";
+
+            fileWriter << "PCMEM:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
+            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
+    }
+}
+
 uint16_t gb::cpu::convert16Bit(uint8_t lsb, uint8_t msb)
  {
     return (msb << 8) | lsb;
  }
 
-void::gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
+void gb::cpu::SetComboRegister(RegisterCombo reg, uint16_t data)
 {
     uint8_t* firstRegister;
     uint8_t* secondRegister;

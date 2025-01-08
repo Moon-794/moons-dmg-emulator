@@ -62,11 +62,23 @@ build CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj: CXX_COMPILER__emulator_unscan
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu
 
-build CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj: CXX_COMPILER__emulator_unscanned_ C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions.cpp || cmake_object_order_depends_target_emulator
-  DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions.cpp.obj.d
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj: CXX_COMPILER__emulator_unscanned_ C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructions.cpp || cmake_object_order_depends_target_emulator
+  DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructions.cpp.obj.d
   INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
   OBJECT_DIR = CMakeFiles\emulator.dir
-  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
+
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj: CXX_COMPILER__emulator_unscanned_ C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructionTable.cpp || cmake_object_order_depends_target_emulator
+  DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructionTable.cpp.obj.d
+  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  OBJECT_DIR = CMakeFiles\emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
+
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj: CXX_COMPILER__emulator_unscanned_ C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructionTableEXT.cpp || cmake_object_order_depends_target_emulator
+  DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructionTableEXT.cpp.obj.d
+  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  OBJECT_DIR = CMakeFiles\emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
 
 build CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj: CXX_COMPILER__emulator_unscanned_ C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/ppu/ppu.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\ppu\ppu.cpp.obj.d
@@ -94,7 +106,7 @@ build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_ CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
   LINK_LIBRARIES = -lsfml-window-s  -lsfml-graphics-s  -lsfml-system-s  -lopengl32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\emulator.dir
   POST_BUILD = cd .

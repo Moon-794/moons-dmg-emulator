@@ -71,30 +71,15 @@ namespace gb
         int Step();
 
         uint32_t GetCycles() { return cycles; }
-
         uint16_t program_counter = 0x0000;
         uint16_t stack_pointer = 0x0000;
-
         uint8_t a, b, c, d, e, f, h, l;
 
         bool debug = false;
 
     private:
-        //8 Bit cpu registers, f is special and represent flag states from certain ops
-       
-
         bool enable_IME_next_instruction = false;
         uint8_t IME;
-
-        void SetFlag(uint8_t flag);
-        void ResetFlag(uint8_t flag);
-
-        bool isFlagSet(uint8_t flag);
-
-        void LogCPUState();
-
-        void SetComboRegister(RegisterCombo reg, uint16_t data);
-        uint16_t GetComboRegister(RegisterCombo reg);
 
         std::ofstream fileWriter;
 
@@ -107,7 +92,18 @@ namespace gb
 
         gb::mmu* memory;
 
-        void SetupInstructionTables();
+        void ProcessInterrupts();
+
+        void SetFlag(uint8_t flag);
+        void ResetFlag(uint8_t flag);
+        bool isFlagSet(uint8_t flag);
+
+        void SetupInstructionTable();
+        void SetupInstructionTableEXT();
+
+        void LogCPUState();
+        void SetComboRegister(RegisterCombo reg, uint16_t data);
+        uint16_t GetComboRegister(RegisterCombo reg);
 
         //Utility
         uint16_t convert16Bit(uint8_t lsb, uint8_t msb);
