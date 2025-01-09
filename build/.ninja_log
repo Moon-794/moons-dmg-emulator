@@ -27,3 +27,10 @@
 5809	6131	7581320611957472	bin/emulator.exe	b8005c291050eb3
 20	1680	7581322742953328	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj	a816dfc94d87835
 1681	1836	7581322759561948	bin/emulator.exe	b8005c291050eb3
+19	1810	7581329488820967	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj	a816dfc94d87835
+1810	1971	7581329506738228	bin/emulator.exe	b8005c291050eb3
+18	570	7581343616656828	CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj	9fe43a546cf93da5
+22	1953	7581343616700451	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj	a816dfc94d87835
+1953	2103	7581343636002767	bin/emulator.exe	b8005c291050eb3
+18	5599	7581344626382092	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj	837d7720c9391fa6
+5599	5755	7581344682191174	bin/emulator.exe	b8005c291050eb3

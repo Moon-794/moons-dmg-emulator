@@ -13,6 +13,12 @@ void gb::cpu::SetupInstructionTableEXT()
 
     extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
 
+    extendedInstructionTable[0x30] = [this]{ gb::cpu::SWAP_X(&b); };
+    extendedInstructionTable[0x31] = [this]{ gb::cpu::SWAP_X(&c); };
+    extendedInstructionTable[0x32] = [this]{ gb::cpu::SWAP_X(&d); };
+    extendedInstructionTable[0x33] = [this]{ gb::cpu::SWAP_X(&e); };
+    extendedInstructionTable[0x34] = [this]{ gb::cpu::SWAP_X(&h); };
+    extendedInstructionTable[0x35] = [this]{ gb::cpu::SWAP_X(&l); };
     extendedInstructionTable[0x37] = [this]{ gb::cpu::SWAP_X(&a); };
     extendedInstructionTable[0x38] = [this]{ gb::cpu::SRL_X(&b); };
     extendedInstructionTable[0x3F] = [this]{ gb::cpu::SRL_X(&a); };
@@ -52,7 +58,6 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x6B] = [this]{ gb::cpu::BIT_N_X(BIT_5, &e); };
     extendedInstructionTable[0x6C] = [this]{ gb::cpu::BIT_N_X(BIT_5, &h); };
     extendedInstructionTable[0x6D] = [this]{ gb::cpu::BIT_N_X(BIT_5, &l); };
-
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
 
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };

@@ -149,6 +149,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0xA0] = [this] { gb::cpu::AND_X(&b); };
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
+    instructionTable[0xA8] = [this] { gb::cpu::AND_X(&b); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
     instructionTable[0xAA] = [this] { gb::cpu::XOR_X(&d); };
     instructionTable[0xAB] = [this] { gb::cpu::XOR_X(&e); };
