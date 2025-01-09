@@ -10,7 +10,7 @@
 
 //Zero Flag, set if an operation results in a zero value
 #define FLAG_Z 0x80
-//Subtraction flag, set if an operationg involves subtraction
+//Subtraction flag, set if an operation involves subtraction
 #define FLAG_N 0x40  
 //Half carry flag, set if an operation carries a bit from bit 3 to bit 4
 #define FLAG_H 0x20  
@@ -28,7 +28,6 @@
 
 #define V_BLANK_FLAG 0x01
 
-
 namespace gb
 {
     enum RegisterCombo
@@ -38,6 +37,7 @@ namespace gb
         DE,
         HL
     };
+    
     enum Register
     {
         A,
@@ -48,19 +48,6 @@ namespace gb
         F,
         H,
         L
-    };
-
-    struct InstructionParams
-    {
-        uint8_t* reg;
-        RegisterCombo reg16;
-
-        uint16_t address;
-
-        uint8_t immediate;
-        uint16_t immediate16;
-
-        uint8_t bit_flag;
     };
 
     class cpu
