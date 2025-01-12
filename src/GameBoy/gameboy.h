@@ -4,6 +4,8 @@
 #include "mmu/mmu.h"
 #include "cpu/cpu.h"
 #include "ppu/ppu.h"
+#include "joypad/joypad.h"
+#include <chrono>
 
 class Gameboy
 {
@@ -12,16 +14,9 @@ public:
 
     void SetupLog();
 
-    void Save(uint32_t saveID);
-    void Load(uint32_t saveID);
-
     void Run();
     void Reset();
     void Quit();
-
-    //Various other functions, not required but definite "nice to have"
-    void SaveState();
-    void LoadState();
 
 private:
     std::vector<uint8_t> indices;
@@ -30,6 +25,7 @@ private:
     gb::cpu* cpu;
     gb::ppu* ppu;
     gb::mmu* mmu;
+    gb::Joypad* joypad;
     
     //rom file needed too, not sure where to store
 };

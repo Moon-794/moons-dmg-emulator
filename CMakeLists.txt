@@ -5,6 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin/)
 set(CMAKE_PREFIX_PATH "/mingw64")
 
 set(SRC_FILES src/main.cpp 
+            src/joypad/joypad.cpp
             src/mmu/mmu.cpp 
             src/cpu/cpu.cpp 
             src/cpu/instructions/instructions.cpp

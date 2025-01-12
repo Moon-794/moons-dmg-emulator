@@ -30,8 +30,6 @@ gb::cpu::cpu(gb::mmu* memory)
 
 int gb::cpu::Step()
 {
-    memory->write(0xFF00, 0xCF);
-
     //Check for interrupts first
     if(IME == 1)
     {
@@ -71,8 +69,6 @@ int gb::cpu::Step()
         program_counter++;
     }
 
-    //memory->PrintByteAsHex(program_counter - 1);
-
     if(enable_IME_next_instruction)
     {
         enable_IME_next_instruction = false;
@@ -89,7 +85,7 @@ int gb::cpu::Step()
         memory->PrintByteAsHex(program_counter - 1);
         std::cout << "Cycles: " << std::dec << cycles << "\n";
 
-        return -1;
+        exit(-2);
     }
     else
     {
