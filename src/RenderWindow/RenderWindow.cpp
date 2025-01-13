@@ -45,15 +45,15 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 
         for (size_t i = 0; i < objs.size(); i++)
         {
-            if(xPos < objs[i].xPos + 8 && xPos >= objs[i].xPos)
+            if(xPos < objs[i].xPos && xPos >= objs[i].xPos - 8)
             {
                 uint8_t objTileIndex = objs[i].tileIndex;
                 
                 uint8_t byteOne = memory->read(0x8000 + (objTileIndex * 16) + (yPos - (objs[i].yPos - 16) * 2));
                 uint8_t byteTwo = memory->read(0x8000 + (objTileIndex * 16) + ((yPos - (objs[i].yPos - 16) * 2) + 1));
 
-                byteOne = (byteOne >> (7 - (xPos - objs[i].xPos)) & 0x01);
-                byteTwo = (byteTwo >> (7 - (xPos - objs[i].xPos)) & 0x01);
+                byteOne = (byteOne >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
+                byteTwo = (byteTwo >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
 
                 sf::Color shade = shades[byteOne + byteTwo];
 

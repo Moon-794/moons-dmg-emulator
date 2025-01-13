@@ -12,3 +12,13 @@
 32	5968	7584349248466151	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj	837d7720c9391fa6
 29	863	7584349248436219	CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj	9fe43a546cf93da5
 22	515	7584349248366768	CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj	d0212ae7caa135f6
+29	2728	7584367948346231	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+2729	3086	7584367975337126	bin/emulator.exe	9e6a1c00908c2c12
+20	493	7584368422867717	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+493	654	7584368427593106	bin/emulator.exe	9e6a1c00908c2c12
+19	487	7584368628354133	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+488	654	7584368633041603	bin/emulator.exe	9e6a1c00908c2c12
+21	490	7584369192184636	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+490	651	7584369196876051	bin/emulator.exe	9e6a1c00908c2c12
+20	484	7584369626974756	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+485	644	7584369631617350	bin/emulator.exe	9e6a1c00908c2c12
