@@ -29,14 +29,6 @@ namespace gb
         VERTICAL_BLANK
     };
 
-    struct Object
-    {
-        uint8_t yPos;
-        uint8_t xPos;
-        uint8_t tileIndex;
-        uint8_t Flags;
-    };
-
     class ppu
     {
     public:

@@ -25,7 +25,7 @@ namespace gb
 
         void DrawPixels(int count);
         void DrawTile(uint8_t index);
-        void Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles);
+        void Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, std::vector<Object> objs);
 
     private:
         sf::RenderWindow window;

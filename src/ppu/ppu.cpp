@@ -81,7 +81,7 @@ void gb::ppu::Step(uint32_t cycles)
             }
         }
         ModeUpdate(cycles);
-        window.Update(mode, clock, scanline, cycles);
+        window.Update(mode, clock, scanline, cycles, objects);
     }
 }
 
@@ -107,17 +107,31 @@ void gb::ppu::OAMSearch()
 {
     objects.clear();
 
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < 40; i++)
     {
-        uint8_t yPos = memory->read(0xFE02);
+        uint8_t yPos = memory->read(0xFE00 + (i * 4));
 
         if(yPos == 0)
             continue;
 
-        if((scanline + 16) - yPos < 8)
+        uint8_t rowDiff = (scanline) - (yPos - 16);
+
+        if( rowDiff < 8 && rowDiff >= 0)
         {
-            std::cout << "Object added!" << "\n";
-            return;
+            uint8_t xPos = memory->read(0xFE01 + (i * 4));
+            uint8_t Index = memory->read(0xFE02 + (i * 4));
+            uint8_t flags = memory->read(0xFE03 + (i * 4));
+            
+            Object obj;
+            obj.yPos = yPos;
+            obj.xPos = xPos;
+            obj.tileIndex = Index;
+            obj.Flags = flags;
+
+            objects.push_back(obj);
+
+            if(objects.size() == 10)
+                return;
         }
     }
 }
