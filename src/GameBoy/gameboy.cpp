@@ -13,13 +13,14 @@ Gameboy::Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 void Gameboy::Run()
 {
     //Fetch, Decode, Execute cycle, then input, graphics and maybe audio
-
     uint32_t last_cycles = cpu->GetCycles();
 
     cpu->Step();
 
     uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
     ppu->Step(cpu_cycles / 4);
+
+    //Wait for 1/4000000 * cpu_cycles
 }
 
 void Gameboy::SetupLog()

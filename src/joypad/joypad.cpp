@@ -2,6 +2,7 @@
 
 #include "joypad/joypad.h"
 #include "mmu/mmu.h"
+#include <bitset>
 
 gb::Joypad::Joypad(gb::mmu* _mmu)
 {
@@ -44,7 +45,7 @@ void gb::Joypad::UpdateInputs()
 
     if(((reg & BIT_5) == 0) && ((reg & BIT_4) != 0))
         newValue = uniqueButtons;
-
+    
     _mmu->mem[0xFF00] = (_mmu->mem[0xFF00] & 0xF0) | (newValue & 0x0F);
 }
         

@@ -1,6 +1,7 @@
 #include "mmu/mmu.h"
 #include <iostream>
 #include <iomanip>
+#include <bitset>
 
 gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 {
@@ -40,11 +41,13 @@ void gb::mmu::write(uint16_t address, uint8_t data)
         uint8_t original = mem[address];
         original &= 0x0F;
 
-        original |= (data & 0xF0);
+        original = (data & 0xF0) | (original & 0x0F);
         mem[address] = original;
 
         if(joypad)
             joypad->UpdateInputs();
+
+        //std::cout << "Write to 0xFF00: " << std::bitset<8>(mem[address]) << std::endl;
 
         return;
     }

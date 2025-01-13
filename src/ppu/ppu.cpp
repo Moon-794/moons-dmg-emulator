@@ -96,6 +96,30 @@ void::gb::ppu::ModeUpdate(int cycles)
     {
         window.DrawPixels(cycles);
     }
+
+    if(mode == ppuMode::OAM_SCAN)
+    {
+        OAMSearch();
+    }
+}
+
+void gb::ppu::OAMSearch()
+{
+    objects.clear();
+
+    for (size_t i = 0; i < 4; i++)
+    {
+        uint8_t yPos = memory->read(0xFE02);
+
+        if(yPos != 0)
+            std::cout << (int)yPos << "\n";
+
+        if((scanline + 16) - yPos < 8)
+        {
+            std::cout << "Object added!" << "\n";
+            return;
+        }
+    }
 }
 
 void gb::ppu::UpdateLY()

@@ -29,6 +29,14 @@ namespace gb
         VERTICAL_BLANK
     };
 
+    struct Object
+    {
+        uint8_t yPos;
+        uint8_t xPos;
+        uint8_t tileIndex;
+        uint8_t Flags;
+    };
+
     class ppu
     {
     public:
@@ -44,12 +52,15 @@ namespace gb
     
     private:
         mmu* memory;
-
         ppuMode mode = ppuMode::OAM_SCAN;
+
+        std::vector<Object> objects;
 
         void ChangeMode(ppuMode newMode);
         void ModeUpdate(int cycles);
         void UpdateLY();
+        void OAMSearch();
     };
 }
+
 #endif
