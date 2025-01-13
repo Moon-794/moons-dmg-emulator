@@ -111,8 +111,8 @@ void gb::ppu::OAMSearch()
     {
         uint8_t yPos = memory->read(0xFE02);
 
-        if(yPos != 0)
-            std::cout << (int)yPos << "\n";
+        if(yPos == 0)
+            continue;
 
         if((scanline + 16) - yPos < 8)
         {

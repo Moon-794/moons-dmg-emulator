@@ -47,9 +47,13 @@ void gb::mmu::write(uint16_t address, uint8_t data)
         if(joypad)
             joypad->UpdateInputs();
 
-        //std::cout << "Write to 0xFF00: " << std::bitset<8>(mem[address]) << std::endl;
-
         return;
+    }
+
+    if(address == 0xFF46)
+    {
+        //Initiate DMA Transfer
+        DMATransfer(static_cast<uint16_t>(data) << 8);
     }
 
     if(address == 0xFF50)
@@ -72,4 +76,12 @@ void::gb::mmu::PrintByteAsHex(uint16_t address)
 void gb::mmu::SetJoypad(Joypad* jp)
 {
     joypad = jp;
+}
+
+void gb::mmu::DMATransfer(uint16_t addr)
+{
+    for (size_t i = 0; i < 0xA0; i++)
+    {
+        write(0xFE00 + i, read(addr + i));
+    }
 }

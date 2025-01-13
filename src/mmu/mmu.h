@@ -39,6 +39,9 @@ namespace gb
         bool isBootRomMapped = true;
 
         Joypad* joypad;
+
+        //Procedure to quickly write 160 bytes of RAM or ROM to OAM
+        void DMATransfer(uint16_t address);
     };
 }
 
