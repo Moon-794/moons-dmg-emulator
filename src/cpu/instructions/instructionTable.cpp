@@ -41,6 +41,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x24] = [this] { gb::cpu::INC_X(&h); };
     instructionTable[0x25] = [this] { gb::cpu::DEC_X(&h); };
     instructionTable[0x26] = [this] { gb::cpu::LD_X_D8(&h); };
+    instructionTable[0x27] = [this] { gb::cpu::DAA(); };
     instructionTable[0x28] = [this] { gb::cpu::JR_CC_E(isFlagSet(FLAG_Z)); };
     instructionTable[0x29] = [this] { gb::cpu::ADD_XX_YY(HL, HL); };
     instructionTable[0x2A] = [this] { gb::cpu::LD_A_HL_INC(); };

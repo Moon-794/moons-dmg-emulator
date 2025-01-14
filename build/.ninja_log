@@ -59,3 +59,11 @@
 485	646	7585266939691399	bin/emulator.exe	9e6a1c00908c2c12
 20	499	7585267350398607	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
 500	663	7585267355198199	bin/emulator.exe	9e6a1c00908c2c12
+7	484	7585270211149908	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	e6bf669a835e8360
+485	650	7585270215922055	bin/emulator.exe	9e6a1c00908c2c12
+6	622	7585703119733315	CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj	9fe43a546cf93da5
+622	811	7585703125888805	bin/emulator.exe	9e6a1c00908c2c12
+20	5706	7585703399432469	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj	837d7720c9391fa6
+5707	5908	7585703456287374	bin/emulator.exe	9e6a1c00908c2c12
+21	5846	7585703743981609	CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj	837d7720c9391fa6
+5847	6007	7585703802244544	bin/emulator.exe	9e6a1c00908c2c12

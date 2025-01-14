@@ -901,11 +901,6 @@ void gb::cpu::OR_HL()
     cycles += 8;
 }
 
-void gb::cpu::DAA()
-{
-    
-}
-
 void gb::cpu::SBC_D8()
 {
     uint8_t data = memory->read(program_counter++);
@@ -1006,6 +1001,44 @@ void gb::cpu::CCF()
     else
     {
         SetFlag(FLAG_C);
+    }
+
+    cycles += 4;
+}
+
+void gb::cpu::DAA()
+{
+    uint8_t offset = 0;
+
+    if(!isFlagSet(FLAG_N) && a & 0x0F > 0x09 || isFlagSet(FLAG_H))
+    {
+        offset |= 0x06;
+    }
+
+    if(!isFlagSet(FLAG_N) && a > 0x99 || isFlagSet(FLAG_C))
+    {
+        offset |= 0x60;
+    }
+
+    if(!isFlagSet(FLAG_N))
+        a += offset;
+    else
+        a -= offset;
+
+    if(a == 0)
+        SetFlag(FLAG_Z);
+    else
+        ResetFlag(FLAG_Z);
+    
+    SetFlag(FLAG_H);
+
+    if(!isFlagSet(FLAG_N) && a > 0x99 || isFlagSet(FLAG_C))
+    {
+        SetFlag(FLAG_C);
+    }
+    else
+    {
+        ResetFlag(FLAG_C);
     }
 
     cycles += 4;
