@@ -48,9 +48,9 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
             if(xPos < objs[i].xPos && xPos >= objs[i].xPos - 8)
             {
                 uint8_t objTileIndex = objs[i].tileIndex;
-                
-                uint8_t byteOne = memory->read(0x8000 + (objTileIndex * 16) + (yPos - (objs[i].yPos - 16) * 2));
-                uint8_t byteTwo = memory->read(0x8000 + (objTileIndex * 16) + ((yPos - (objs[i].yPos - 16) * 2) + 1));
+
+                uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2));
+                uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2) + 1);
 
                 byteOne = (byteOne >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
                 byteTwo = (byteTwo >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
