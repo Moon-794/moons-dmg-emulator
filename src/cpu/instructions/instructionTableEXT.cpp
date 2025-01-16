@@ -29,6 +29,7 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x43] = [this]{ gb::cpu::BIT_N_X(BIT_0, &e); };
     extendedInstructionTable[0x44] = [this]{ gb::cpu::BIT_N_X(BIT_0, &h); };
     extendedInstructionTable[0x45] = [this]{ gb::cpu::BIT_N_X(BIT_0, &l); };
+    extendedInstructionTable[0x47] = [this]{ gb::cpu::BIT_N_X(BIT_0, &a); };
     extendedInstructionTable[0x48] = [this]{ gb::cpu::BIT_N_X(BIT_1, &b); };
 
     extendedInstructionTable[0x50] = [this]{ gb::cpu::BIT_N_X(BIT_2, &b); };

@@ -143,6 +143,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
     instructionTable[0x87] = [this] { gb::cpu::ADD_X(&a); };
     instructionTable[0x89] = [this] { gb::cpu::ADC_X(&c); };
+    instructionTable[0x8E] = [this] { gb::cpu::ADC_A_NN(memory->read(GetComboRegister(HL))); };
 
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0x96] = [this] { gb::cpu::SUB_X(memory->read(GetComboRegister(HL))); cycles += 4; };
