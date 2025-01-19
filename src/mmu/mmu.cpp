@@ -8,7 +8,7 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     this->bootRom = bootRom;
 
     //Load the first 32KB of memory to the game rom
-    mem = std::vector<uint8_t>(0xFFFF);
+    mem = {};
     for (size_t i = 0; i < gameRom.size(); i++)
     {
         mem[i] = gameRom[i];
@@ -17,9 +17,6 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 
 uint8_t gb::mmu::read(uint16_t address)
 { 
-    if(address > 0xFFFF)
-        throw std::out_of_range("Invalid address");
-
     //Retrieve memory from bootrom if still in the boot sequence
     if(address <= 0x00FF && isBootRomMapped)
         return bootRom[address];

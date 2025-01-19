@@ -1,3 +1,5 @@
+#define SFML_STATIC
+
 #ifndef GB_DMG
 #define GB_DMG
 

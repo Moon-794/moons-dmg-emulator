@@ -88,6 +88,9 @@ void gb::ppu::Step(uint32_t cycles)
 void gb::ppu::ChangeMode(ppuMode newMode)
 {
     mode = newMode;
+
+    if(mode == ppuMode::OAM_SCAN)
+        OAMSearch();
 }
 
 void::gb::ppu::ModeUpdate(int cycles)
@@ -95,11 +98,6 @@ void::gb::ppu::ModeUpdate(int cycles)
     if(mode == ppuMode::DRAWING_PIXELS)
     {
         window.DrawPixels(cycles);
-    }
-
-    if(mode == ppuMode::OAM_SCAN)
-    {
-        OAMSearch();
     }
 }
 
@@ -134,6 +132,11 @@ void gb::ppu::OAMSearch()
                 return;
         }
     }
+}
+
+gb::ppuMode gb::ppu::GetPPUMode()
+{
+    return mode;
 }
 
 void gb::ppu::UpdateLY()

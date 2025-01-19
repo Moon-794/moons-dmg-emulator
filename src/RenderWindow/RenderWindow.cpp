@@ -3,6 +3,7 @@
 gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "My window");
+    window.setFramerateLimit(400);
 
     shades[0] = sf::Color(160, 160, 160, 255);
     shades[1] = sf::Color(120, 120, 120, 255);
@@ -42,29 +43,28 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         TexturePixels[textureIndex + 1] = shade.g;
         TexturePixels[textureIndex + 2] = shade.b;
         TexturePixels[textureIndex + 3] = shade.a;
+    }
 
-        for (size_t i = 0; i < objs.size(); i++)
+    for (size_t i = 0; i < objs.size(); i++)
+    {
+        if(xPos < objs[i].xPos && xPos >= objs[i].xPos - 8)
         {
-            if(xPos < objs[i].xPos && xPos >= objs[i].xPos - 8)
-            {
-                uint8_t objTileIndex = objs[i].tileIndex;
+            uint8_t objTileIndex = objs[i].tileIndex;
 
-                uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2));
-                uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2) + 1);
+            uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2));
+            uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - objs[i].yPos) * 2) + 1);
 
-                byteOne = (byteOne >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
-                byteTwo = (byteTwo >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
+            byteOne = (byteOne >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
+            byteTwo = (byteTwo >> (7 - (xPos - objs[i].xPos + 8)) & 0x01);
 
-                sf::Color shade = shades[byteOne + byteTwo];
+            sf::Color shade = shades[byteOne + byteTwo];
 
-                int textureIndex = ((scanline * 160) + xPos) * 4;
-                TexturePixels[textureIndex] = shade.r;
-                TexturePixels[textureIndex + 1] = shade.g;
-                TexturePixels[textureIndex + 2] = shade.b;
-                TexturePixels[textureIndex + 3] = shade.a;
-            }
+            int textureIndex = ((scanline * 160) + xPos) * 4;
+            TexturePixels[textureIndex] = shade.r;
+            TexturePixels[textureIndex + 1] = shade.g;
+            TexturePixels[textureIndex + 2] = shade.b;
+            TexturePixels[textureIndex + 3] = shade.a;
         }
-        
     }
 
     if(scanline == 144 && clock == 455)
@@ -74,19 +74,20 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         window.clear();
         window.draw(sprite);
         window.display();
-
-        
     }
+}
 
+void gb::RenderWindow::PollWindowEvents()
+{
     sf::Event event;
-        while (window.pollEvent(event))
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
         {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-                exit(0);
-            }
+            window.close();
+            exit(0);
         }
+    }
 }
 
 void gb::RenderWindow::DrawPixels(int count)

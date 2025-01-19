@@ -5,6 +5,7 @@
 #define VRAM_END 0x9FFF
 
 #include <vector>
+#include <array>
 #include <cstdint>
 #include <fstream>
 #include <stdexcept>
@@ -39,7 +40,7 @@ namespace gb
         void SetJoypad(Joypad* jp);
 
     private:
-        std::vector<uint8_t> mem;
+        std::array<uint8_t, 0xFFFF> mem;
         std::vector<uint8_t> bootRom;
 
         //If true, reads from adresses 0x0000 to 0x00FF will read from bootRom instead of the game cartridge

@@ -17,10 +17,15 @@ void Gameboy::Run()
 
     cpu->Step();
 
+    gb::ppuMode currentMode = ppu->GetPPUMode();
+
     uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
     ppu->Step(cpu_cycles / 4);
 
-    //Wait for 1/4000000 * cpu_cycles
+    if(ppu->GetPPUMode() == gb::ppuMode::VERTICAL_BLANK && currentMode != gb::ppuMode::VERTICAL_BLANK)
+    {
+        ppu->window.PollWindowEvents();
+    }
 }
 
 void Gameboy::SetupLog()
