@@ -16,18 +16,19 @@ void Gameboy::Run()
     uint32_t last_cycles = cpu->GetCycles();
 
     cpu->Step();
-
     gb::ppuMode currentMode = ppu->GetPPUMode();
-
+    
     uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
     ppu->Step(cpu_cycles / 4);
 
+    //Only poll window once per frame, when the ppu switches to V-Blank
     if(ppu->GetPPUMode() == gb::ppuMode::VERTICAL_BLANK && currentMode != gb::ppuMode::VERTICAL_BLANK)
     {
         ppu->window.PollWindowEvents();
     }
 }
 
+//Sets the cpu to the state after finishing the bootrom, used for logging CPU debug data
 void Gameboy::SetupLog()
 {
     cpu->a = 0x01;

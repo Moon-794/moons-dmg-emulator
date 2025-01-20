@@ -48,8 +48,3 @@ void gb::Joypad::UpdateInputs()
     
     _mmu->mem[0xFF00] = (_mmu->mem[0xFF00] & 0xF0) | (newValue & 0x0F);
 }
-        
-void gb::Joypad::PrintJoypadStatus()
-{
-
-}

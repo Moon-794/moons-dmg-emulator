@@ -26,39 +26,34 @@ uint8_t gb::mmu::read(uint16_t address)
 
 void gb::mmu::write(uint16_t address, uint8_t data)
 {
-    if(address >= 0x2000 && address < 0x4000)
+    switch (address) 
     {
-        //Ignore write
-        return;
-    }
+    case 0xFF00:
+        // Handle joypad register
+        {
+            uint8_t original = mem[address];
+            original &= 0x0F;
+            original = (data & 0xF0) | (original & 0x0F);
+            mem[address] = original;
 
-    if(address == 0xFF00)
-    {   
-        //Lower nibble of 0xFF00 is read only
-        uint8_t original = mem[address];
-        original &= 0x0F;
-
-        original = (data & 0xF0) | (original & 0x0F);
-        mem[address] = original;
-
-        if(joypad)
-            joypad->UpdateInputs();
-
-        return;
-    }
-
-    if(address == 0xFF46)
-    {
-        //Initiate DMA Transfer
+            if(joypad)
+                joypad->UpdateInputs();
+        }
+        break;
+    case 0xFF46:
         DMATransfer(static_cast<uint16_t>(data) << 8);
-    }
-
-    if(address == 0xFF50)
-    {   
+        break;
+    case 0xFF50:
         isBootRomMapped = false;
+        break;
+    default:
+        if (address >= 0x2000 && address < 0x4000) {
+            // Ignore write
+            return;
+        }
+        mem[address] = data;
+        break;
     }
-
-    mem[address] = data;
 }
 
 void::gb::mmu::PrintByteAsHex(uint16_t address)
