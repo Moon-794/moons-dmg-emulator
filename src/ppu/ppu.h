@@ -35,7 +35,7 @@ namespace gb
         ppu(gb::mmu* memory);
 
         void Step(uint32_t cycles);
-        ppuMode GetPPUMode();
+        inline ppuMode GetPPUMode() const { return mode; }
     
         uint32_t clock = 0;
         uint32_t scanline = 0; // Must also update LCD register 0xFF44

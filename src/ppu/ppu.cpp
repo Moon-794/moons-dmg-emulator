@@ -8,7 +8,6 @@ gb::ppu::ppu(gb::mmu* memory) : window(memory)
 void gb::ppu::Step(uint32_t cycles)
 {
     uint8_t LCDC = memory->read(0xFF40);
-
     uint8_t LCDC_CTRL = LCDC >> 7;
 
     for (size_t i = 0; i < cycles; i++)
@@ -80,7 +79,7 @@ void gb::ppu::Step(uint32_t cycles)
                 memory->write(0xFF41, 0);
             }
         }
-        ModeUpdate(cycles);
+
         window.Update(mode, clock, scanline, cycles, objects);
     }
 }
@@ -91,14 +90,6 @@ void gb::ppu::ChangeMode(ppuMode newMode)
 
     if(mode == ppuMode::OAM_SCAN)
         OAMSearch();
-}
-
-void::gb::ppu::ModeUpdate(int cycles)
-{
-    if(mode == ppuMode::DRAWING_PIXELS)
-    {
-        window.DrawPixels(cycles);
-    }
 }
 
 void gb::ppu::OAMSearch()
@@ -132,11 +123,6 @@ void gb::ppu::OAMSearch()
                 return;
         }
     }
-}
-
-gb::ppuMode gb::ppu::GetPPUMode()
-{
-    return mode;
 }
 
 void gb::ppu::UpdateLY()

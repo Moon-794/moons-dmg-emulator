@@ -15,15 +15,15 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     }
 }
 
-uint8_t gb::mmu::readBootrom(uint16_t address)
-{
+//uint8_t gb::mmu::readBootrom(uint16_t address)
+//{
 
-}
+//}
 
 uint8_t gb::mmu::read(uint16_t address)
 { 
     //Retrieve memory from bootrom if still in the boot sequence
-    if(address <= 0x00FF && isBootRomMapped)
+    if(isBootRomMapped && address <= 0x00FF)
         return bootRom[address];
 
     return mem[address];

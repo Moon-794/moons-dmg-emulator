@@ -89,11 +89,6 @@ void gb::RenderWindow::PollWindowEvents()
     }
 }
 
-void gb::RenderWindow::DrawPixels(int count)
-{
-    //std::cout << "Drawing pixels...\n";
-}
-
 void gb::RenderWindow::DrawTile(uint8_t index)
 {
     /*

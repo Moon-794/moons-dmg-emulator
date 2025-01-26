@@ -4,6 +4,9 @@ project(emulator)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin/)
 set(CMAKE_PREFIX_PATH "/mingw64")
 
+set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -march=native")
+
 set(SRC_FILES src/main.cpp 
             src/joypad/joypad.cpp
             src/mmu/mmu.cpp 
