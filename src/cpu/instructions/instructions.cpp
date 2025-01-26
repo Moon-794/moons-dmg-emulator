@@ -668,7 +668,7 @@ void gb::cpu::JP_HL()
     cycles += 4;
 }
 
-void gb::cpu::LD_XX_Y(RegisterCombo regCombo, uint8_t* reg)
+void gb::cpu::LD_XX_Y(RegisterCombo regCombo, const uint8_t* reg)
 {
     memory->write(GetComboRegister(regCombo), *reg);
     cycles += 8;
@@ -1076,7 +1076,7 @@ void gb::cpu::RL_X(uint8_t* reg)
 }
 
 //Test if the nth bit of register x is set
-void gb::cpu::BIT_N_X(uint8_t n, uint8_t* reg)
+void gb::cpu::BIT_N_X(uint8_t n, const uint8_t* reg)
 {
     //Test if nth bit of register x is set
     if((*reg & n) != 0)

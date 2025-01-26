@@ -15,7 +15,7 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
     sprite.setScale(4, 4);
 }
 
-void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, std::vector<Object> objs)
+void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, std::vector<Object>& objs)
 {
     if(mode == DRAWPIXELS && clock < 240)
     {

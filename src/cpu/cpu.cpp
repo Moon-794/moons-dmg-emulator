@@ -58,8 +58,7 @@ int gb::cpu::Step()
         }
     }
 
-    uint8_t instruction = memory->read(program_counter);
-    program_counter++;
+    uint8_t instruction = memory->read(program_counter++);
 
     if(instruction == 0xCB)
     {
@@ -75,7 +74,7 @@ int gb::cpu::Step()
         IME = 1;
     }
     
-    if(usingCB == false && (this->instructionTable[instruction] == nullptr) || usingCB == true && (this->extendedInstructionTable[instruction] == nullptr))
+    if(!usingCB && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
     {
         std::cout << "Unknown Instruction Encountered:\n";
 
@@ -90,15 +89,9 @@ int gb::cpu::Step()
     else
     {
         //Call the instruction implementation
-        if(usingCB)
-        {
-            usingCB = false;
-            (extendedInstructionTable[instruction])();
-        }
-        else
-        {
-            (instructionTable[instruction])();
-        }
+        auto& table = usingCB ? extendedInstructionTable : instructionTable;
+        usingCB = false; // Reset usingCB if true
+        table[instruction]();
     }
 
     return 0;
