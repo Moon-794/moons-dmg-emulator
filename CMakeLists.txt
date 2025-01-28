@@ -19,7 +19,6 @@ set(SRC_FILES src/main.cpp
             src/RenderWindow/RenderWindow.cpp)
 
 add_executable(emulator ${SRC_FILES})
-
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 
 target_include_directories(emulator PRIVATE ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/include/)

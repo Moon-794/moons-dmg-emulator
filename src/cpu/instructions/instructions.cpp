@@ -1008,38 +1008,27 @@ void gb::cpu::CCF()
 
 void gb::cpu::DAA()
 {
-    uint8_t offset = 0;
-
-    if(!isFlagSet(FLAG_N) && a & 0x0F > 0x09 || isFlagSet(FLAG_H))
+    if(isFlagSet(FLAG_N))
     {
-        offset |= 0x06;
-    }
-
-    if(!isFlagSet(FLAG_N) && a > 0x99 || isFlagSet(FLAG_C))
-    {
-        offset |= 0x60;
-    }
-
-    if(!isFlagSet(FLAG_N))
-        a += offset;
-    else
-        a -= offset;
-
-    if(a == 0)
-        SetFlag(FLAG_Z);
-    else
-        ResetFlag(FLAG_Z);
-    
-    SetFlag(FLAG_H);
-
-    if(!isFlagSet(FLAG_N) && a > 0x99 || isFlagSet(FLAG_C))
-    {
-        SetFlag(FLAG_C);
+        if(isFlagSet(C))
+            a -= 0x60;
+        
+        if(isFlagSet(FLAG_H))
+            a -= 0x06;
     }
     else
     {
-        ResetFlag(FLAG_C);
+        if(isFlagSet(C) || (a & 0xFF) > 0x99)
+        {
+            a += 0x60;
+            SetFlag(C);
+        }
+
+        if(isFlagSet(H) || (a & 0x0F) > 0x09)
+            a += 0x06;
     }
+
+    a == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
 
     cycles += 4;
 }
