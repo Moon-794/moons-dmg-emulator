@@ -3,7 +3,7 @@
 gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "My window");
-    //window.setFramerateLimit(400);
+    window.setFramerateLimit(60);
 
     shades[0] = sf::Color(160, 160, 160, 255);
     shades[1] = sf::Color(120, 120, 120, 255);

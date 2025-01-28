@@ -8,6 +8,7 @@
 #include "ppu/ppu.h"
 #include "joypad/joypad.h"
 #include <chrono>
+#include <thread>
 
 class Gameboy
 {
