@@ -13,7 +13,7 @@ Gameboy::Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
 void Gameboy::Run()
 {
     //Fetch, Decode, Execute cycle, then input, graphics and maybe audio
-    constexpr float timePerCycle = (1.0f/4194304);
+    constexpr float timePerCycle = (1.0f/4194300);
     uint32_t last_cycles = cpu->GetCycles();
 
     cpu->Step();
@@ -26,7 +26,7 @@ void Gameboy::Run()
     //uint64_t timeInNanoseconds = static_cast<uint64_t>(delayTarget * 1e9);
 
     //auto start = std::chrono::high_resolution_clock::now();
-   //while (std::chrono::high_resolution_clock::now() - start < std::chrono::nanoseconds(timeInNanoseconds)) {
+    //while (std::chrono::high_resolution_clock::now() - start < std::chrono::nanoseconds(timeInNanoseconds)) {
     //}
 
     //Only poll window once per frame, when the ppu switches to V-Blank

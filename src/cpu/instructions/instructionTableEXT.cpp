@@ -72,7 +72,19 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x86] = [this]{ gb::cpu::RES_N_HL(BIT_0); };
     extendedInstructionTable[0x87] = [this]{ gb::cpu::RES_N_X(&a, BIT_0); };
 
+    extendedInstructionTable[0x9E] = [this]{ gb::cpu::RES_N_HL(BIT_3); };
+
     extendedInstructionTable[0xBE] = [this]{ gb::cpu::RES_N_HL(BIT_7); };
+
+    extendedInstructionTable[0xCE] = [this]{ gb::cpu::SET_N_HL(BIT_1); };
+
+    extendedInstructionTable[0xD6] = [this]{ gb::cpu::SET_N_HL(BIT_2); };
+    extendedInstructionTable[0xDE] = [this]{ gb::cpu::SET_N_HL(BIT_3); };
+
+    extendedInstructionTable[0xE6] = [this]{ gb::cpu::SET_N_HL(BIT_4); };
+    extendedInstructionTable[0xEE] = [this]{ gb::cpu::SET_N_HL(BIT_5); };
+
+    extendedInstructionTable[0xF6] = [this]{ gb::cpu::SET_N_HL(BIT_6); };
 
     extendedInstructionTable[0xFE] = [this]{ gb::cpu::SET_N_HL(BIT_7); };
 }
