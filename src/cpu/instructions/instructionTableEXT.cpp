@@ -63,8 +63,10 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x6F] = [this]{ gb::cpu::BIT_N_X(BIT_5, &a); };
 
     extendedInstructionTable[0x70] = [this]{ gb::cpu::BIT_N_X(BIT_6, &b); };
+    extendedInstructionTable[0x71] = [this]{ gb::cpu::BIT_N_X(BIT_6, &c); };
     extendedInstructionTable[0x77] = [this]{ gb::cpu::BIT_N_X(BIT_6, &a); };
     extendedInstructionTable[0x78] = [this]{ gb::cpu::BIT_N_X(BIT_7, &b); };
+    extendedInstructionTable[0x79] = [this]{ gb::cpu::BIT_N_X(BIT_7, &c); };
     extendedInstructionTable[0x7C] = [this]{ gb::cpu::BIT_N_X(BIT_7, &h); };
     extendedInstructionTable[0x7E] = [this]{ gb::cpu::BIT_N_HL(BIT_7); };
     extendedInstructionTable[0x7F] = [this]{ gb::cpu::BIT_N_X(BIT_7, &a); };

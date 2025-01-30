@@ -31,32 +31,7 @@ gb::cpu::cpu(gb::mmu* memory)
 int gb::cpu::Step()
 {
     //Check for interrupts first
-    if(IME == 1)
-    {
-        uint8_t IF = memory->read(0xFF0F);
-        uint8_t IE = memory->read(0xFFFF);
-
-        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
-        {
-            //Clear V-Blank Interrupt
-            IF &= ~0x01;
-            memory->write(0xFF0F, IF);
-
-            //Push program counter to stack
-            uint8_t pcMSB = program_counter >> 8;
-            uint8_t pcLSB = program_counter & 0x00FF;
-
-            stack_pointer--;
-            memory->write(stack_pointer, pcMSB);
-            stack_pointer--;
-            memory->write(stack_pointer, pcLSB);
-            
-            program_counter = 0x0040;
-
-            //Disable Interrupts
-            DI();
-        }
-    }
+    ProcessInterrupts();
 
     uint8_t instruction = memory->read(program_counter++);
 
@@ -64,14 +39,7 @@ int gb::cpu::Step()
     {
         //Using the extended instruction set, get next byte for opcode
         usingCB = true;
-        instruction = memory->read(program_counter);
-        program_counter++;
-    }
-
-    if(enable_IME_next_instruction)
-    {
-        enable_IME_next_instruction = false;
-        IME = 1;
+        instruction = memory->read(program_counter++);
     }
     
     if(!usingCB && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
@@ -119,6 +87,42 @@ void gb::cpu::LogCPUState()
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
             fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
+    }
+}
+
+void gb::cpu::ProcessInterrupts()
+{
+    if(IME == 1)
+    {
+        uint8_t IF = memory->read(0xFF0F);
+        uint8_t IE = memory->read(0xFFFF);
+
+        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
+        {
+            //Clear V-Blank Interrupt
+            IF &= ~0x01;
+            memory->write(0xFF0F, IF);
+
+            //Push program counter to stack
+            uint8_t pcMSB = program_counter >> 8;
+            uint8_t pcLSB = program_counter & 0x00FF;
+
+            stack_pointer--;
+            memory->write(stack_pointer, pcMSB);
+            stack_pointer--;
+            memory->write(stack_pointer, pcLSB);
+            
+            program_counter = 0x0040;
+
+            //Disable Interrupts
+            DI();
+        }
+    }
+
+    if(enable_IME_next_instruction)
+    {
+        enable_IME_next_instruction = false;
+        IME = 1;
     }
 }
 
