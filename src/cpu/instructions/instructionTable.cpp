@@ -142,12 +142,23 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x85] = [this] { gb::cpu::ADD_X(&l); };
     instructionTable[0x86] = [this] { gb::cpu::ADD_HL(); };
     instructionTable[0x87] = [this] { gb::cpu::ADD_X(&a); };
+    instructionTable[0x88] = [this] { gb::cpu::ADC_X(&b); };
     instructionTable[0x89] = [this] { gb::cpu::ADC_X(&c); };
+    instructionTable[0x8A] = [this] { gb::cpu::ADC_X(&d); };
+    instructionTable[0x8B] = [this] { gb::cpu::ADC_X(&e); };
+    instructionTable[0x8C] = [this] { gb::cpu::ADC_X(&h); };
+    instructionTable[0x8D] = [this] { gb::cpu::ADC_X(&l); };
     instructionTable[0x8E] = [this] { gb::cpu::ADC_A_NN(memory->read(GetComboRegister(HL))); };
+    instructionTable[0x8F] = [this] { gb::cpu::ADC_X(&a); };
 
     instructionTable[0x90] = [this] { gb::cpu::SUB_X(b); };
     instructionTable[0x91] = [this] { gb::cpu::SUB_X(c); };
+    instructionTable[0x92] = [this] { gb::cpu::SUB_X(d); };
+    instructionTable[0x93] = [this] { gb::cpu::SUB_X(e); };
+    instructionTable[0x94] = [this] { gb::cpu::SUB_X(h); };
+    instructionTable[0x95] = [this] { gb::cpu::SUB_X(l); };
     instructionTable[0x96] = [this] { gb::cpu::SUB_X(memory->read(GetComboRegister(HL))); cycles += 4; };
+    instructionTable[0x97] = [this] { gb::cpu::SUB_X(a); };
 
     instructionTable[0xA0] = [this] { gb::cpu::AND_X(&b); };
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };

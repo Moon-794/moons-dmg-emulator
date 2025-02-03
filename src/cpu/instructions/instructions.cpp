@@ -1008,27 +1008,32 @@ void gb::cpu::CCF()
 
 void gb::cpu::DAA()
 {
+    uint16_t val = a;
+
     if(isFlagSet(FLAG_N))
     {
         if(isFlagSet(C))
-            a -= 0x60;
+            val -= 0x60;
         
         if(isFlagSet(FLAG_H))
-            a -= 0x06;
+            val -= 0x06;
     }
     else
     {
-        if(isFlagSet(C) || (a & 0xFF) > 0x99)
+        if(isFlagSet(C) || val > 0x99)
         {
-            a += 0x60;
+            val += 0x60;
             SetFlag(C);
         }
 
-        if(isFlagSet(H) || (a & 0x0F) > 0x09)
-            a += 0x06;
+        if(isFlagSet(H) || (val & 0x0F) > 0x09)
+            val += 0x06;
     }
 
-    a == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    val == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    a = val;
+
+    ResetFlag(FLAG_H);
 
     cycles += 4;
 }
