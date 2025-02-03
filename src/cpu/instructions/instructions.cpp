@@ -1038,6 +1038,39 @@ void gb::cpu::DAA()
     cycles += 4;
 }
 
+void gb::cpu::SBC_X(uint8_t* reg)
+{
+    uint8_t carry = isFlagSet(FLAG_C) ? 1 : 0;
+
+    uint8_t result = a - carry - (*reg);
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+
+    if(a < ((*reg) + carry))
+    {
+        SetFlag(FLAG_C);
+    }
+    else
+    {
+        ResetFlag(FLAG_C);
+    }
+
+    if((a & 0x0F) < ((*reg) & 0x0F) + (carry & 0x0F))
+    {
+        SetFlag(FLAG_H);
+    }
+    else
+    {
+        ResetFlag(FLAG_H);
+    }
+
+    SetFlag(FLAG_N);
+
+    a = result;
+
+    cycles += 8;
+}
+
 //CB PREFIX TABLE
 
 void gb::cpu::RL_X(uint8_t* reg)

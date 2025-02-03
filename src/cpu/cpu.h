@@ -130,6 +130,7 @@ namespace gb
         void JP_CC_NN(bool condition);
         void CP_X(uint8_t value);
         void SBC_D8();
+        void SBC_X(uint8_t* reg);
 
         // --- Specific implementations ---
         void NO_OP();

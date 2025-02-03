@@ -159,11 +159,22 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x95] = [this] { gb::cpu::SUB_X(l); };
     instructionTable[0x96] = [this] { gb::cpu::SUB_X(memory->read(GetComboRegister(HL))); cycles += 4; };
     instructionTable[0x97] = [this] { gb::cpu::SUB_X(a); };
+    instructionTable[0x98] = [this] { gb::cpu::SBC_X(&b); };
+    instructionTable[0x99] = [this] { gb::cpu::SBC_X(&c); };
+    instructionTable[0x9A] = [this] { gb::cpu::SBC_X(&d); };
+    instructionTable[0x9B] = [this] { gb::cpu::SBC_X(&e); };
+    instructionTable[0x9C] = [this] { gb::cpu::SBC_X(&h); };
+    instructionTable[0x9D] = [this] { gb::cpu::SBC_X(&l); };
+    instructionTable[0x9F] = [this] { gb::cpu::SBC_X(&a); };
 
     instructionTable[0xA0] = [this] { gb::cpu::AND_X(&b); };
     instructionTable[0xA1] = [this] { gb::cpu::AND_X(&c); };
+    instructionTable[0xA2] = [this] { gb::cpu::AND_X(&d); };
+    instructionTable[0xA3] = [this] { gb::cpu::AND_X(&e); };
+    instructionTable[0xA4] = [this] { gb::cpu::AND_X(&h); };
+    instructionTable[0xA5] = [this] { gb::cpu::AND_X(&l); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
-    instructionTable[0xA8] = [this] { gb::cpu::AND_X(&b); };
+    instructionTable[0xA8] = [this] { gb::cpu::XOR_X(&b); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
     instructionTable[0xAA] = [this] { gb::cpu::XOR_X(&d); };
     instructionTable[0xAB] = [this] { gb::cpu::XOR_X(&e); };
