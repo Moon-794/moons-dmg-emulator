@@ -43,6 +43,9 @@ void gb::mmu::write(uint16_t address, uint8_t data)
                 joypad->UpdateInputs();
         }
         break;
+    //DIV Register
+    case 0xFF04:
+        mem[address] = 0;
     case 0xFF46:
         DMATransfer(static_cast<uint16_t>(data) << 8);
         break;

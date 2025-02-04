@@ -26,8 +26,10 @@ private:
     gb::ppu* ppu;
     gb::mmu* mmu;
     gb::Joypad* joypad;
-    
-    //rom file needed too, not sure where to store
+
+    std::chrono::high_resolution_clock::time_point divTimer;
+
+    friend gb::mmu;
 };
 
 #endif

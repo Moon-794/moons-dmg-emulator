@@ -12,6 +12,8 @@
 
 #include "joypad/joypad.h"
 
+class Gameboy;
+
 struct Object
 {
     uint8_t yPos;
@@ -25,6 +27,8 @@ namespace gb
     class mmu
     {
     friend Joypad;
+    friend Gameboy;
+
     public:
         mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom);
 

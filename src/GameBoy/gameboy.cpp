@@ -8,12 +8,24 @@ Gameboy::Gameboy(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     joypad = new gb::Joypad(mmu);
 
     mmu->SetJoypad(joypad);
+
+    divTimer = std::chrono::high_resolution_clock::now();
 }
 
 //Main loop
 void Gameboy::Run()
 {
-    constexpr float timePerCycle = (1.0f/4194300);
+    constexpr float divRate = (1.0f/16384);
+    
+    std::chrono::high_resolution_clock::time_point divMeasurer = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(divMeasurer - divTimer);
+
+    if(time_span.count() > divRate)
+    {
+        divTimer = std::chrono::high_resolution_clock::now();
+        mmu->mem[0xFF04]++;
+    }
+
     uint32_t last_cycles = cpu->GetCycles();
 
     cpu->Step();
