@@ -28,8 +28,6 @@ private:
     gb::Joypad* joypad;
 
     std::chrono::high_resolution_clock::time_point divTimer;
-
-    friend gb::mmu;
 };
 
 #endif

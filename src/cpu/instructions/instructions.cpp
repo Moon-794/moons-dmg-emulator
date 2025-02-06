@@ -1224,3 +1224,13 @@ void gb::cpu::RR_X(uint8_t* reg)
 
     cycles += 8;
 }
+
+ void gb::cpu::SET_N_X(uint8_t bitNo, uint8_t* reg)
+ {
+    uint8_t val = (*reg);
+
+    val |= bitNo;
+    *reg = val;
+
+    cycles += 8;
+ }
