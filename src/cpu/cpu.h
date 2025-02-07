@@ -131,6 +131,7 @@ namespace gb
         void CP_X(uint8_t value);
         void SBC_D8();
         void SBC_X(uint8_t* reg);
+        void SBC_HL();
 
         // --- Specific implementations ---
         void NO_OP();
@@ -170,6 +171,7 @@ namespace gb
         void RRA();
         void RLA();
         void LD_A_HL_DEC();
+        void ADD_HL_SP();
         void ADC_A_NN(uint8_t val);
         void XOR_HL();
         void XOR_A_D8();
@@ -181,6 +183,7 @@ namespace gb
         void LD_SP_HL();
         void SCF();
         void CCF();
+        void SBC_HL();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, const uint8_t* reg);

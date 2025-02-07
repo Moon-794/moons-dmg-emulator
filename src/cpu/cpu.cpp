@@ -33,7 +33,7 @@ int gb::cpu::Step()
     //Check for interrupts first
     ProcessInterrupts();
 
-    LogCPUState();
+    //LogCPUState();
 
     uint8_t instruction = memory->read(program_counter++);
 

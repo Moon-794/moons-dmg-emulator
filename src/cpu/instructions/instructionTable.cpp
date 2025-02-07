@@ -4,6 +4,7 @@ void gb::cpu::SetupInstructionTable()
 {
     instructionTable[0x00] = [this] { gb::cpu::NO_OP(); };
     instructionTable[0x01] = [this] { gb::cpu::LD_NN_D16(BC); };
+    instructionTable[0x02] = [this] { gb::cpu::LD_XX_Y(BC, &a); };
     instructionTable[0x03] = [this] { gb::cpu::SetComboRegister(BC, gb::cpu::GetComboRegister(BC) + 1); cycles += 8; };
     instructionTable[0x04] = [this] { gb::cpu::INC_X(&b); };
     instructionTable[0x05] = [this] { gb::cpu::DEC_X(&b); };
@@ -60,6 +61,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x36] = [this] { gb::cpu::LD_HL_D8(); };
     instructionTable[0x37] = [this] { gb::cpu::SCF(); };
     instructionTable[0x38] = [this] { gb::cpu::JR_CC_E(isFlagSet(FLAG_C)); };
+    instructionTable[0x39] = [this] { gb::cpu::ADD_HL_SP(); };
     instructionTable[0x3A] = [this] { gb::cpu::LD_A_HL_DEC(); };
     instructionTable[0x3B] = [this] { stack_pointer--; cycles += 8; };
     instructionTable[0x3C] = [this] { gb::cpu::INC_X(&a); };
@@ -165,6 +167,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x9B] = [this] { gb::cpu::SBC_X(&e); };
     instructionTable[0x9C] = [this] { gb::cpu::SBC_X(&h); };
     instructionTable[0x9D] = [this] { gb::cpu::SBC_X(&l); };
+    instructionTable[0x9E] = [this] { gb::cpu::SBC_HL(); };
     instructionTable[0x9F] = [this] { gb::cpu::SBC_X(&a); };
 
     instructionTable[0xA0] = [this] { gb::cpu::AND_X(&b); };

@@ -655,6 +655,22 @@ void gb::cpu::ADD_XX_YY(RegisterCombo first, RegisterCombo second)
     cycles += 8;
 }
 
+void gb::cpu::ADD_HL_SP()
+{
+    uint16_t firstVal = GetComboRegister(HL);
+    uint16_t secondVal = stack_pointer;
+
+    uint32_t result = firstVal + secondVal;
+
+    SetComboRegister(HL, result);
+
+    ((firstVal & 0x0FFF) + (secondVal & 0x0FFF) > 0x0FFF) ? SetFlag(FLAG_H) : ResetFlag(FLAG_H);
+    result > 0xFFFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    ResetFlag(FLAG_N);
+
+    cycles += 8;
+}
+
 void gb::cpu::LD_X_DHL(uint8_t* reg)
 {
     *reg = memory->read(GetComboRegister(HL));
@@ -1012,7 +1028,7 @@ void gb::cpu::DAA()
 
     if(isFlagSet(FLAG_N))
     {
-        if(isFlagSet(C))
+        if(isFlagSet(FLAG_C))
             val -= 0x60;
         
         if(isFlagSet(FLAG_H))
@@ -1020,14 +1036,14 @@ void gb::cpu::DAA()
     }
     else
     {
-        if(isFlagSet(C) || val > 0x99)
+        if(isFlagSet(FLAG_H) || (val & 0x0F) > 0x09)
+        val += 0x06;
+
+        if(isFlagSet(FLAG_C) || val > 0x99)
         {
             val += 0x60;
-            SetFlag(C);
+            SetFlag(FLAG_C);
         }
-
-        if(isFlagSet(H) || (val & 0x0F) > 0x09)
-            val += 0x06;
     }
 
     val == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
@@ -1068,7 +1084,15 @@ void gb::cpu::SBC_X(uint8_t* reg)
 
     a = result;
 
-    cycles += 8;
+    cycles += 4;
+}
+
+void gb::cpu::SBC_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    SBC_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 4;
 }
 
 //CB PREFIX TABLE
