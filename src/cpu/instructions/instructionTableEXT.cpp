@@ -2,20 +2,38 @@
 
 void gb::cpu::SetupInstructionTableEXT()
 {
+    extendedInstructionTable[0x00] = [this]{ gb::cpu::RLC_X(&b); };
+    extendedInstructionTable[0x01] = [this]{ gb::cpu::RLC_X(&c); };
+    extendedInstructionTable[0x02] = [this]{ gb::cpu::RLC_X(&d); };
+    extendedInstructionTable[0x03] = [this]{ gb::cpu::RLC_X(&e); };
+    extendedInstructionTable[0x04] = [this]{ gb::cpu::RLC_X(&h); };
+    extendedInstructionTable[0x05] = [this]{ gb::cpu::RLC_X(&l); };
+    extendedInstructionTable[0x06] = [this]{ gb::cpu::RLC_HL(); };
+    extendedInstructionTable[0x07] = [this]{ gb::cpu::RLC_X(&a); };
+    extendedInstructionTable[0x08] = [this]{ gb::cpu::RRC_X(&b); };
+    extendedInstructionTable[0x09] = [this]{ gb::cpu::RRC_X(&c); };
+    extendedInstructionTable[0x0A] = [this]{ gb::cpu::RRC_X(&d); };
+    extendedInstructionTable[0x0B] = [this]{ gb::cpu::RRC_X(&e); };
+    extendedInstructionTable[0x0C] = [this]{ gb::cpu::RRC_X(&h); };
+    extendedInstructionTable[0x0D] = [this]{ gb::cpu::RRC_X(&l); };
+    extendedInstructionTable[0x0E] = [this]{ gb::cpu::RRC_HL(); };
+    extendedInstructionTable[0x0F] = [this]{ gb::cpu::RRC_X(&a); };
+
     extendedInstructionTable[0x10] = [this]{ gb::cpu::RL_X(&b); };
     extendedInstructionTable[0x11] = [this]{ gb::cpu::RL_X(&c); };
     extendedInstructionTable[0x12] = [this]{ gb::cpu::RL_X(&d); };
     extendedInstructionTable[0x13] = [this]{ gb::cpu::RL_X(&e); };
     extendedInstructionTable[0x14] = [this]{ gb::cpu::RL_X(&h); };
     extendedInstructionTable[0x15] = [this]{ gb::cpu::RL_X(&l); };
+    extendedInstructionTable[0x16] = [this]{ gb::cpu::RL_HL(); };
     extendedInstructionTable[0x17] = [this]{ gb::cpu::RL_X(&a); };
-
     extendedInstructionTable[0x18] = [this]{ gb::cpu::RR_X(&b); };
     extendedInstructionTable[0x19] = [this]{ gb::cpu::RR_X(&c); };
     extendedInstructionTable[0x1A] = [this]{ gb::cpu::RR_X(&d); };
     extendedInstructionTable[0x1B] = [this]{ gb::cpu::RR_X(&e); };
     extendedInstructionTable[0x1C] = [this]{ gb::cpu::RR_X(&h); };
     extendedInstructionTable[0x1D] = [this]{ gb::cpu::RR_X(&l); };
+    extendedInstructionTable[0x1E] = [this]{ gb::cpu::RR_HL(); };
     extendedInstructionTable[0x1F] = [this]{ gb::cpu::RR_X(&a); };
 
     extendedInstructionTable[0x20] = [this]{ gb::cpu::SLA_X(&b); };
@@ -24,7 +42,16 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x23] = [this]{ gb::cpu::SLA_X(&e); };
     extendedInstructionTable[0x24] = [this]{ gb::cpu::SLA_X(&h); };
     extendedInstructionTable[0x25] = [this]{ gb::cpu::SLA_X(&l); };
+    extendedInstructionTable[0x26] = [this]{ gb::cpu::SLA_HL(); };
     extendedInstructionTable[0x27] = [this]{ gb::cpu::SLA_X(&a); };
+    extendedInstructionTable[0x28] = [this]{ gb::cpu::SRA_X(&b); };
+    extendedInstructionTable[0x29] = [this]{ gb::cpu::SRA_X(&c); };
+    extendedInstructionTable[0x2A] = [this]{ gb::cpu::SRA_X(&d); };
+    extendedInstructionTable[0x2B] = [this]{ gb::cpu::SRA_X(&e); };
+    extendedInstructionTable[0x2C] = [this]{ gb::cpu::SRA_X(&h); };
+    extendedInstructionTable[0x2D] = [this]{ gb::cpu::SRA_X(&l); };
+    extendedInstructionTable[0x2E] = [this]{ gb::cpu::SRA_HL(); };
+    extendedInstructionTable[0x2F] = [this]{ gb::cpu::SRA_X(&a); };
 
     extendedInstructionTable[0x30] = [this]{ gb::cpu::SWAP_X(&b); };
     extendedInstructionTable[0x31] = [this]{ gb::cpu::SWAP_X(&c); };
@@ -32,6 +59,7 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x33] = [this]{ gb::cpu::SWAP_X(&e); };
     extendedInstructionTable[0x34] = [this]{ gb::cpu::SWAP_X(&h); };
     extendedInstructionTable[0x35] = [this]{ gb::cpu::SWAP_X(&l); };
+    extendedInstructionTable[0x36] = [this]{ gb::cpu::SWAP_HL(); };
     extendedInstructionTable[0x37] = [this]{ gb::cpu::SWAP_X(&a); };
     extendedInstructionTable[0x38] = [this]{ gb::cpu::SRL_X(&b); };
     extendedInstructionTable[0x39] = [this]{ gb::cpu::SRL_X(&c); };
@@ -39,6 +67,7 @@ void gb::cpu::SetupInstructionTableEXT()
     extendedInstructionTable[0x3B] = [this]{ gb::cpu::SRL_X(&e); };
     extendedInstructionTable[0x3C] = [this]{ gb::cpu::SRL_X(&h); };
     extendedInstructionTable[0x3D] = [this]{ gb::cpu::SRL_X(&l); };
+    extendedInstructionTable[0x3E] = [this]{ gb::cpu::SRL_HL(); };
     extendedInstructionTable[0x3F] = [this]{ gb::cpu::SRL_X(&a); };
 
     extendedInstructionTable[0x40] = [this]{ gb::cpu::BIT_N_X(BIT_0, &b); };

@@ -186,14 +186,25 @@ namespace gb
         void BIT_N_X(uint8_t bitNo, const uint8_t* reg);
         void BIT_N_HL(uint8_t bitNo);
         void RL_X(uint8_t* reg);
+        void RL_HL();
+        void RLC_X(uint8_t* reg);
+        void RLC_HL();
+        void RRC_X(uint8_t* reg);
+        void RRC_HL();
         void SWAP_X(uint8_t* reg);
+        void SWAP_HL();
         void RES_N_X(uint8_t* reg, uint8_t bitNo);
         void RES_N_HL(uint8_t bitNo);
         void SET_N_X(uint8_t bitNo, uint8_t* reg);
         void SET_N_HL(uint8_t bitNo);
         void SLA_X(uint8_t* reg);
+        void SLA_HL();
+        void SRA_X(uint8_t* reg);
+        void SRA_HL();
         void SRL_X(uint8_t* reg);
+        void SRL_HL();
         void RR_X(uint8_t* reg);
+        void RR_HL();
     };
 }
 

@@ -21,8 +21,8 @@ uint8_t gb::mmu::read(uint16_t address)
     if(isBootRomMapped && address <= 0x00FF)
         return bootRom[address];
 
-    //if(address == 0xff44)
-       //return 0x90;
+    if(address == 0xff44)
+       return 0x90;
 
     return mem[address];
 }

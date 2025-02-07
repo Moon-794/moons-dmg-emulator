@@ -15,6 +15,8 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
     sprite.setScale(4, 4);
 }
 
+//Main function to draw pixels to the screen texture, the function is called per pixel to maintain accuracy when scroll registers
+//are manipulated mid-scanline
 void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, const std::vector<Object>& objs)
 {
     if(mode == DRAWPIXELS && clock < 240)
@@ -28,7 +30,8 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         tileColumn = xPos / 8;
         pixelColumn = xPos % 8;
         
-        uint8_t tileIndex = memory->read(0x9800 + tileRow * 32 + tileColumn);
+        uint16_t addrMode = memory->read(0xFF40) & (BIT_3) != 0 ? 0x9800 : 0x9C00;
+        uint8_t tileIndex = memory->read(addrMode + tileRow * 32 + tileColumn);
 
         uint16_t offset = 0x8000 + (tileIndex * 16) + (pixelRow * 2);
         uint8_t byteOne = memory->read(offset);

@@ -1170,13 +1170,31 @@ void gb::cpu::SET_N_HL(uint8_t bitNo)
 
 void gb::cpu::SLA_X(uint8_t* reg)
 {
-    *reg = ((*reg) << 1) & 0xFF;
+    uint8_t value = ((*reg) << 1);
 
     ((*reg) & BIT_7) != 0 ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
-    (*reg) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    value == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
 
     ResetFlag(FLAG_N);
     ResetFlag(FLAG_H);
+
+    *reg = value;
+
+    cycles += 8;
+}
+
+void gb::cpu::SRA_X(uint8_t* reg)
+{
+    uint8_t value = ((*reg) >> 1) & 0xFF;
+    
+    ((*reg) & BIT_7) != 0 ? value |= BIT_7 : value &= ~BIT_7;
+    ((*reg) & BIT_0) != 0 ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+    value == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+
+    ResetFlag(FLAG_N);
+    ResetFlag(FLAG_H);
+
+    (*reg) = value;
 
     cycles += 8;
 }
@@ -1234,3 +1252,119 @@ void gb::cpu::RR_X(uint8_t* reg)
 
     cycles += 8;
  }
+
+ void gb::cpu::RLC_X(uint8_t* reg)
+ {
+    uint8_t value = (*reg);
+    uint8_t leftMostBit = value >> 7;
+
+    value = value << 1;
+    
+    if(leftMostBit == 1)
+    {
+        SetFlag(FLAG_C);
+        value |= 1;
+    }
+    else
+    {
+        ResetFlag(FLAG_C);
+    }
+
+    value == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    
+    ResetFlag(FLAG_H);
+    ResetFlag(FLAG_N);
+
+    *reg = value;
+    cycles += 8;
+ }
+
+ void gb::cpu::RRC_X(uint8_t* reg)
+ {
+    uint8_t value = (*reg);
+    uint8_t rightMostBit = value & 0x01;
+
+    value = value >> 1;
+    
+    if(rightMostBit == 1)
+    {
+        SetFlag(FLAG_C);
+        value |= BIT_7;
+    }
+    else
+    {
+        ResetFlag(FLAG_C);
+    }
+
+    value == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    
+    ResetFlag(FLAG_H);
+    ResetFlag(FLAG_N);
+
+    *reg = value;
+    cycles += 8;
+ }
+
+ void gb::cpu::SWAP_HL()
+ {
+    uint8_t value = memory->read(GetComboRegister(HL));
+    SWAP_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+ }
+
+void gb::cpu::SRL_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    SRL_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::SLA_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    SLA_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::SRA_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    SRA_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::RL_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    RL_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::RR_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    RR_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::RLC_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    RLC_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}
+
+void gb::cpu::RRC_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    RRC_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 8;
+}

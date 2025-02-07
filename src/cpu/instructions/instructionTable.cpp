@@ -16,7 +16,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x0C] = [this] { gb::cpu::INC_X(&c); };
     instructionTable[0x0D] = [this] { gb::cpu::DEC_X(&c); };
     instructionTable[0x0E] = [this] { gb::cpu::LD_X_D8(&c); };
-    instructionTable[0x0F] = [this] { gb::cpu::RLCA(); };
+    instructionTable[0x0F] = [this] { gb::cpu::RRCA(); };
 
     instructionTable[0x11] = [this] { gb::cpu::LD_NN_D16(DE); };
     instructionTable[0x12] = [this] { gb::cpu::LD_XX_Y(DE, &a); };
