@@ -362,8 +362,9 @@ void gb::cpu::CP_HL()
         ResetFlag(FLAG_H);
     }
 
-    if(result == 0)
-        SetFlag(FLAG_Z);
+    a < data ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
+
+    result == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
 
     SetFlag(FLAG_N);
 
@@ -410,7 +411,6 @@ void gb::cpu::ADD_HL()
 {
     uint8_t data = memory->read(GetComboRegister(HL));
     uint8_t result = a + data;
-    a = result;
 
     if((a & 0x0F) + (data & 0x0F) > 0x0F)
     {
@@ -423,6 +423,8 @@ void gb::cpu::ADD_HL()
 
     if(result == 0)
         SetFlag(FLAG_Z);
+    else
+        ResetFlag(FLAG_Z);
 
     ResetFlag(FLAG_N);
 
@@ -430,6 +432,10 @@ void gb::cpu::ADD_HL()
         SetFlag(FLAG_C);
     else
         ResetFlag(FLAG_C);
+
+    a = result;
+
+    cycles += 8;
 }
 
 void gb::cpu::DI()
@@ -1036,17 +1042,17 @@ void gb::cpu::DAA()
     }
     else
     {
-        if(isFlagSet(FLAG_H) || (val & 0x0F) > 0x09)
-            val += 0x06;
-
         if(isFlagSet(FLAG_C) || val > 0x99)
         {
             val += 0x60;
             SetFlag(FLAG_C);
         }
+
+        if(isFlagSet(FLAG_H) || (val & 0x0F) > 0x09)
+            val += 0x06;
     }
 
-    val == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
+    (val & 0xFF) == 0 ? SetFlag(FLAG_Z) : ResetFlag(FLAG_Z);
     a = val;
 
     ResetFlag(FLAG_H);

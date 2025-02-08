@@ -30,7 +30,7 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         tileColumn = xPos / 8;
         pixelColumn = xPos % 8;
         
-        uint16_t addrMode = memory->read(0xFF40) & (BIT_3) != 0 ? 0x9800 : 0x9C00;
+        uint16_t addrMode = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
         uint8_t tileIndex = memory->read(addrMode + tileRow * 32 + tileColumn);
 
         uint16_t offset = 0x8000 + (tileIndex * 16) + (pixelRow * 2);

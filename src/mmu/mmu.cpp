@@ -13,6 +13,8 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     {
         mem[i] = gameRom[i];
     }
+
+    //isBootRomMapped = false;
 }
 
 uint8_t gb::mmu::read(uint16_t address)
