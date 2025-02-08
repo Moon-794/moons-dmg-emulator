@@ -33,6 +33,9 @@ int gb::cpu::Step()
     //Check for interrupts first
     ProcessInterrupts();
 
+    if(isHalted)
+        return 0;
+
     //LogCPUState();
 
     uint8_t instruction = memory->read(program_counter++);
@@ -99,6 +102,7 @@ void gb::cpu::ProcessInterrupts()
         uint8_t IF = memory->read(0xFF0F);
         uint8_t IE = memory->read(0xFFFF);
 
+        //V-Blank Interrupt
         if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
         {
             //Clear V-Blank Interrupt
@@ -118,6 +122,8 @@ void gb::cpu::ProcessInterrupts()
 
             //Disable Interrupts
             DI();
+
+            isHalted = false;
         }
     }
 

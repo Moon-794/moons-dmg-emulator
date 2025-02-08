@@ -690,14 +690,14 @@ void gb::cpu::LD_XX_Y(RegisterCombo regCombo, const uint8_t* reg)
     cycles += 8;
 }
 
-void gb::cpu::CALL_NZ_NN()
+void gb::cpu::CALL_CC_A16(bool condition)
 {
     uint8_t addrLSB = memory->read(program_counter++);
     uint8_t addrMSB = memory->read(program_counter++);
 
     uint16_t addr = convert16Bit(addrLSB, addrMSB);
 
-    if(!isFlagSet(FLAG_Z))
+    if(condition)
     {
         uint8_t pcMSB = program_counter >> 8;
         uint8_t pcLSB = program_counter & 0x00FF;
@@ -1037,7 +1037,7 @@ void gb::cpu::DAA()
     else
     {
         if(isFlagSet(FLAG_H) || (val & 0x0F) > 0x09)
-        val += 0x06;
+            val += 0x06;
 
         if(isFlagSet(FLAG_C) || val > 0x99)
         {
@@ -1093,6 +1093,74 @@ void gb::cpu::SBC_HL()
     SBC_X(&value);
     memory->write(GetComboRegister(HL), value);
     cycles += 4;
+}
+
+void gb::cpu::HALT()
+{
+    isHalted = true;
+}
+
+void gb::cpu::AND_HL()
+{
+    uint8_t value = memory->read(GetComboRegister(HL));
+    AND_X(&value);
+    memory->write(GetComboRegister(HL), value);
+    cycles += 4;
+}
+
+void gb::cpu::LDH_A_C()
+{
+    uint16_t addr = convert16Bit(c, 0xFF);
+    a = memory->read(addr);
+
+    cycles += 8;
+}
+
+void gb::cpu::ADD_SP_E8()
+{
+    int8_t offset = static_cast<int8_t>(memory->read(program_counter++));
+    uint16_t oldSP = stack_pointer;
+
+    stack_pointer += offset;
+
+    if(((oldSP & 0x0F) + (static_cast<uint8_t>(offset) & 0x0F)) > 0x0F)
+        SetFlag(FLAG_H);
+    else
+        ResetFlag(FLAG_H);
+    
+    if(((oldSP & 0xFF) + (static_cast<uint8_t>(offset) & 0xFF)) > 0xFF)
+        SetFlag(FLAG_C);
+    else
+        ResetFlag(FLAG_C);
+    
+    ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_N);
+
+    cycles += 16;
+}
+
+void gb::cpu::LD_HL_SPXE8()
+{
+    int8_t offset = static_cast<int8_t>(memory->read(program_counter++));
+    uint16_t oldSP = stack_pointer;
+
+    uint16_t result = stack_pointer + offset;
+    SetComboRegister(HL, result);
+
+    if(((oldSP & 0x0F) + (static_cast<uint8_t>(offset) & 0x0F)) > 0x0F)
+        SetFlag(FLAG_H);
+    else
+        ResetFlag(FLAG_H);
+    
+    if(((oldSP & 0xFF) + (static_cast<uint8_t>(offset) & 0xFF)) > 0xFF)
+        SetFlag(FLAG_C);
+    else
+        ResetFlag(FLAG_C);
+    
+    ResetFlag(FLAG_Z);
+    ResetFlag(FLAG_N);
+
+    cycles += 12;
 }
 
 //CB PREFIX TABLE

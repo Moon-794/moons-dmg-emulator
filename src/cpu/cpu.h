@@ -60,9 +60,12 @@ namespace gb
         uint32_t GetCycles() { return cycles; }
         uint16_t program_counter = 0x0000;
         uint16_t stack_pointer = 0x0000;
+        
+        //CPU Registers
         uint8_t a, b, c, d, e, f, h, l;
 
         bool debug = false;
+        bool isHalted = false;
 
     private:
         bool enable_IME_next_instruction = false;
@@ -131,7 +134,7 @@ namespace gb
         void CP_X(uint8_t value);
         void SBC_D8();
         void SBC_X(uint8_t* reg);
-        void SBC_HL();
+        void CALL_CC_A16(bool condition);
 
         // --- Specific implementations ---
         void NO_OP();
@@ -149,13 +152,13 @@ namespace gb
         void LD_HL_INC_A();
         void LD_DE_D16();
         void LDH_A8_A();
+        void LDH_A_C();
         void LD_A16_A();
         void LD_A_NN();
         void LD_A_HL_INC();
         void CP_HL();
         void ADD_HL();
         void CALL_A16();
-        void CALL_NZ_NN();
         void RET();
         void RET_NZ();
         void RET_NC();
@@ -184,6 +187,10 @@ namespace gb
         void SCF();
         void CCF();
         void SBC_HL();
+        void HALT();
+        void AND_HL();
+        void ADD_SP_E8();
+        void LD_HL_SPXE8();
 
         // --- CB Generics ---
         void BIT_N_X(uint8_t bitNo, const uint8_t* reg);

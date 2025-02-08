@@ -126,6 +126,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0x73] = [this] { gb::cpu::LD_HL_X(&e); };
     instructionTable[0x74] = [this] { gb::cpu::LD_HL_X(&h); };
     instructionTable[0x75] = [this] { gb::cpu::LD_HL_X(&l); };
+    instructionTable[0x76] = [this] { gb::cpu::HALT(); };
     instructionTable[0x77] = [this] { gb::cpu::LD_HL_X(&a); };
     instructionTable[0x78] = [this] { gb::cpu::LD_X_Y(&a, b); };
     instructionTable[0x79] = [this] { gb::cpu::LD_X_Y(&a, c); };
@@ -176,6 +177,7 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0xA3] = [this] { gb::cpu::AND_X(&e); };
     instructionTable[0xA4] = [this] { gb::cpu::AND_X(&h); };
     instructionTable[0xA5] = [this] { gb::cpu::AND_X(&l); };
+    instructionTable[0xA6] = [this] { gb::cpu::AND_HL(); };
     instructionTable[0xA7] = [this] { gb::cpu::AND_X(&a); };
     instructionTable[0xA8] = [this] { gb::cpu::XOR_X(&b); };
     instructionTable[0xA9] = [this] { gb::cpu::XOR_X(&c); };
@@ -207,22 +209,29 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0xC1] = [this] { gb::cpu::POP_XX(BC); };
     instructionTable[0xC2] = [this] { gb::cpu::JP_CC_NN(!isFlagSet(FLAG_Z)); };
     instructionTable[0xC3] = [this] { gb::cpu::JP_A16(); };
-    instructionTable[0xC4] = [this] { gb::cpu::CALL_NZ_NN(); };
+    instructionTable[0xC4] = [this] { gb::cpu::CALL_CC_A16(!isFlagSet(FLAG_Z)); };
     instructionTable[0xC5] = [this] { gb::cpu::PUSH_XX(BC); };
     instructionTable[0xC6] = [this] { gb::cpu::ADD_N(); };
+    instructionTable[0xC7] = [this] { gb::cpu::RST_XX(0x00); };
     instructionTable[0xC8] = [this] { gb::cpu::RET_Z(); };
     instructionTable[0xC9] = [this] { gb::cpu::RET(); };
     instructionTable[0xCA] = [this] { gb::cpu::JP_CC_NN(isFlagSet(FLAG_Z)); };
+    instructionTable[0xCC] = [this] { gb::cpu::CALL_CC_A16(isFlagSet(FLAG_Z)); };
     instructionTable[0xCD] = [this] { gb::cpu::CALL_A16(); };
     instructionTable[0xCE] = [this] { gb::cpu::ADC_A_NN(memory->read(program_counter++)); };
     instructionTable[0xCF] = [this] { gb::cpu::RST_XX(0x08); };
 
     instructionTable[0xD0] = [this] { gb::cpu::RET_NC(); };
     instructionTable[0xD1] = [this] { gb::cpu::POP_XX(DE); };
+    instructionTable[0xD2] = [this] { gb::cpu::JP_CC_NN(!isFlagSet(FLAG_C)); };
+    instructionTable[0xD4] = [this] { gb::cpu::CALL_CC_A16(!isFlagSet(FLAG_C)); };
     instructionTable[0xD5] = [this] { gb::cpu::PUSH_XX(DE); };
     instructionTable[0xD6] = [this] { gb::cpu::SUB_X(memory->read(program_counter++)); };
+    instructionTable[0xD7] = [this] { gb::cpu::RST_XX(0x10); };
     instructionTable[0xD8] = [this] { gb::cpu::RET_C();};
     instructionTable[0xD9] = [this] { gb::cpu::RET(); IME = 1; };
+    instructionTable[0xDA] = [this] { gb::cpu::JP_CC_NN(isFlagSet(FLAG_C)); };
+    instructionTable[0xDC] = [this] { gb::cpu::CALL_CC_A16(isFlagSet(FLAG_C)); };
     instructionTable[0xDE] = [this] { gb::cpu::SBC_D8(); };
     instructionTable[0xDF] = [this] { gb::cpu::RST_XX(0x18); };
 
@@ -231,6 +240,8 @@ void gb::cpu::SetupInstructionTable()
     instructionTable[0xE2] = [this] { gb::cpu::LD_FFC_A(); };
     instructionTable[0xE5] = [this] { gb::cpu::PUSH_XX(HL); };
     instructionTable[0xE6] = [this] { gb::cpu::AND_N(); };
+    instructionTable[0xE7] = [this] { gb::cpu::RST_XX(0x20); };
+    instructionTable[0xE8] = [this] { gb::cpu::ADD_SP_E8(); };
     instructionTable[0xE9] = [this] { gb::cpu::JP_HL(); };
     instructionTable[0xEA] = [this] { gb::cpu::LD_A16_A(); };
     instructionTable[0xEE] = [this] { gb::cpu::XOR_A_D8(); };
@@ -238,9 +249,12 @@ void gb::cpu::SetupInstructionTable()
 
     instructionTable[0xF0] = [this] { gb::cpu::LDH_A_A8(); };
     instructionTable[0xF1] = [this] { gb::cpu::POP_XX(AF); };
+    instructionTable[0xF2] = [this] { gb::cpu::LDH_A_C(); };
     instructionTable[0xF3] = [this] { gb::cpu::DI(); };
     instructionTable[0xF5] = [this] { gb::cpu::PUSH_XX(AF); };
     instructionTable[0xF6] = [this] { gb::cpu::OR_D8(); };
+    instructionTable[0xF7] = [this] { gb::cpu::RST_XX(0x30); };
+    instructionTable[0xF8] = [this] { gb::cpu::LD_HL_SPXE8(); };
     instructionTable[0xF9] = [this] { gb::cpu::LD_SP_HL(); };
     instructionTable[0xFA] = [this] { gb::cpu::LD_A_NN(); };
     instructionTable[0xFB] = [this] { gb::cpu::EI(); }; 
