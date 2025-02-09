@@ -66,10 +66,10 @@ namespace gb
 
         bool debug = false;
         bool isHalted = false;
+        uint8_t IME;
 
     private:
         bool enable_IME_next_instruction = false;
-        uint8_t IME;
 
         std::ofstream fileWriter;
 

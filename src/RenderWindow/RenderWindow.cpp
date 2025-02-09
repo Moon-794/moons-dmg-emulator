@@ -2,7 +2,7 @@
 
 gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
-    window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "My window");
+    window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE + (8 * 16), SCREEN_HEIGHT * WINDOW_SCALE), "My window");
     window.setFramerateLimit(60);
 
     shades[0] = sf::Color(160, 120, 120, 255);
@@ -13,6 +13,11 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
     tex.create(160, 144);
     sprite.setTexture(tex);
     sprite.setScale(4, 4);
+
+    debugTex.create(8, 8);
+    debugSprite.setTexture(debugTex);
+    debugSprite.setScale(16, 16);
+    debugSprite.setPosition(SCREEN_WIDTH * WINDOW_SCALE, 0);
 }
 
 //Main function to draw pixels to the screen texture, the function is called per pixel to maintain accuracy when scroll registers
@@ -30,10 +35,20 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         tileColumn = xPos / 8;
         pixelColumn = xPos % 8;
         
-        uint16_t addrMode = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
-        uint8_t tileIndex = memory->read(addrMode + tileRow * 32 + tileColumn);
+        //Changing the addressing mode based on bit 3 and 4 of LCDC register
+        uint16_t memArea = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
+        uint8_t tileIndex = memory->read(memArea + tileRow * 32 + tileColumn);
+        uint16_t offset;
+        if((memory->read(0xFF40) & (BIT_4)) == 0 )
+        {
+            offset = 0x9000 + (static_cast<int8_t>(tileIndex) * 16) + (pixelRow * 2);
+        }
+        else
+        {
+            offset = 0x8000 + (tileIndex * 16) + (pixelRow * 2);
+        }
 
-        uint16_t offset = 0x8000 + (tileIndex * 16) + (pixelRow * 2);
+       
         uint8_t byteOne = memory->read(offset);
         uint8_t byteTwo = memory->read(offset + 1);
 
@@ -76,8 +91,17 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 
 void gb::RenderWindow::PollWindowEvents()
 {
-    tex.update(TexturePixels);
     window.clear();
+    DrawTile(index / 8);
+
+    index++;
+
+    if(index > 1024)
+    {
+        index = 0;
+    }
+
+    tex.update(TexturePixels);
     window.draw(sprite);
     window.display();
 
@@ -94,7 +118,31 @@ void gb::RenderWindow::PollWindowEvents()
 
 void gb::RenderWindow::DrawTile(uint8_t index)
 {
-    /*
+    uint8_t pixels[8 * 8 * 4];
+    uint8_t tileData[16];
 
-    */
+    for (size_t i = 0; i < 16; i++)
+    {
+        tileData[i] = memory->read(0x8000 + (index * 16) + i);
+    }
+
+    for (size_t i = 0; i < 8; i++)
+    {
+        uint8_t first = tileData[(2 * i)];
+        uint8_t second = tileData[(2 * i) + 1];
+        for (size_t f = 0; f < 8; f++)
+        {
+            uint8_t shiftedFirst = (first >> 7 - f) & 0x01;
+            uint8_t shiftedSecond = (second >> 7 - f) & 0x01;
+            sf::Color shade = shades[shiftedFirst + shiftedSecond];
+            size_t pixelIndex = (i * 8 + f) * 4;
+            pixels[pixelIndex] = shade.r;
+            pixels[pixelIndex + 1] = shade.g;
+            pixels[pixelIndex + 2] = shade.b;
+            pixels[pixelIndex + 3] = shade.a;
+        }
+    }
+
+    debugTex.update(pixels);
+    window.draw(debugSprite);
 }

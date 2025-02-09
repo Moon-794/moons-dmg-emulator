@@ -13,8 +13,6 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     {
         mem[i] = gameRom[i];
     }
-
-    //isBootRomMapped = false;
 }
 
 uint8_t gb::mmu::read(uint16_t address)
@@ -23,8 +21,11 @@ uint8_t gb::mmu::read(uint16_t address)
     if(isBootRomMapped && address <= 0x00FF)
         return bootRom[address];
 
-    //if(address == 0xff44)
-       //return 0x90;
+    //if(address == 0xFF01)
+        //return 0xFF;
+
+    if(address == 0xFF01)
+        return 0xFF;
 
     return mem[address];
 }
@@ -44,6 +45,14 @@ void gb::mmu::write(uint16_t address, uint8_t data)
             if(joypad)
                 joypad->UpdateInputs();
         }
+        break;
+    case 0xFF02:
+        if(data == 0x81)
+        {
+            if(SerialTransferInitiate)
+                SerialTransferInitiate();
+        }
+        mem[address] = data;
         break;
     //DIV Register
     case 0xFF04:

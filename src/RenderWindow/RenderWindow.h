@@ -28,8 +28,14 @@ namespace gb
         void Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, const std::vector<Object>& objs);
         void PollWindowEvents();
 
+        int index = 0;
+
     private:
         sf::RenderWindow window;
+
+        uint8_t debugTexturePixels[8 * 8 * 4];
+        sf::Texture debugTex;
+        sf::Sprite debugSprite;
 
         uint8_t TexturePixels[160 * 144 * 4];
         sf::Texture tex;

@@ -98,6 +98,13 @@ build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj: 
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
 
+build CMakeFiles/emulator.dir/src/serial/serial.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/serial/serial.cpp || cmake_object_order_depends_target_emulator
+  DEP_FILE = CMakeFiles\emulator.dir\src\serial\serial.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -O3 -march=native
+  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  OBJECT_DIR = CMakeFiles\emulator.dir
+  OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\serial
+
 build CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/ppu/ppu.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\ppu\ppu.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -O3 -march=native
@@ -127,7 +134,7 @@ build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_Release CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_Release CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj CMakeFiles/emulator.dir/src/serial/serial.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
   FLAGS = -O3 -DNDEBUG -O3 -march=native
   LINK_LIBRARIES = -lsfml-window-s  -lsfml-graphics-s  -lsfml-system-s  -lopengl32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\emulator.dir

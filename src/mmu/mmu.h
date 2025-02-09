@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <fstream>
 #include <stdexcept>
+#include <functional>
 
 #include "joypad/joypad.h"
 
@@ -52,6 +53,8 @@ namespace gb
         bool isBootRomMapped = true;
 
         Joypad* joypad;
+
+        std::function<void()> SerialTransferInitiate;
         
         //Procedure to quickly write 160 bytes of RAM or ROM to OAM
         void DMATransfer(uint16_t address);

@@ -38,11 +38,6 @@ void gb::ppu::Step(uint32_t cycles)
                         //Entering Vertical blank, change mode
                         ChangeMode(ppuMode::VERTICAL_BLANK);
 
-                        if((LCDC & BIT_3) != 0)
-                        {
-                            std::cout << std::hex << (int)LCDC << "\n";
-                        }
-
                         memory->write(0xFF41, 1);
 
                         //Enable IF VBlank flag

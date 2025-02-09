@@ -14,6 +14,7 @@ set(SRC_FILES src/main.cpp
             src/cpu/instructions/instructions.cpp
             src/cpu/instructions/instructionTable.cpp
             src/cpu/instructions/instructionTableEXT.cpp 
+            src/serial/serial.cpp
             src/ppu/ppu.cpp 
             src/GameBoy/gameboy.cpp 
             src/RenderWindow/RenderWindow.cpp)

@@ -34,9 +34,10 @@ int gb::cpu::Step()
     ProcessInterrupts();
 
     if(isHalted)
+    {
+        cycles += 4;
         return 0;
-
-    //LogCPUState();
+    }
 
     uint8_t instruction = memory->read(program_counter++);
 
@@ -47,52 +48,18 @@ int gb::cpu::Step()
         instruction = memory->read(program_counter++);
     }
     
-    if(!usingCB && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
+    //Call the instruction implementation
+    auto& table = usingCB ? extendedInstructionTable : instructionTable;
+    usingCB = false; // Reset usingCB if true
+    table[instruction]();
+
+    if(enable_IME_next_instruction)
     {
-        std::cout << "Unknown Instruction Encountered:\n";
-
-        if(usingCB)
-            std::cout << "**CB Table**\n";
-
-        memory->PrintByteAsHex(program_counter - 1);
-        std::cout << "Cycles: " << std::dec << cycles << "\n";
-
-        exit(-2);
-    }
-    else
-    {
-        //Call the instruction implementation
-        auto& table = usingCB ? extendedInstructionTable : instructionTable;
-        usingCB = false; // Reset usingCB if true
-        table[instruction]();
+        enable_IME_next_instruction = false;
+        IME = 1;
     }
 
     return 0;
-}
-
-void gb::cpu::LogCPUState()
-{
-    if (debug) 
-    {
-            std::cout << std::hex << std::uppercase << std::setfill('0');
-
-            fileWriter << "A:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(a) << " ";
-            fileWriter << "F:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(f) << " ";
-            fileWriter << "B:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(b) << " ";
-            fileWriter << "C:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(c) << " ";
-            fileWriter << "D:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(d) << " ";
-            fileWriter << "E:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(e) << " ";
-            fileWriter << "H:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(h) << " ";
-            fileWriter << "L:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(l) << " ";
-
-            fileWriter << "SP:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(stack_pointer) << " ";
-            fileWriter << "PC:" << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << static_cast<int>(program_counter) << " ";
-
-            fileWriter << "PCMEM:" << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 1)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 2)) << ",";
-            fileWriter << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<int>(memory->read(program_counter + 3)) << std::endl;
-    }
 }
 
 void gb::cpu::ProcessInterrupts()
@@ -105,7 +72,7 @@ void gb::cpu::ProcessInterrupts()
         //V-Blank Interrupt
         if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
         {
-            //Clear V-Blank Interrupt
+            //Clear V-Blank Interrupt request
             IF &= ~0x01;
             memory->write(0xFF0F, IF);
 
@@ -125,12 +92,32 @@ void gb::cpu::ProcessInterrupts()
 
             isHalted = false;
         }
-    }
 
-    if(enable_IME_next_instruction)
-    {
-        enable_IME_next_instruction = false;
-        IME = 1;
+        //V-Blank Interrupt
+        if((IE & 0x08) == 0x08 && (IF & 0x08) == 0x08)
+        {
+            //Clear V-Blank Interrupt request
+            IF &= ~0x08;
+            memory->write(0xFF0F, IF);
+
+            //Push program counter to stack
+            uint8_t pcMSB = program_counter >> 8;
+            uint8_t pcLSB = program_counter & 0x00FF;
+
+            stack_pointer--;
+            memory->write(stack_pointer, pcMSB);
+            stack_pointer--;
+            memory->write(stack_pointer, pcLSB);
+            
+            program_counter = 0x0058;
+
+            //Disable Interrupts
+            DI();
+
+            isHalted = false;
+        }
+
+        //TIMA interrupt
     }
 }
 

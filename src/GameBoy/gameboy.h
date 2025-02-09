@@ -6,6 +6,7 @@
 #include "mmu/mmu.h"
 #include "cpu/cpu.h"
 #include "ppu/ppu.h"
+#include "serial/serial.h"
 #include "joypad/joypad.h"
 #include <chrono>
 #include <thread>
@@ -26,6 +27,10 @@ private:
     gb::ppu* ppu;
     gb::mmu* mmu;
     gb::Joypad* joypad;
+    gb::serial* serial;
+
+    void ProcessDIV();
+    void ProcessSerial(uint8_t last_cycles);
 
     std::chrono::high_resolution_clock::time_point divTimer;
 };
