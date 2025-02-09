@@ -75,13 +75,30 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         if(xPos < o.xPos && xPos >= o.xPos - 8)
         {
             uint8_t objTileIndex = o.tileIndex;
+            uint8_t tileLine = ((scanline + 16) - o.yPos);
+            
+            //Vertical flip
+            if ((o.Flags & BIT_6) == BIT_6)
+            {
+                tileLine = 7 - tileLine;
+            }
 
-            uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - o.yPos) * 2));
-            uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + ((scanline + 16) - o.yPos) * 2) + 1);
+            //byte one and byte two contain the tiledata for this row of the sprite
+            uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + tileLine * 2));
+            uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + tileLine * 2) + 1);
 
+            //horizontal flip
+            if((o.Flags & BIT_5) == BIT_5)
+            {
+                byteOne = reverseByte(byteOne);
+                byteTwo = reverseByte(byteTwo);
+            }
+
+            //Extract the current bit we are drawing, and shift to the first position
             byteOne = (byteOne >> (7 - (xPos - o.xPos + 8)) & 0x01);
             byteTwo = (byteTwo >> (7 - (xPos - o.xPos + 8)) & 0x01);
 
+            //The two bits form an index to the shade depth
             sf::Color shade = shades[byteOne + byteTwo];
 
             int textureIndex = ((scanline * 160) + xPos) * 4;
@@ -101,6 +118,13 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         }
     }
     
+}
+
+uint8_t gb::RenderWindow::reverseByte(uint8_t b) {
+    b = ((b & 0xF0) >> 4) | ((b & 0x0F) << 4);
+    b = ((b & 0xCC) >> 2) | ((b & 0x33) << 2);
+    b = ((b & 0xAA) >> 1) | ((b & 0x55) << 1);
+    return b;
 }
 
 void gb::RenderWindow::PollWindowEvents()

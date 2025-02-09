@@ -1,5 +1,5 @@
 cd build
 ninja
 cd bin
-emulator.exe bootrom.gb t.gb
+emulator.exe bootrom.gb aw.gb
 cd ../../

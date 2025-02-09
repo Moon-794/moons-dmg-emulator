@@ -51,5 +51,7 @@ namespace gb
         int xPos = 0;
         int tileColumn = 0;
         int pixelColumn = 0;
+
+        uint8_t reverseByte(uint8_t b);
     };
 }
