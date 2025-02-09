@@ -31,9 +31,14 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         tileRow = yPos / 8;
         pixelRow = yPos % 8;
 
-        xPos = clock - 80;
-        tileColumn = xPos / 8;
-        pixelColumn = xPos % 8;
+        uint8_t scx = memory->read(0xFF43);
+
+        xPos = (clock - 80);
+
+        uint8_t bgX = (xPos + scx) % 256;
+
+        tileColumn = bgX / 8;
+        pixelColumn = bgX % 8;
         
         //Changing the addressing mode based on bit 3 and 4 of LCDC register
         uint16_t memArea = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
@@ -80,10 +85,19 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
             sf::Color shade = shades[byteOne + byteTwo];
 
             int textureIndex = ((scanline * 160) + xPos) * 4;
-            TexturePixels[textureIndex] = shade.r;
-            TexturePixels[textureIndex + 1] = shade.g;
-            TexturePixels[textureIndex + 2] = shade.b;
-            TexturePixels[textureIndex + 3] = shade.a;
+
+            if(shade.r == shades[0].r)
+            {
+                //transparent, dont replace
+            }
+            else
+            {
+                TexturePixels[textureIndex] = shade.r;
+                TexturePixels[textureIndex + 1] = shade.g;
+                TexturePixels[textureIndex + 2] = shade.b;
+                TexturePixels[textureIndex + 3] = shade.a;
+            }
+
         }
     }
     
