@@ -29,18 +29,23 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         yPos = (scanline + memory->read(0xFF42)) % 256;
 
         uint8_t shiftY = memory->read(0xFF42);
+        uint8_t modShifty = shiftY % 8;
 
         tileRow = yPos / 8;
-        pixelRow = yPos % 8;
+        pixelRow = (yPos) % 8;
 
         uint8_t scx = memory->read(0xFF43);
 
         xPos = (clock - 80);
 
-        uint8_t bgX = (clock + scx) % 256;
+        uint8_t bgX = (xPos + scx) % 256;
 
         tileColumn = bgX / 8;
         pixelColumn = bgX % 8;
+
+        //BEEP BEEP BEEP
+        //STAT INTERRUPT NEEDED!!!!!!!
+        //BEEP BEEP BEEP
         
         //Changing the addressing mode based on bit 3 and 4 of LCDC register
         uint16_t memArea = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
@@ -48,11 +53,11 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         uint16_t offset;
         if((memory->read(0xFF40) & (BIT_4)) == 0 )
         {
-            offset = 0x9000 + (static_cast<int8_t>(tileIndex) * 16) + ((pixelRow) * 2) + scx;
+            offset = 0x9000 + (static_cast<int8_t>(tileIndex) * 16) + ((pixelRow) * 2);
         }
         else
         {
-            offset = 0x8000 + (tileIndex * 16) + ((pixelRow) * 2) + scx;
+            offset = 0x8000 + (tileIndex * 16) + ((pixelRow) * 2);
         }
 
        

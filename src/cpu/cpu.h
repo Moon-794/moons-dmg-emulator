@@ -91,6 +91,8 @@ namespace gb
         void SetupInstructionTable();
         void SetupInstructionTableEXT();
 
+        void PushPCToStack(uint16_t newAddr);
+
         void LogCPUState();
         void SetComboRegister(RegisterCombo reg, uint16_t data);
         uint16_t GetComboRegister(RegisterCombo reg);

@@ -173,12 +173,6 @@ void gb::cpu::LDH_A8_A()
 
     uint16_t addr = 0xFF00 | val;
     memory->write(addr, a);
-
-    if(addr == 0xFFE1)
-    {
-        std::cout << "EOA: " << (int)a << "\n";
-    }
-
     cycles += 12;
 }
 

@@ -96,6 +96,10 @@ void gb::mmu::write(uint16_t address, uint8_t data)
     //DIV Register
     case 0xFF04:
         mem[address] = 0;
+        break;
+    case 0xFF45:
+        mem[address] = data;
+        break;
     case 0xFF46:
         DMATransfer(static_cast<uint16_t>(data) << 8);
         break;

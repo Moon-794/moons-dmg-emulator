@@ -30,6 +30,22 @@ gb::cpu::cpu(gb::mmu* memory)
 
 int gb::cpu::Step()
 {
+    if(memory->read(0xFF44) == memory->read(0xFF45))
+    {
+        memory->write(0xFF45, memory->read(0xFF44) | BIT_2);
+        
+        if(memory->read(0xFF41) & BIT_6 == BIT_6)
+        {
+            uint8_t IF = memory->read(0xFF0F);
+            IF |= BIT_1;
+            memory->write(0xFF0F, IF);
+        }
+    }
+    else
+    {
+        memory->write(0xFF45, memory->read(0xFF44) & ~BIT_2);
+    }
+
     //Check for interrupts first
     ProcessInterrupts();
 
@@ -85,22 +101,13 @@ void gb::cpu::ProcessInterrupts()
         uint8_t IE = memory->read(0xFFFF);
 
         //V-Blank Interrupt
-        if((IE & 0x01) == 0x01 && (IF & 0x01) == 0x01)
+        if((IE & BIT_0) == BIT_0 && (IF & BIT_0) == BIT_0)
         {
             //Clear V-Blank Interrupt request
             IF &= ~0x01;
             memory->write(0xFF0F, IF);
 
-            //Push program counter to stack
-            uint8_t pcMSB = program_counter >> 8;
-            uint8_t pcLSB = program_counter & 0x00FF;
-
-            stack_pointer--;
-            memory->write(stack_pointer, pcMSB);
-            stack_pointer--;
-            memory->write(stack_pointer, pcLSB);
-            
-            program_counter = 0x0040;
+            PushPCToStack(0x40);
 
             //Disable Interrupts
             DI();
@@ -108,23 +115,29 @@ void gb::cpu::ProcessInterrupts()
             isHalted = false;
         }
 
-        //V-Blank Interrupt
-        if((IE & 0x08) == 0x08 && (IF & 0x08) == 0x08)
+        //STAT Interrupt
+        if((IE & BIT_1) == BIT_1 && (IF & BIT_1) == BIT_1)
         {
-            //Clear V-Blank Interrupt request
+            //Clear serial Interrupt request
+            IF &= ~BIT_1;
+            memory->write(0xFF0F, IF);
+
+            PushPCToStack(0x48);
+
+            //Disable Interrupts
+            DI();
+
+            isHalted = false;
+        }
+
+        //Serial Interrupt
+        if((IE & BIT_3) == BIT_3 && (IF & BIT_3) == BIT_3)
+        {
+            //Clear serial Interrupt request
             IF &= ~0x08;
             memory->write(0xFF0F, IF);
 
-            //Push program counter to stack
-            uint8_t pcMSB = program_counter >> 8;
-            uint8_t pcLSB = program_counter & 0x00FF;
-
-            stack_pointer--;
-            memory->write(stack_pointer, pcMSB);
-            stack_pointer--;
-            memory->write(stack_pointer, pcLSB);
-            
-            program_counter = 0x0058;
+            PushPCToStack(0x58);
 
             //Disable Interrupts
             DI();
@@ -134,6 +147,20 @@ void gb::cpu::ProcessInterrupts()
 
         //TIMA interrupt
     }
+}
+
+void gb::cpu::PushPCToStack(uint16_t addr)
+{
+    //Push program counter to stack
+    uint8_t pcMSB = program_counter >> 8;
+    uint8_t pcLSB = program_counter & 0x00FF;
+
+    stack_pointer--;
+    memory->write(stack_pointer, pcMSB);
+    stack_pointer--;
+    memory->write(stack_pointer, pcLSB);
+    
+    program_counter = addr;
 }
 
 uint16_t gb::cpu::convert16Bit(uint8_t lsb, uint8_t msb)
