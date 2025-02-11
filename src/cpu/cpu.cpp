@@ -48,10 +48,25 @@ int gb::cpu::Step()
         instruction = memory->read(program_counter++);
     }
     
-    //Call the instruction implementation
-    auto& table = usingCB ? extendedInstructionTable : instructionTable;
-    usingCB = false; // Reset usingCB if true
-    table[instruction]();
+    if(!usingCB && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
+    {
+        std::cout << "Unknown Instruction Encountered:\n";
+
+        if(usingCB)
+            std::cout << "**CB Table**\n";
+
+        memory->PrintByteAsHex(program_counter - 1);
+        std::cout << "Cycles: " << std::dec << cycles << "\n";
+
+        exit(-2);
+    }
+    else
+    {
+        //Call the instruction implementation
+        auto& table = usingCB ? extendedInstructionTable : instructionTable;
+        usingCB = false; // Reset usingCB if true
+        table[instruction]();
+    }
 
     if(enable_IME_next_instruction)
     {

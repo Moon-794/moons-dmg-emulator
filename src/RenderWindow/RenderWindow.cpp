@@ -28,6 +28,8 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
     {
         yPos = (scanline + memory->read(0xFF42)) % 256;
 
+        uint8_t shiftY = memory->read(0xFF42);
+
         tileRow = yPos / 8;
         pixelRow = yPos % 8;
 
@@ -35,7 +37,7 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 
         xPos = (clock - 80);
 
-        uint8_t bgX = (xPos + scx) % 256;
+        uint8_t bgX = (clock + scx) % 256;
 
         tileColumn = bgX / 8;
         pixelColumn = bgX % 8;
@@ -46,11 +48,11 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
         uint16_t offset;
         if((memory->read(0xFF40) & (BIT_4)) == 0 )
         {
-            offset = 0x9000 + (static_cast<int8_t>(tileIndex) * 16) + (pixelRow * 2);
+            offset = 0x9000 + (static_cast<int8_t>(tileIndex) * 16) + ((pixelRow) * 2) + scx;
         }
         else
         {
-            offset = 0x8000 + (tileIndex * 16) + (pixelRow * 2);
+            offset = 0x8000 + (tileIndex * 16) + ((pixelRow) * 2) + scx;
         }
 
        

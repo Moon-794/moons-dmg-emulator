@@ -54,8 +54,6 @@ void gb::ppu::Step(uint32_t cycles)
             {
                 if(clock < 80)
                     ChangeMode(ppuMode::OAM_SCAN);
-
-                memory->write(0xFF41, 2);
             }
 
             //Mode 2, 3 and 0 changes
@@ -63,24 +61,18 @@ void gb::ppu::Step(uint32_t cycles)
             {
                 //Entered OAM Scan
                 ChangeMode(ppuMode::OAM_SCAN);
-
-                memory->write(0xFF41, 2);
             }
 
             if(mode == ppuMode::OAM_SCAN && clock == OAM_SCAN_SPAN)
             {
                 //Entered pixel drawing mode
                 ChangeMode(ppuMode::DRAWING_PIXELS);
-
-                memory->write(0xFF41, 3);
             }
 
             if(mode == DRAWING_PIXELS && clock == OAM_SCAN_SPAN + DRAWING_PIXELS_SPAN)
             {
                 //Entered Horizontal Blank Mode
                 ChangeMode(ppuMode::HORIZONTAL_BLANK);
-
-                memory->write(0xFF41, 0);
             }
         }
 
@@ -91,9 +83,48 @@ void gb::ppu::Step(uint32_t cycles)
 void gb::ppu::ChangeMode(ppuMode newMode)
 {
     mode = newMode;
+    uint8_t STAT = memory->read(0xFF41);
+
+    if(mode == ppuMode::HORIZONTAL_BLANK)
+    {
+        //clear bits 0 and 1
+        STAT &= ~(1 << 0);
+        STAT &= ~(1 << 1);
+        
+        memory->write(0xFF41, STAT);
+        return;
+    }
+
+    if(mode == ppuMode::VERTICAL_BLANK)
+    {
+        //set bit 0 and clear bit 1
+        STAT |= (1 << 0);
+        STAT &= ~(1 << 1);
+
+        memory->write(0xFF41, STAT);
+        return;
+    }
 
     if(mode == ppuMode::OAM_SCAN)
+    {
+        //clear bit 0 and set bit 1
+        STAT &= ~(1 << 0);
+        STAT |= (1 << 1);
+
+        memory->write(0xFF41, STAT);
         OAMSearch();
+        return;
+    }
+
+    if(mode == ppuMode::DRAWING_PIXELS)
+    {
+        //set bit 0 and set bit 1
+        STAT |= (1 << 0);
+        STAT |= (1 << 1);
+
+        memory->write(0xFF41, STAT);
+        return;
+    }
 }
 
 void gb::ppu::OAMSearch()
