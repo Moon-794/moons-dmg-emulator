@@ -30,7 +30,7 @@ gb::cpu::cpu(gb::mmu* memory)
 
 int gb::cpu::Step()
 {
-    if(memory->read(0xFF44) == memory->read(0xFF45))
+    if(memory->read(0xFF44) == memory->read(0xFF45) && memory->read(0xFF44) & BIT_2 != 0)
     {
         memory->write(0xFF45, memory->read(0xFF44) | BIT_2);
         
@@ -46,7 +46,7 @@ int gb::cpu::Step()
         memory->write(0xFF45, memory->read(0xFF44) & ~BIT_2);
     }
 
-    //Check for interrupts first
+    //Check for interrupt requests
     ProcessInterrupts();
 
     if(isHalted)
@@ -64,6 +64,7 @@ int gb::cpu::Step()
         instruction = memory->read(program_counter++);
     }
     
+    //Check if opcode is valid
     if(!usingCB && (this->instructionTable[instruction] == nullptr) || usingCB && (this->extendedInstructionTable[instruction] == nullptr))
     {
         std::cout << "Unknown Instruction Encountered:\n";
@@ -95,6 +96,7 @@ int gb::cpu::Step()
 
 void gb::cpu::ProcessInterrupts()
 {
+    //IME = INTERRUPT MASTER ENABLE
     if(IME == 1)
     {
         uint8_t IF = memory->read(0xFF0F);

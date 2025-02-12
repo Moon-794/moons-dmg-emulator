@@ -7,11 +7,9 @@ gb::ppu::ppu(gb::mmu* memory) : window(memory)
 
 void gb::ppu::Step(uint32_t cycles)
 {
+    
+    
     uint8_t LCDC = memory->read(0xFF40);
-    if(LCDC & BIT_3 == 0)
-    {
-        std::cout << "chec";
-    }
     uint8_t LCDC_CTRL = LCDC >> 7;
 
     for (size_t i = 0; i < cycles; i++)

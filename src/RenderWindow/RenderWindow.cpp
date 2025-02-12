@@ -2,13 +2,13 @@
 
 gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
-    window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE + (8 * 16), SCREEN_HEIGHT * WINDOW_SCALE), "My window");
+    window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "DMG-Emulator");
     window.setFramerateLimit(60);
 
-    shades[0] = sf::Color(160, 120, 120, 255);
-    shades[1] = sf::Color(120, 80, 80, 255);
-    shades[2] = sf::Color(80, 40, 40, 255);
-    shades[3] = sf::Color(40, 00, 00, 255);
+    shades[0] = sf::Color(160,160,200, 255);
+    shades[1] = sf::Color(120,120,160, 255);
+    shades[2] = sf::Color(80,80,120, 255);
+    shades[3] = sf::Color(40,40,80, 255);
 
     tex.create(160, 144);
     sprite.setTexture(tex);
@@ -42,10 +42,6 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
 
         tileColumn = bgX / 8;
         pixelColumn = bgX % 8;
-
-        //BEEP BEEP BEEP
-        //STAT INTERRUPT NEEDED!!!!!!!
-        //BEEP BEEP BEEP
         
         //Changing the addressing mode based on bit 3 and 4 of LCDC register
         uint16_t memArea = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
@@ -137,15 +133,6 @@ uint8_t gb::RenderWindow::reverseByte(uint8_t b) {
 void gb::RenderWindow::PollWindowEvents()
 {
     window.clear();
-    DrawTile(index / 8);
-
-    index++;
-
-    if(index > 1024)
-    {
-        index = 0;
-    }
-
     tex.update(TexturePixels);
     window.draw(sprite);
     window.display();
