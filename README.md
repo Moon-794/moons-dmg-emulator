@@ -13,7 +13,7 @@ in size.
 * Picture Processing Unit
 
 # GIFS
-![]preview/Logo.gif)
+<img src="./preview/Logo.gif" width="50%" height="50%"/>
 
 # Test ROMS
 ## BLAARG CPU Test Roms
