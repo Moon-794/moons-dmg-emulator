@@ -16,3 +16,10 @@
 700	872	7610272266107441	bin/emulator.exe	be44de833649a288
 7	639	7610275387125860	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	97be58619c47c76
 639	803	7610275393448768	bin/emulator.exe	be44de833649a288
+24	636	7610293661403675	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	97be58619c47c76
+637	795	7610293667522468	bin/emulator.exe	be44de833649a288
+21	569	7610295334478051	CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj	77b5585b02b74268
+24	609	7610295334508216	CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj	9ce70911d7bb156c
+609	771	7610295340367829	bin/emulator.exe	be44de833649a288
+7	619	7610297584100683	CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj	97be58619c47c76
+619	778	7610297590223320	bin/emulator.exe	be44de833649a288

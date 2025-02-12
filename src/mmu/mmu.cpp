@@ -17,8 +17,6 @@ gb::mmu::mmu(std::vector<uint8_t> bootRom, std::vector<uint8_t> gameRom)
     uint8_t numBanks = gameRom.size() / 0x4000;
     numBanks--;
 
-    std::cout << (int)numBanks;
-
     for (size_t i = 0; i < numBanks; i++)
     {
         std::array<uint8_t, 0x4000> bank = {};
@@ -54,7 +52,6 @@ void gb::mmu::write(uint16_t address, uint8_t data)
 {
     if(address > 0xFFFF)
     {
-        std::cout << "hello";
         return;
     }
 
@@ -146,6 +143,4 @@ void gb::mmu::ChangeMemoryBank(uint8_t bankNo)
         active_memory_bank = 1;
     else
         active_memory_bank = bankNo;
-
-    std::cout << std::hex << (int)active_memory_bank << "\n";
 }

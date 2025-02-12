@@ -35,11 +35,7 @@ void gb::ppu::Step(uint32_t cycles)
                     {
                         //Entering Vertical blank, change mode
                         ChangeMode(ppuMode::VERTICAL_BLANK);
-
-                        //std::cout << (int)memory->read(0xFF45) << "\n";
-
                         memory->write(0xFF41, 1);
-
                         //Enable IF VBlank flag
                         uint8_t IF = memory->read(0xFF0F);
                         IF = IF | 0x01;

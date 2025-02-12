@@ -5,10 +5,10 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "DMG-Emulator");
     window.setFramerateLimit(60);
 
-    shades[0] = sf::Color(160,160,200, 255);
-    shades[1] = sf::Color(120,120,160, 255);
-    shades[2] = sf::Color(80,80,120, 255);
-    shades[3] = sf::Color(40,40,80, 255);
+    shades[0] = sf::Color(200,160,160, 255);
+    shades[1] = sf::Color(160,120,120, 255);
+    shades[2] = sf::Color(120,80,80, 255);
+    shades[3] = sf::Color(80,40,40, 255);
 
     tex.create(160, 144);
     sprite.setTexture(tex);
