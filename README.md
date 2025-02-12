@@ -13,7 +13,7 @@ in size.
 * Picture Processing Unit
 
 # GIFS
-show gifs here
+![](https://giphy.com/gifs/8OZwuqTziAw5qx4l0N)
 
 # Test ROMS
 ## BLAARG CPU Test Roms
