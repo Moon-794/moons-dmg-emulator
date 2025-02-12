@@ -1,19 +1,40 @@
-# gameboy-dmg-emulator
+# Moons Gameboy Emulator
 A simple C++ original gameboy (DMG) emulator for windows.
+My first attempt at an emulator, it is far from cycle accurate but is still able to
+practically emulate a variety of games.
 
-The issue for the copyright screen failing to show was ultimately an issue with the ADD_A_X opcode
-implementation. Tetris uses jump tables to hop to functions based on the value stored in 0xFFE1. This is done
-by calling rst 0x28 before defining the addresses of the functions in memory directly after the rst call. The
-addresses are called such that 0 = first func, 1 = second func. However, the addresses are, of course, 2 bytes long,
-which is why .dw is used to write them in the dissassembly. This means our index must be doubled to get the correct offset
-in memory to call the function.
+This project is still very much a work in progress, it will probably require a large refactor
+as I simply didnt know enough about emulator design to keep things clean as the codebase grew
+in size.
 
-With that in mind, the call to display the credits is the 36th function in the function table. So in order to load
-that, 0xFFE1 must be filled with 0x24, once doubled this would become 0x48, or 72 in decimal. Which would correctly point
-to the function.
+# Features
+* Functional CPU with all 512 CPU opcodes implemented
+* Implemented V-Blank, Serial and STAT interrupts
+* Picture Processing Unit
 
-THE PROBLEM was that the value was doubled by being loaded into the A register, then calling ADD_A_A. Simple enough,
-except that in my implementation ADD_A_X, didnt actually store the result back in the a register, resulting in nothing
-happening.
+# GIFS
+![](https://giphy.com/gifs/8OZwuqTziAw5qx4l0N)
 
-Took like 2 weeks to fix.
+# Test ROMS
+## BLAARG CPU Test Roms
+
+
+| No. |   Name  |   Passed?  |
+| --- | ------- | ---------- |
+|  1  | Special            |✓|
+|  2  | Interrupts         |X|
+|  3  | OP SP,HL           |✓|
+|  4  | OP R, IMM          |✓|
+|  5  | OP RP              |✓|
+|  6  | OP LD R,R          |✓|
+|  7  | JR,JP,CALL,RET,RST |✓|
+|  8  | MISC               |✓|
+|  9  | OP R,R             |✓|
+|  10 | BIT OPS            |✓|
+|  11 | OP A,(HL)          |✓|
+
+
+# How to run
+1) clone the repository and build the project, or download the application directly here
+2) Aquire a valid DMG bootrom, and game ROM, tetris is a good shout :)
+3) In the console, write `./emulator.exe BOOTROM_FILE] [GAME_ROM_FILE]`
