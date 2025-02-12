@@ -16,4 +16,4 @@ show gifs here
 # How to run
 1) clone the repository and build the project, or download the application directly here
 2) Aquire a valid DMG bootrom, and game ROM, tetris is a good shout :)
-3) In the console, write [./emulator.exe [BOOTROM_FILE] [GAME_ROM_FILE]]
+3) In the console, write [./emulator.exe BOOTROM_FILE] [GAME_ROM_FILE]
