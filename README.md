@@ -12,6 +12,23 @@ practically emulate a variety of games.
 show gifs here
 
 # Test ROMS
+## BLAARG CPU Test Roms
+
+
+| No. |   Name  |   Passed?  |
+| --- | ------- | ---------- |
+|  1  | Special            |✓|
+|  2  | Interrupts         |X|
+|  3  | OP SP,HL           |✓|
+|  4  | OP R, IMM          |✓|
+|  5  | OP RP              |✓|
+|  6  | OP LD R,R          |✓|
+|  7  | JR,JP,CALL,RET,RST |✓|
+|  8  | MISC               |✓|
+|  9  | OP R,R             |✓|
+|  10 | BIT OPS            |✓|
+|  11 | OP A,(HL)          |✓|
+
 
 # How to run
 1) clone the repository and build the project, or download the application directly here
