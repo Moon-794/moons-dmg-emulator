@@ -73,7 +73,7 @@ namespace gb
 
         std::ofstream fileWriter;
 
-        uint32_t cycles = 0;
+        uint64_t cycles = 0;
 
         typedef void (gb::cpu::*InstructionTable)();
         std::function<void()> instructionTable[256];  

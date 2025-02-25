@@ -26,7 +26,7 @@ void Gameboy::Run()
 
     ProcessSerial(last_cycles);
     
-    uint32_t cpu_cycles = (cpu->GetCycles() - last_cycles);
+    uint64_t cpu_cycles = (cpu->GetCycles() - last_cycles);
     ppu->Step(cpu_cycles);
 
     //Only poll window once per frame, when the ppu switches to V-Blank

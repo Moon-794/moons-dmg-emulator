@@ -143,7 +143,6 @@ void gb::cpu::ProcessInterrupts()
 
             //Disable Interrupts
             DI();
-
             isHalted = false;
         }
 

@@ -10,6 +10,7 @@
 #include "ppu/ppu.h"
 #include "serial/serial.h"
 #include "joypad/joypad.h"
+#include <unistd.h>
 #include <chrono>
 #include <thread>
 

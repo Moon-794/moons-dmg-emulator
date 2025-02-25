@@ -46,6 +46,8 @@ void gb::cpu::JP_A16()
 
     uint16_t newAddr = convert16Bit(lsb, msb);
     program_counter = newAddr;
+
+    cycles += 16;
 }
 
 void gb::cpu::INC_X(uint8_t* reg)
@@ -471,6 +473,8 @@ void gb::cpu::OR_X(uint8_t* reg)
     ResetFlag(FLAG_N);
     ResetFlag(FLAG_C);
     ResetFlag(FLAG_H);
+
+    cycles += 4;
 }
 
 void gb::cpu::AND_X(uint8_t* reg)
@@ -622,6 +626,8 @@ void gb::cpu::ADD_X(uint8_t* reg)
     result > 0xFF ? SetFlag(FLAG_C) : ResetFlag(FLAG_C);
 
     a = result;
+
+    cycles += 4;
 }
 
 void gb::cpu::ADD_N()
@@ -1098,6 +1104,7 @@ void gb::cpu::SBC_HL()
 void gb::cpu::HALT()
 {
     isHalted = true;
+    cycles += 4;
 }
 
 void gb::cpu::AND_HL()
