@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: emulator
-# Configurations: Release
+# Configurations: Debug
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Release
+CONFIGURATION = Debug
 # =============================================================================
 # Include auxiliary files.
 
@@ -39,7 +39,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = C$:/Users/conno/Desktop/gameboy-dmg-emulator/build/
+cmake_ninja_workdir = C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/build/
 # =============================================================================
 # Object build statements for EXECUTABLE target emulator
 
@@ -49,104 +49,82 @@ cmake_ninja_workdir = C$:/Users/conno/Desktop/gameboy-dmg-emulator/build/
 
 build cmake_object_order_depends_target_emulator: phony || .
 
-build CMakeFiles/emulator.dir/src/main.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/main.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/main.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/main.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\main.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/joypad/joypad.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/joypad/joypad.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\joypad\joypad.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\joypad
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/mmu/mmu.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/mmu/mmu.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\mmu\mmu.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\mmu
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/cpu.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/cpu/cpu.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\cpu.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructions.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/cpu/instructions/instructions.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructions.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructionTable.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/cpu/instructions/instructionTable.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructionTable.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/cpu/instructions/instructionTableEXT.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/cpu/instructions/instructionTableEXT.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\cpu\instructions\instructionTableEXT.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\cpu\instructions
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/serial/serial.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/serial/serial.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/serial/serial.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/serial/serial.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\serial\serial.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\serial
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/ppu/ppu.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/ppu/ppu.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\ppu\ppu.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\ppu
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/GameBoy/gameboy.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/GameBoy/gameboy.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\GameBoy\gameboy.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\GameBoy
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
-build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILER__emulator_unscanned_Release C$:/Users/conno/Desktop/gameboy-dmg-emulator/src/RenderWindow/RenderWindow.cpp || cmake_object_order_depends_target_emulator
+build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILER__emulator_unscanned_Debug C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/src/RenderWindow/RenderWindow.cpp || cmake_object_order_depends_target_emulator
   DEP_FILE = CMakeFiles\emulator.dir\src\RenderWindow\RenderWindow.cpp.obj.d
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
-  INCLUDES = -IC:/Users/conno/Desktop/gameboy-dmg-emulator/src -IC:/Users/conno/Desktop/gameboy-dmg-emulator/include
+  FLAGS = -g
+  INCLUDES = -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/src" -I"C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/include"
   OBJECT_DIR = CMakeFiles\emulator.dir
   OBJECT_FILE_DIR = CMakeFiles\emulator.dir\src\RenderWindow
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
-  TARGET_PDB = bin\emulator.pdb
 
 
 # =============================================================================
@@ -156,23 +134,22 @@ build CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable bin\emulator.exe
 
-build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_Release CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj CMakeFiles/emulator.dir/src/serial/serial.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
-  FLAGS = -O3 -DNDEBUG -O3 -march=native
+build bin/emulator.exe: CXX_EXECUTABLE_LINKER__emulator_Debug CMakeFiles/emulator.dir/src/main.cpp.obj CMakeFiles/emulator.dir/src/joypad/joypad.cpp.obj CMakeFiles/emulator.dir/src/mmu/mmu.cpp.obj CMakeFiles/emulator.dir/src/cpu/cpu.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructions.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTable.cpp.obj CMakeFiles/emulator.dir/src/cpu/instructions/instructionTableEXT.cpp.obj CMakeFiles/emulator.dir/src/serial/serial.cpp.obj CMakeFiles/emulator.dir/src/ppu/ppu.cpp.obj CMakeFiles/emulator.dir/src/GameBoy/gameboy.cpp.obj CMakeFiles/emulator.dir/src/RenderWindow/RenderWindow.cpp.obj
+  FLAGS = -g
   LINK_LIBRARIES = -lsfml-window-s  -lsfml-graphics-s  -lsfml-system-s  -lopengl32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\emulator.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\emulator.dir\
   TARGET_FILE = bin\emulator.exe
   TARGET_IMPLIB = libemulator.dll.a
-  TARGET_PDB = bin\emulator.pdb
+  TARGET_PDB = emulator.exe.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\conno\Desktop\gameboy-dmg-emulator\build && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\Users\conno\Desktop\gameboy-dmg-emulator -BC:\Users\conno\Desktop\gameboy-dmg-emulator\build"
+  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D "C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator\build" && "C:\Program Files\CMake\bin\cmake-gui.exe" -S"C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator" -B"C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator\build""
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -184,7 +161,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D C:\Users\conno\Desktop\gameboy-dmg-emulator\build && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\Users\conno\Desktop\gameboy-dmg-emulator -BC:\Users\conno\Desktop\gameboy-dmg-emulator\build"
+  COMMAND = C:\Windows\system32\cmd.exe /C "cd /D "C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator\build" && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -S"C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator" -B"C:\Users\conno\Desktop\Gameboy ROMS\gameboy-dmg-emulator\build""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -204,7 +181,7 @@ build emulator.exe: phony bin/emulator.exe
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/conno/Desktop/gameboy-dmg-emulator/build
+# Folder: C:/Users/conno/Desktop/Gameboy ROMS/gameboy-dmg-emulator/build
 
 build all: phony bin/emulator.exe
 
@@ -215,14 +192,14 @@ build all: phony bin/emulator.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompilerABI.c C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeNinjaFindMake.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystem.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Determine-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Users/conno/Desktop/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfig.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigDependencies.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets-release.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfig.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigDependencies.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets-release.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompilerABI.c C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeNinjaFindMake.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystem.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Determine-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Users/conno/Desktop/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfig.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigDependencies.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets-release.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake: phony
+build C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Users/conno/Desktop/Gameboy$ ROMS/gameboy-dmg-emulator/CMakeLists.txt C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfig.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigDependencies.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLConfigVersion.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets-release.cmake C$:/msys64/mingw64/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake: phony
 
 
 #############################################

@@ -3,6 +3,8 @@
 #ifndef GB_DMG
 #define GB_DMG
 
+#define CLOCK_SPEED 4194304
+
 #include "mmu/mmu.h"
 #include "cpu/cpu.h"
 #include "ppu/ppu.h"

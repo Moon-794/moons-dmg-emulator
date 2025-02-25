@@ -7,8 +7,6 @@ gb::ppu::ppu(gb::mmu* memory) : window(memory)
 
 void gb::ppu::Step(uint32_t cycles)
 {
-    
-    
     uint8_t LCDC = memory->read(0xFF40);
     uint8_t LCDC_CTRL = LCDC >> 7;
 
@@ -70,9 +68,13 @@ void gb::ppu::Step(uint32_t cycles)
                 //Entered Horizontal Blank Mode
                 ChangeMode(ppuMode::HORIZONTAL_BLANK);
             }
-        }
 
-        window.Update(mode, clock, scanline, cycles, objects);
+            if(mode == DRAWING_PIXELS && clock < 240)
+            {
+                const PPUState& state = {mode, clock, scanline, cycles, objects};
+                window.Update(state);
+            }
+        }
     }
 }
 

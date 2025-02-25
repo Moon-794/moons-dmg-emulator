@@ -4,7 +4,7 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
 {
     window.create(sf::VideoMode(SCREEN_WIDTH * WINDOW_SCALE, SCREEN_HEIGHT * WINDOW_SCALE), "DMG-Emulator");
     window.setFramerateLimit(60);
-
+    
     shades[0] = sf::Color(200,160,160, 255);
     shades[1] = sf::Color(160,120,120, 255);
     shades[2] = sf::Color(120,80,80, 255);
@@ -13,35 +13,24 @@ gb::RenderWindow::RenderWindow(gb::mmu* mmu) : memory(mmu)
     tex.create(160, 144);
     sprite.setTexture(tex);
     sprite.setScale(4, 4);
-
-    debugTex.create(8, 8);
-    debugSprite.setTexture(debugTex);
-    debugSprite.setScale(16, 16);
-    debugSprite.setPosition(SCREEN_WIDTH * WINDOW_SCALE, 0);
 }
 
 //Main function to draw pixels to the screen texture, the function is called per pixel to maintain accuracy when scroll registers
 //are manipulated mid-scanline
-void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, uint32_t cycles, const std::vector<Object>& objs)
+void gb::RenderWindow::Update(const PPUState& state)
 {
-    if(mode == DRAWPIXELS && clock < 240)
+    if(state.mode == DRAWPIXELS && state.clock < 240)
     {
-        yPos = (scanline + memory->read(0xFF42)) % 256;
+        yPos = (state.scanline + memory->read(0xFF42)) % 256;
+        xPos = (state.clock - 80);
 
-        uint8_t shiftY = memory->read(0xFF42);
-        uint8_t modShifty = shiftY % 8;
-
-        tileRow = yPos / 8;
-        pixelRow = (yPos) % 8;
+        int tileRow = yPos / 8;
+        int pixelRow = (yPos) % 8;
 
         uint8_t scx = memory->read(0xFF43);
-
-        xPos = (clock - 80);
-
         uint8_t bgX = (xPos + scx) % 256;
-
-        tileColumn = bgX / 8;
-        pixelColumn = bgX % 8;
+        int tileColumn = bgX / 8;
+        int pixelColumn = bgX % 8;
         
         //Changing the addressing mode based on bit 3 and 4 of LCDC register
         uint16_t memArea = (memory->read(0xFF40) & (BIT_3)) != 0 ? 0x9C00 : 0x9800;
@@ -56,78 +45,66 @@ void gb::RenderWindow::Update(uint8_t mode, uint32_t clock, uint32_t scanline, u
             offset = 0x8000 + (tileIndex * 16) + ((pixelRow) * 2);
         }
 
-       
-        uint8_t byteOne = memory->read(offset);
-        uint8_t byteTwo = memory->read(offset + 1);
+        SpriteData spriteData(*memory, offset);
+        sf::Color shade = shades[spriteData.GetShadeIndex(pixelColumn)];
+        SetPixels(state, shade);
 
-        byteOne = (byteOne >> (7 - pixelColumn)) & 0x01;
-        byteTwo = (byteTwo >> (7 - pixelColumn)) & 0x01;
-
-        sf::Color shade = shades[byteOne + byteTwo];
-
-        int textureIndex = ((scanline * 160) + xPos) * 4;
-        TexturePixels[textureIndex] = shade.r;
-        TexturePixels[textureIndex + 1] = shade.g;
-        TexturePixels[textureIndex + 2] = shade.b;
-        TexturePixels[textureIndex + 3] = shade.a;
-    }
-
-    for (size_t i = 0; i < objs.size(); i++)
-    {
-        Object o = objs[i];
-        if(xPos < o.xPos && xPos >= o.xPos - 8)
+        for (size_t i = 0; i < state.objs.size(); i++)
         {
-            uint8_t objTileIndex = o.tileIndex;
-            uint8_t tileLine = ((scanline + 16) - o.yPos);
-            
-            //Vertical flip
-            if ((o.Flags & BIT_6) == BIT_6)
+            Object o = state.objs[i];
+            if(xPos < o.xPos && xPos >= o.xPos - 8)
             {
-                tileLine = 7 - tileLine;
+                uint8_t objTileIndex = o.tileIndex;
+                uint8_t tileLine = ((state.scanline + 16) - o.yPos);
+                
+                //Vertical flip
+                if ((o.Flags & BIT_6) == BIT_6)
+                {
+                    tileLine = 7 - tileLine;
+                }
+
+                //byte one and byte two contain the tiledata for this row of the sprite
+                uint16_t memoryIndex = (0x8000 + (objTileIndex * 16) + tileLine * 2);
+                SpriteData objectData(*memory, memoryIndex);
+
+                //horizontal flip
+                if((o.Flags & BIT_5) == BIT_5)
+                {
+                    reverseByte(objectData.byteOne);
+                    reverseByte(objectData.byteTwo);
+                }
+                
+                uint8_t shadeIndex = objectData.GetShadeIndex((xPos - o.xPos + 8));
+                sf::Color shade = shades[shadeIndex];
+
+                //Only draw if not transparent
+                if(shade.r != shades[0].r)
+                {
+                    SetPixels(state, shade);
+                }
             }
-
-            //byte one and byte two contain the tiledata for this row of the sprite
-            uint8_t byteOne = memory->read((0x8000 + (objTileIndex * 16) + tileLine * 2));
-            uint8_t byteTwo = memory->read((0x8000 + (objTileIndex * 16) + tileLine * 2) + 1);
-
-            //horizontal flip
-            if((o.Flags & BIT_5) == BIT_5)
-            {
-                byteOne = reverseByte(byteOne);
-                byteTwo = reverseByte(byteTwo);
-            }
-
-            //Extract the current bit we are drawing, and shift to the first position
-            byteOne = (byteOne >> (7 - (xPos - o.xPos + 8)) & 0x01);
-            byteTwo = (byteTwo >> (7 - (xPos - o.xPos + 8)) & 0x01);
-
-            //The two bits form an index to the shade depth
-            sf::Color shade = shades[byteOne + byteTwo];
-
-            int textureIndex = ((scanline * 160) + xPos) * 4;
-
-            if(shade.r == shades[0].r)
-            {
-                //transparent, dont replace
-            }
-            else
-            {
-                TexturePixels[textureIndex] = shade.r;
-                TexturePixels[textureIndex + 1] = shade.g;
-                TexturePixels[textureIndex + 2] = shade.b;
-                TexturePixels[textureIndex + 3] = shade.a;
-            }
-
         }
     }
-    
 }
 
-uint8_t gb::RenderWindow::reverseByte(uint8_t b) {
+//Reverses a byte. Used to modify sprite data for horizontal flipping.
+uint8_t gb::RenderWindow::reverseByte(uint8_t& b) 
+{
     b = ((b & 0xF0) >> 4) | ((b & 0x0F) << 4);
     b = ((b & 0xCC) >> 2) | ((b & 0x33) << 2);
     b = ((b & 0xAA) >> 1) | ((b & 0x55) << 1);
     return b;
+}
+
+//Sets the rgb values for a specific pixel
+void gb::RenderWindow::SetPixels(const PPUState& state, sf::Color shade)
+{
+    uint32_t textureIndex = ((state.scanline * 160) + xPos) * 4;
+
+    TexturePixels[textureIndex]     = shade.r;
+    TexturePixels[textureIndex + 1] = shade.g;
+    TexturePixels[textureIndex + 2] = shade.b;
+    TexturePixels[textureIndex + 3] = shade.a;
 }
 
 void gb::RenderWindow::PollWindowEvents()
@@ -146,35 +123,4 @@ void gb::RenderWindow::PollWindowEvents()
             exit(0);
         }
     }
-}
-
-void gb::RenderWindow::DrawTile(uint8_t index)
-{
-    uint8_t pixels[8 * 8 * 4];
-    uint8_t tileData[16];
-
-    for (size_t i = 0; i < 16; i++)
-    {
-        tileData[i] = memory->read(0x8000 + (index * 16) + i);
-    }
-
-    for (size_t i = 0; i < 8; i++)
-    {
-        uint8_t first = tileData[(2 * i)];
-        uint8_t second = tileData[(2 * i) + 1];
-        for (size_t f = 0; f < 8; f++)
-        {
-            uint8_t shiftedFirst = (first >> 7 - f) & 0x01;
-            uint8_t shiftedSecond = (second >> 7 - f) & 0x01;
-            sf::Color shade = shades[shiftedFirst + shiftedSecond];
-            size_t pixelIndex = (i * 8 + f) * 4;
-            pixels[pixelIndex] = shade.r;
-            pixels[pixelIndex + 1] = shade.g;
-            pixels[pixelIndex + 2] = shade.b;
-            pixels[pixelIndex + 3] = shade.a;
-        }
-    }
-
-    debugTex.update(pixels);
-    window.draw(debugSprite);
 }
