@@ -38,6 +38,10 @@ in size.
 
 
 # How to run
-1) clone the repository and build the project, or download the application directly here
-2) Aquire a valid DMG bootrom, and game ROM, tetris is a good shout :)
-3) In the console, write `./emulator.exe BOOTROM_FILE] [GAME_ROM_FILE]`
+1) `mkdir build`
+2) `cd build`
+3) `cmake -GNinja ..`
+4) `ninja`
+5) `cd bin`
+7) Aquire a valid DMG bootrom, and game ROM, tetris is a good shout :)
+8) In the console, write `./emulator.exe [BOOTROM_FILE] [GAME_ROM_FILE]`
