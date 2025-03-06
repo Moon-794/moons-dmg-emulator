@@ -18,6 +18,12 @@ in size.
 <img src="./preview/Tennis.gif" width="35%" height="35%"/>
 <img src="./preview/SML.gif" width="35%" height="35%"/>
 
+
+|||
+|-------------|-------------|
+|<img src="./preview/Logo.gif" width="35%" height="35%"/>|<img src="./preview/Tetris.gif" width="35%" height="35%"/>|
+|<img src="./preview/Tennis.gif" width="35%" height="35%"/>|<img src="./preview/SML.gif" width="35%" height="35%"/>|
+
 # Test ROMS
 ## BLAARG CPU Test Roms
 
