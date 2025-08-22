@@ -3,10 +3,6 @@ A simple C++ original gameboy (DMG) emulator for windows.
 My first attempt at an emulator, it is far from cycle accurate but is still able to
 practically emulate a variety of games.
 
-This project is still very much a work in progress, it will probably require a large refactor
-as I simply didnt know enough about emulator design to keep things clean as the codebase grew
-in size.
-
 # Features
 * Functional CPU with all 512 CPU opcodes implemented
 * Implemented V-Blank, Serial and STAT interrupts
@@ -47,4 +43,4 @@ in size.
 4) `ninja`
 5) `cd bin`
 7) Aquire a valid DMG bootrom, and game ROM, tetris is a good shout :)
-8) In the console, write `./emulator.exe [BOOTROM_FILE] [GAME_ROM_FILE]`
+8) In the console, run `./emulator.exe [BOOTROM_FILE] [GAME_ROM_FILE]`
