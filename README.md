@@ -37,6 +37,17 @@ practically emulate a variety of games.
 
 
 # How to run
+## CMake dependencies
+* freetype
+* jpeg
+* opengl32
+* winmm
+* gdi32
+* user32
+* ole32
+* sfml
+
+advapi32
 1) `mkdir build`
 2) `cd build`
 3) `cmake -GNinja ..`
